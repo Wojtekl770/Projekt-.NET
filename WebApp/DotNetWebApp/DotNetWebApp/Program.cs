@@ -22,7 +22,7 @@ namespace DotNetWebApp
 			builder.Services.AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<ApplicationDbContext>();
 
-
+			builder.Services.AddDbContext<CarContext>(options=> options.UseInMemoryDatabase("Cars"));
 
 			builder.Services.AddAuthentication(o =>
 			{

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9ZKxypsP+SlDIiqn1OnptapWxc3HrXUC52/MMkIKW/bIohKxMdqLy5sb58QqyTwO1Uotd8jB3bAIgAzfb23XsA==",
+  "dgSpecHash": "S1/8z2m+G4farHJeTGZwCOM4+jYtpOSibvw7n/mb3TBGiWy8JmGFjpFu9+SRLAVMkH7RKo5BLl5dfgzRPKhntw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\wikto\\source\\repos\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj",
+  "projectFilePath": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wikto\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\wikto\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
@@ -87,6 +87,7 @@
     "C:\\Users\\wikto\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.10\\microsoft.entityframeworkcore.abstractions.8.0.10.nupkg.sha512",
     "C:\\Users\\wikto\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.10\\microsoft.entityframeworkcore.analyzers.8.0.10.nupkg.sha512",
     "C:\\Users\\wikto\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.10\\microsoft.entityframeworkcore.design.8.0.10.nupkg.sha512",
+    "C:\\Users\\wikto\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\8.0.10\\microsoft.entityframeworkcore.inmemory.8.0.10.nupkg.sha512",
     "C:\\Users\\wikto\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.10\\microsoft.entityframeworkcore.relational.8.0.10.nupkg.sha512",
     "C:\\Users\\wikto\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\8.0.10\\microsoft.entityframeworkcore.sqlite.8.0.10.nupkg.sha512",
     "C:\\Users\\wikto\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\8.0.10\\microsoft.entityframeworkcore.sqlite.core.8.0.10.nupkg.sha512",

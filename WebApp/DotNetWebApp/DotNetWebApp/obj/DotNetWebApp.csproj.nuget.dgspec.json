@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wikto\\source\\repos\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj": {}
+    "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wikto\\source\\repos\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj": {
+    "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wikto\\source\\repos\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj",
         "projectName": "DotNetWebApp",
-        "projectPath": "C:\\Users\\wikto\\source\\repos\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj",
+        "projectPath": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\DotNetWebApp.csproj",
         "packagesPath": "C:\\Users\\wikto\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wikto\\source\\repos\\DotNetWebApp\\DotNetWebApp\\obj\\",
+        "outputPath": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -63,6 +63,10 @@
               "version": "[8.0.10, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[8.0.10, )"
             },

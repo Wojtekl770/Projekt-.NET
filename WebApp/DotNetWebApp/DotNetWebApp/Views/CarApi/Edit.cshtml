@@ -1,0 +1,44 @@
+﻿@model DotNetWebApp.Models.Car
+@{
+	ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Car</h4>
+<body>
+	@if (Model.IsRented)
+	{
+		<div>
+			Car Is Rented
+		</div>
+	}
+	else
+	{
+		<div>
+			You Still Can Rent Car!
+		</div>
+	}
+
+	<form asp-action="Edit">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<input type="hidden" asp-for="Id" />
+		<input type="hidden" asp-for="LicensePlate" />
+		<input type="hidden" asp-for="CarBrand" />
+		<input type="hidden" asp-for="CarModel" />
+		<input type="hidden" asp-for="IsRented" />
+
+		<div class="form-group">
+			<input type="submit" value="Rent" class="btn btn-primary" />
+		</div>
+	</form>
+
+
+</body>
+
+
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+

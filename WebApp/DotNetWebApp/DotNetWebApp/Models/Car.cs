@@ -1,4 +1,6 @@
-﻿namespace DotNetWebApp.Models
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace DotNetWebApp.Models
 {
 	public class Car
 	{
@@ -8,11 +10,29 @@
 		public string CarModel { get; set; }
 		public bool IsRented { get; set; }
 
-		public Car()
+		public Car(int Id = 0, string LicensePlate = "v", string CarBrand = "u", string CarModel = "c", bool IsRented = false)
 		{
-
+			this.Id = Id;
+			this.LicensePlate = LicensePlate;
+			this.CarBrand = CarBrand;
+			this.CarModel = CarModel;
+			this.IsRented = IsRented;
 		}
 
+		public static bool operator==(Car? f, Car? s)
+		{
+			if (f == null && s == null)
+				return true;
+
+			if (f == null || s == null)
+				return false;
+
+			return f.Id == s.Id && f.LicensePlate == s.LicensePlate && f.CarModel == s.CarModel;
+		}
+		public static bool operator !=(Car f, Car s)
+		{
+			return !(f == s);
+		}
 
 
 	}

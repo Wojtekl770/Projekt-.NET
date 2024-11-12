@@ -4,44 +4,85 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetApiCars.Controllers
 {
-    
-    [ApiController]
-    [Route("[controller]/[action]")]
-    public class CarController : Controller
-    {
-        private readonly CarContext _carContext;
-        public CarController(CarContext carContext)
-        {
-            _carContext = carContext;
-        }
-        [HttpGet]
-        public IEnumerable<Car> Get()
-        {
-            return _carContext.Cars.ToList();
-        }
 
-        [HttpPost]
-        public void Post(Car car)
-        {
-            var c = new Car
-            {
-                Id = car.Id,
-                CarBrand = car.CarBrand,
-                CarModel = car.CarModel,
-                IsRented = car.IsRented,
-                LicensePlate = car.LicensePlate
-            };
+	[ApiController]
+	[Route("[controller]/[action]")]
+	public class CarController : Controller
+	{
+		private readonly CarContext _carContext;
+		public CarController(CarContext carContext)
+		{
+			_carContext = carContext;
+		}
 
-            _carContext.Cars.Add(c);
-            _carContext.SaveChanges();
+		[HttpGet]
+		public async Task<IEnumerable<Car>> Get()
+		{
+			return await _carContext.Cars.ToListAsync();
+		}
 
-            if (ModelState.IsValid)
-            {
-                //_carContext.Add(c);
-                //await _carContext.SaveChangesAsync();
-            }
-        }
-        /*
+		[HttpPost]
+		public void Post(Car car)
+		{
+			var c = new Car
+			{
+				Id = car.Id,
+				CarBrand = car.CarBrand,
+				CarModel = car.CarModel,
+				IsRented = car.IsRented,
+				LicensePlate = car.LicensePlate
+			};
+
+			_carContext.Cars.Add(c);
+			_carContext.SaveChangesAsync();
+
+		}
+
+
+		[HttpPut]
+		public async Task<Car?> Put(Car car)
+		{
+			//Car? _car = await _carContext.Cars.Where(c => c.Id == car.Id).FirstOrDefaultAsync();
+
+			Car? _car = await _carContext.Cars.Where(c => (car.LicensePlate == c.LicensePlate)
+			                                              && (car.CarModel == c.CarModel)
+			                                              && (car.CarBrand == c.CarBrand))
+                                                          .FirstOrDefaultAsync();
+			if (_car == null)
+				return null;
+
+			if (!_car.IsRented)
+			{
+				_car.IsRented = true;
+				await _carContext.SaveChangesAsync();
+			}
+
+			return _car;
+		}
+
+		[HttpPut]
+		public async Task<Car?> Edit(Car car)
+		{
+			//Car? _car = await _carContext.Cars.Where(c => c.Id == car.Id).FirstOrDefaultAsync();
+
+			Car? _car = await _carContext.Cars.Where(c => (car.LicensePlate == c.LicensePlate)
+														  && (car.CarModel == c.CarModel)
+														  && (car.CarBrand == c.CarBrand))
+														  .FirstOrDefaultAsync();
+			if (_car == null)
+				return null;
+
+			if (_car.IsRented)
+			{
+				_car.IsRented = false;
+				await _carContext.SaveChangesAsync();
+			}
+
+			return _car;
+		}
+
+
+		/*
         // GET: CarController
         public ActionResult Index()
         {
@@ -116,7 +157,7 @@ namespace DotNetApiCars.Controllers
                 return View();
             }
         }
-     */   
-    }
+     */
+	}
 
 }

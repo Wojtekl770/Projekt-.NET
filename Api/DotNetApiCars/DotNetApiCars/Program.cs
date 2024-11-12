@@ -22,22 +22,13 @@ namespace DotNetApiCars
             builder.Services.AddSwaggerGen();
 
             
-            /*
-            builder.Services.AddDbContext<CarContext>(options =>
-            {
-                options.UseInMemoryDatabase("Car");
-            });
-            */
-
-
-
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("https://localhost:7136")
+                          policy.WithOrigins("https://localhost:7136", "https://carrentalwebapp-a5fxc7cne5cmfve8.canadacentral-01.azurewebsites.net")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
@@ -46,13 +37,15 @@ namespace DotNetApiCars
             var app = builder.Build();
 
 
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            
+
 
             app.UseCors(MyAllowSpecificOrigins);
 
