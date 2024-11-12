@@ -10,8 +10,14 @@ namespace DotNetWebApp.Models
 		public string CarModel { get; set; }
 		public bool IsRented { get; set; }
 
-		public Car(int Id = 0, string LicensePlate = "v", string CarBrand = "u", string CarModel = "c", bool IsRented = false)
+		public Car()
 		{
+			int Id = -1;
+			string LicensePlate = "v";
+			string CarBrand = "u";
+			string CarModel = "c";
+			bool IsRented = false;
+
 			this.Id = Id;
 			this.LicensePlate = LicensePlate;
 			this.CarBrand = CarBrand;
@@ -19,7 +25,7 @@ namespace DotNetWebApp.Models
 			this.IsRented = IsRented;
 		}
 
-		public static bool operator==(Car? f, Car? s)
+		public static bool operator ==(Car? f, Car? s)
 		{
 			if (f == null && s == null)
 				return true;

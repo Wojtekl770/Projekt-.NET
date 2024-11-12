@@ -19,24 +19,40 @@
       "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\models\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|c:\\users\\wikto\\source\\repos\\.net projekt\\webapp\\dotnetwebapp\\dotnetwebapp\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|c:\\users\\wikto\\source\\repos\\.net projekt\\webapp\\dotnetwebapp\\dotnetwebapp\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|c:\\users\\wikto\\source\\repos\\.net projekt\\webapp\\dotnetwebapp\\dotnetwebapp\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\areas\\identity\\pages\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\areas\\identity\\pages\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\views\\carapi\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\views\\carapi\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\views\\carapi\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\views\\carapi\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -87,10 +103,6 @@
       "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\areas\\identity\\pages\\account\\logout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\areas\\identity\\pages\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\areas\\identity\\pages\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\dotnetwebapp\\areas\\identity\\pages\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1AAAEB42-C072-423C-9B98-2693823252A9}|DotNetWebApp\\DotNetWebApp.csproj|solutionrelative:dotnetwebapp\\areas\\identity\\pages\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -130,7 +142,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -150,13 +162,39 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAAAsAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-12T14:10:49.21Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "DotNetWebApp\\Controllers\\HomeController.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAQwAgAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T14:03:35.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "CarApiController.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Controllers\\CarApiController.cs",
               "RelativeDocumentMoniker": "DotNetWebApp\\Controllers\\CarApiController.cs",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Controllers\\CarApiController.cs",
               "RelativeToolTip": "DotNetWebApp\\Controllers\\CarApiController.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAQwBUAAAAtAAAA",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAAAGMAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-06T15:44:49.384Z",
               "EditorCaption": ""
@@ -169,7 +207,7 @@
               "RelativeDocumentMoniker": "DotNetWebApp\\Views\\CarApi\\Index.cshtml",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\CarApi\\Index.cshtml",
               "RelativeToolTip": "DotNetWebApp\\Views\\CarApi\\Index.cshtml",
-              "ViewState": "AQIAACoAAAAAAAAAAAAAAEQAAAAiAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-11-06T15:53:34.949Z",
               "EditorCaption": ""
@@ -182,13 +220,105 @@
               "RelativeDocumentMoniker": "DotNetWebApp\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "DotNetWebApp\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAABIAAAAAAAAAAAAqwB0AAABdAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAABdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-04T14:30:32.87Z"
+              "WhenOpened": "2024-11-04T14:30:32.87Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
+              "Title": "Car.cs",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Models\\Car.cs",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Models\\Car.cs",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Models\\Car.cs",
+              "RelativeToolTip": "DotNetWebApp\\Models\\Car.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAAwA4AAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-06T15:36:49.357Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeToolTip": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T14:11:20.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\CarApi\\Edit.cshtml",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Views\\CarApi\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\CarApi\\Edit.cshtml",
+              "RelativeToolTip": "DotNetWebApp\\Views\\CarApi\\Edit.cshtml",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABgAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-08T01:20:55.978Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Program.cs",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Program.cs",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Program.cs",
+              "RelativeToolTip": "DotNetWebApp\\Program.cs",
+              "ViewState": "AQIAACIAAAAAAAAAAAAQwCMAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-04T14:05:48.114Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_ValidationScriptsPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\_ValidationScriptsPartial.cshtml",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\_ValidationScriptsPartial.cshtml",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\_ValidationScriptsPartial.cshtml",
+              "RelativeToolTip": "DotNetWebApp\\Areas\\Identity\\Pages\\_ValidationScriptsPartial.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T14:17:22.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "_ValidationScriptsPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeToolTip": "DotNetWebApp\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-08T13:23:02.123Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_LoginPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeDocumentMoniker": "DotNetWebApp\\Views\\Shared\\_LoginPartial.cshtml",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeToolTip": "DotNetWebApp\\Views\\Shared\\_LoginPartial.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T14:30:39.267Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "DotNetWebApp\\Properties\\launchSettings.json",
@@ -200,68 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Car.cs",
-              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Models\\Car.cs",
-              "RelativeDocumentMoniker": "DotNetWebApp\\Models\\Car.cs",
-              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Models\\Car.cs",
-              "RelativeToolTip": "DotNetWebApp\\Models\\Car.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAmwBIAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T15:36:49.357Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\CarApi\\Edit.cshtml",
-              "RelativeDocumentMoniker": "DotNetWebApp\\Views\\CarApi\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\CarApi\\Edit.cshtml",
-              "RelativeToolTip": "DotNetWebApp\\Views\\CarApi\\Edit.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-08T01:20:55.978Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Program.cs",
-              "RelativeDocumentMoniker": "DotNetWebApp\\Program.cs",
-              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Program.cs",
-              "RelativeToolTip": "DotNetWebApp\\Program.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAQwCMAAAA/AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T14:05:48.114Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "_ValidationScriptsPartial.cshtml",
-              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-              "RelativeDocumentMoniker": "DotNetWebApp\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-              "RelativeToolTip": "DotNetWebApp\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-08T13:23:02.123Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "_LoginPartial.cshtml",
-              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_LoginPartial.cshtml",
-              "RelativeDocumentMoniker": "DotNetWebApp\\Views\\Shared\\_LoginPartial.cshtml",
-              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Shared\\_LoginPartial.cshtml",
-              "RelativeToolTip": "DotNetWebApp\\Views\\Shared\\_LoginPartial.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-04T14:30:39.267Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Views\\_ViewImports.cshtml",
@@ -273,7 +342,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Views\\_ViewStart.cshtml",
@@ -285,7 +354,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "CarContext.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Data\\CarContext.cs",
               "RelativeDocumentMoniker": "DotNetWebApp\\Data\\CarContext.cs",
@@ -297,7 +366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\appsettings.json",
               "RelativeDocumentMoniker": "DotNetWebApp\\appsettings.json",
@@ -309,7 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "DotNetWebApp\\Data\\ApplicationDbContext.cs",
@@ -322,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "serviceDependencies.json",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Properties\\serviceDependencies.json",
               "RelativeDocumentMoniker": "DotNetWebApp\\Properties\\serviceDependencies.json",
@@ -334,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Views\\Home\\Index.cshtml",
@@ -346,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\_ViewStart.cshtml",
@@ -358,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "CustomUser.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Models\\CustomUser.cs",
               "RelativeDocumentMoniker": "DotNetWebApp\\Models\\CustomUser.cs",
@@ -370,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "ScaffoldingReadMe.txt",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\ScaffoldingReadMe.txt",
               "RelativeDocumentMoniker": "DotNetWebApp\\ScaffoldingReadMe.txt",
@@ -382,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "Logout.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Logout.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Logout.cshtml",
@@ -394,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
@@ -406,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "Error.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Error.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Error.cshtml",
@@ -418,7 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "DotNetWebApp\\Models\\ErrorViewModel.cs",
@@ -430,7 +499,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\_ViewImports.cshtml",
@@ -442,19 +511,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "_ValidationScriptsPartial.cshtml",
-              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\_ValidationScriptsPartial.cshtml",
-              "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\_ValidationScriptsPartial.cshtml",
-              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\_ValidationScriptsPartial.cshtml",
-              "RelativeToolTip": "DotNetWebApp\\Areas\\Identity\\Pages\\_ValidationScriptsPartial.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-04T14:17:22.961Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "Logout.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Logout.cshtml.cs",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Logout.cshtml.cs",
@@ -466,7 +523,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "Register.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
@@ -479,7 +536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "ExternalLogin.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\ExternalLogin.cshtml.cs",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\ExternalLogin.cshtml.cs",
@@ -491,7 +548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "ExternalLogin.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Areas\\Identity\\Pages\\Account\\ExternalLogin.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Areas\\Identity\\Pages\\Account\\ExternalLogin.cshtml",
@@ -503,7 +560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 32,
               "Title": "Privacy.cshtml",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\WebApp\\DotNetWebApp\\DotNetWebApp\\Views\\Home\\Privacy.cshtml",
               "RelativeDocumentMoniker": "DotNetWebApp\\Views\\Home\\Privacy.cshtml",

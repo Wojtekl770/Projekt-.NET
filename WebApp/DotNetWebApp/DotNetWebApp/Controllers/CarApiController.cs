@@ -1,10 +1,13 @@
-﻿using DotNetWebApp.Data;
+﻿using Azure;
+using DotNetWebApp.Data;
 using DotNetWebApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -85,8 +88,44 @@ namespace DotNetWebApp.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("ID,LicensePlate,CarBrand,CarModel,IsRented")] Car car)
+		public async Task<IActionResult> Edit(int id, [Bind("Id,LicensePlate,CarBrand,CarModel,IsRented")] Car car)
 		{
+			Car? _car = await carContext.Cars.Where(c => (car.LicensePlate == c.LicensePlate)
+														  && (car.CarModel == c.CarModel)
+														  && (car.CarBrand == c.CarBrand))
+														  .FirstOrDefaultAsync();
+			//if (_car == null)
+				//return View(carContext);
+
+			var jsonContent = JsonConvert.SerializeObject(car);
+			var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+			HttpResponseMessage response = await _client.PutAsync(baseAddress + "/Put", httpContent);
+
+			response.EnsureSuccessStatusCode();
+
+			string data = await response.Content.ReadAsStringAsync();
+			Car? car2 = JsonConvert.DeserializeObject<Car>(data);
+
+			//if (_car != null && car2 != null)
+			//{
+			_car.IsRented = car2.IsRented;
+			await carContext.SaveChangesAsync();
+			//}
+
+			return View(_car);
+
+		}
+
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit2(int id, [Bind("Id,LicensePlate,CarBrand,CarModel,IsRented")] Car car)
+		{
+			if (User.Identity == null || !User.Identity.IsAuthenticated)
+				return View(carContext);
+
+
 			Car? _car = await carContext.Cars.Where(c => (car.LicensePlate == c.LicensePlate)
 														  && (car.CarModel == c.CarModel)
 														  && (car.CarBrand == c.CarBrand))
@@ -94,10 +133,20 @@ namespace DotNetWebApp.Controllers
 			if (_car == null)
 				return View(carContext);
 
-			var jsonContent = JsonConvert.SerializeObject(car);
-			var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+			
+			int id_client = -1; //User.FindFirst(ClaimTypes.Email).Value;
 
-			HttpResponseMessage response = await _client.PutAsync(baseAddress + "/Put", httpContent);
+			var formData = new Dictionary<string, string>
+			{
+				{ "Client_ID", id_client.ToString() },
+				{ "Car_ID", id.ToString() }
+			};
+
+			var httpContent = new FormUrlEncodedContent(formData);
+
+			// Send the PUT request
+			var response = await _client.PutAsync(baseAddress + "/Rent", httpContent);
+
 
 			response.EnsureSuccessStatusCode();
 

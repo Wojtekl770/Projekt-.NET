@@ -45,9 +45,9 @@ namespace DotNetApiCars.Controllers
 			//Car? _car = await _carContext.Cars.Where(c => c.Id == car.Id).FirstOrDefaultAsync();
 
 			Car? _car = await _carContext.Cars.Where(c => (car.LicensePlate == c.LicensePlate)
-			                                              && (car.CarModel == c.CarModel)
-			                                              && (car.CarBrand == c.CarBrand))
-                                                          .FirstOrDefaultAsync();
+														  && (car.CarModel == c.CarModel)
+														  && (car.CarBrand == c.CarBrand))
+														  .FirstOrDefaultAsync();
 			if (_car == null)
 				return null;
 
@@ -61,7 +61,31 @@ namespace DotNetApiCars.Controllers
 		}
 
 		[HttpPut]
-		public async Task<Car?> Edit(Car car)
+		public async Task<Car?> Rent(int Client_Id, int Car_Id)
+		{
+			string? platform = HttpContext.Request.Headers["Origin"].ToString();
+
+			Car? _car = await _carContext.Cars.Where(c => c.Id == Car_Id)
+														  .FirstOrDefaultAsync();
+			if (_car == null)
+				return null;
+			if (platform == null)
+				return _car;
+
+
+			if (!_car.IsRented)
+			{
+				_car.IsRented = true;
+				_carContext.Rents.Add(new() { Client_Id = Client_Id, Platform = platform, Car = _car, RentDate = DateTime.Now });
+				await _carContext.SaveChangesAsync();
+			}
+
+
+			return _car;
+		}
+
+		[HttpPut]
+		public async Task<Car?> Unrent(Car car)
 		{
 			//Car? _car = await _carContext.Cars.Where(c => c.Id == car.Id).FirstOrDefaultAsync();
 
