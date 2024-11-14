@@ -17,10 +17,13 @@ namespace DotNetWebApp
 			options.UseSqlServer(connectionString));
 			builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-
-
+			/*
 			builder.Services.AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<ApplicationDbContext>();
+			*/
+			builder.Services.AddIdentity<CustomUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+							.AddEntityFrameworkStores<ApplicationDbContext>();
+			builder.Services.AddScoped<IUserClaimsPrincipalFactory<CustomUser>, CustomUserClaimsPrincipalFactory>();
 
 			builder.Services.AddDbContext<CarContext>(options=> options.UseInMemoryDatabase("Cars"));
 
@@ -45,7 +48,9 @@ namespace DotNetWebApp
 
 			builder.Services.AddControllersWithViews();
 
-			//builder.Services.AddRazorPages();
+			builder.Services.AddRazorPages();
+
+
 
 			var app = builder.Build();
 

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Net.Http.Json;
 using System.Runtime.ConstrainedExecution;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DotNetWebApp.Controllers
 {
@@ -110,6 +111,7 @@ namespace DotNetWebApp.Controllers
 				if (User.Identity == null || !User.Identity.IsAuthenticated)
 					return Redirect("/Identity/Account/Login");
 
+
 				if (carOverall == null)
 				{
 					return NotFound();
@@ -124,16 +126,41 @@ namespace DotNetWebApp.Controllers
 				DateTime Start = DateTime.Now.AddDays(add);
 				DateTime Return = DateTime.Now.AddDays(add + rand.Next() % 10);
 
+				int yearOfBirth = DateTime.Now.Year;
+				int yearNow = DateTime.Now.Year;
+				int yearOfGettingDriversLicence = DateTime.Now.Year;
+
+				if (int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "YearOfBirth")?.Value, out var yob))
+					yearOfBirth = yob;
+				if (int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "YearOfGettingDriversLicence")?.Value, out var yogdl))
+					yearOfGettingDriversLicence = yogdl;
+
 
 				ConcurrentBag<OfferCarModel> offerscars = [];
+				ConcurrentBag<OfferCarModel> existingOffers = [];
+				foreach(var m in (await carContext.Offers.Include(o => o.Car).ToListAsync())
+					.Where(o => o.Car.CarModel == carOverall.CarModel && o.Car.CarBrand == carOverall.CarBrand))
+				{
+					existingOffers.Add(m);
+				}
+
 				await Parallel.ForEachAsync(cars, async (car, cancell) =>
 				{
 					try
 					{
+						
+						OfferCarModel? offerFromDatabase;
+						if((offerFromDatabase = existingOffers.Where(o=> o.CarId == car.Id).FirstOrDefault()) != null)
+						{
+							offerscars.Add(offerFromDatabase);
+							throw new Exception();
+						}
+						
+
 						AskPrice ask = new()
 						{
-							Age = 18,
-							DriversLicenceDuration = 2,
+							Age = yearNow - yearOfBirth,
+							DriversLicenceDuration = yearNow - yearOfGettingDriversLicence,
 							Start = Start,
 							Return = Return,
 							ExtraInfo = "No Extra Info",
@@ -141,8 +168,7 @@ namespace DotNetWebApp.Controllers
 						};
 
 
-						var response = await _client.PostAsJsonAsync(baseAddress + "/CreateOffer",
-							/*new StringContent(JsonConvert.SerializeObject(ask), Encoding.UTF8, "application/json")*/ ask);
+						var response = await _client.PostAsJsonAsync(baseAddress + "/CreateOffer", ask);
 						response.EnsureSuccessStatusCode();
 
 
@@ -164,16 +190,20 @@ namespace DotNetWebApp.Controllers
 
 
 							offerscars.Add(ocm);
+							carContext.Offers.Add(ocm);
+							await carContext.SaveChangesAsync();
 						}
 					}
 					catch (Exception) { }
 				});
 
+				/*
 				foreach(var o in offerscars)
 				{
 					carContext.Offers.Add(o);
 					await carContext.SaveChangesAsync();
 				}
+				*/
 
 				return View(offerscars.ToList());
 			}
