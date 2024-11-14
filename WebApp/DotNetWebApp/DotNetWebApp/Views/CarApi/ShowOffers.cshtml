@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DotNetWebApp.Models.OfferCarModel>
+@{
+	ViewData["Title"] = "ShowOffers";
+}
+
+<h1>Show Offers</h1>
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Car.CarBrand)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Car.CarModel)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Car.LicensePlate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Car.Localization)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.PriceDay)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.PriceInsurance)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ExpirationDate)
+			</th>
+			<th>
+
+			</th>
+		</tr>
+	</thead>
+	<tbody id="car_table_body">
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Car.CarBrand)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Car.CarModel)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Car.LicensePlate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Car.Localization)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PriceDay)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PriceInsurance)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ExpirationDate)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.Id">Rent</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

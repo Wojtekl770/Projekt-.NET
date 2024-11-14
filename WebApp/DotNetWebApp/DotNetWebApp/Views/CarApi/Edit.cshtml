@@ -1,13 +1,13 @@
-﻿@model DotNetWebApp.Models.Car
+﻿@model DotNetWebApp.Models.OfferCarModel
 @{
 	ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Renting</h1>
 
 <h4>Car</h4>
 <body>
-	@if (Model.IsRented)
+	@if (Model.Car.IsRented)
 	{
 		<div>
 			Car Is Rented
@@ -23,10 +23,7 @@
 	<form asp-action="Edit">
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<input type="hidden" asp-for="Id" />
-		<input type="hidden" asp-for="LicensePlate" />
-		<input type="hidden" asp-for="CarBrand" />
-		<input type="hidden" asp-for="CarModel" />
-		<input type="hidden" asp-for="IsRented" />
+		<input type="hidden" asp-for="CarId" />
 
 		<div class="form-group">
 			<input type="submit" value="Rent" class="btn btn-primary" />

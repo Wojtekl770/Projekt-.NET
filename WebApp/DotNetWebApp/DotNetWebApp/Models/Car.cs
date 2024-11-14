@@ -9,6 +9,7 @@ namespace DotNetWebApp.Models
 		public string CarBrand { get; set; }
 		public string CarModel { get; set; }
 		public bool IsRented { get; set; }
+		public string Localization { get; set; }
 
 		public Car()
 		{
@@ -17,12 +18,14 @@ namespace DotNetWebApp.Models
 			string CarBrand = "u";
 			string CarModel = "c";
 			bool IsRented = false;
+			string Localization = "Warszawa";
 
 			this.Id = Id;
 			this.LicensePlate = LicensePlate;
 			this.CarBrand = CarBrand;
 			this.CarModel = CarModel;
 			this.IsRented = IsRented;
+			this.Localization = Localization;
 		}
 
 		public static bool operator ==(Car? f, Car? s)

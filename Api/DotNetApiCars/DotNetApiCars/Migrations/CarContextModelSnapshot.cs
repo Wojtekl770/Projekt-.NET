@@ -45,12 +45,16 @@ namespace DotNetApiCars.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Localization")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("DotNetApiCars.RentHistory", b =>
+            modelBuilder.Entity("DotNetApiCars.OfferDB", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +65,37 @@ namespace DotNetApiCars.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PriceDay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriceInsurance")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("WhenOfferWasMade")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("OffersDB");
+                });
+
+            modelBuilder.Entity("DotNetApiCars.RentHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("Client_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OfferId")
                         .HasColumnType("int");
 
                     b.Property<string>("Platform")
@@ -73,12 +107,12 @@ namespace DotNetApiCars.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarId");
+                    b.HasIndex("OfferId");
 
                     b.ToTable("Rents");
                 });
 
-            modelBuilder.Entity("DotNetApiCars.RentHistory", b =>
+            modelBuilder.Entity("DotNetApiCars.OfferDB", b =>
                 {
                     b.HasOne("DotNetApiCars.Car", "Car")
                         .WithMany()
@@ -87,6 +121,17 @@ namespace DotNetApiCars.Migrations
                         .IsRequired();
 
                     b.Navigation("Car");
+                });
+
+            modelBuilder.Entity("DotNetApiCars.RentHistory", b =>
+                {
+                    b.HasOne("DotNetApiCars.OfferDB", "Offer")
+                        .WithMany()
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Offer");
                 });
 #pragma warning restore 612, 618
         }

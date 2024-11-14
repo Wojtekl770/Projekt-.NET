@@ -7,6 +7,7 @@
         public string CarBrand { get; set; }
         public string CarModel { get; set; }
         public bool IsRented { get; set; }
+        public string Localization {  get; set; }
 
         public Car()
         {

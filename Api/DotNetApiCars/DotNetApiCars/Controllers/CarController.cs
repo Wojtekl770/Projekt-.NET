@@ -20,6 +20,12 @@ namespace DotNetApiCars.Controllers
 		{
 			return await _carContext.Cars.ToListAsync();
 		}
+		[HttpGet]
+		public async Task<IEnumerable<RentHistory>> GetRents()
+		{
+			return (await _carContext.Rents.Include(o => o.Offer).ToListAsync());
+		}
+
 
 		[HttpPost]
 		public void Post(Car car)
@@ -30,7 +36,8 @@ namespace DotNetApiCars.Controllers
 				CarBrand = car.CarBrand,
 				CarModel = car.CarModel,
 				IsRented = car.IsRented,
-				LicensePlate = car.LicensePlate
+				LicensePlate = car.LicensePlate,
+				Localization = car.Localization,
 			};
 
 			_carContext.Cars.Add(c);
@@ -39,56 +46,92 @@ namespace DotNetApiCars.Controllers
 		}
 
 
+
 		[HttpPut]
-		public async Task<Car?> Put(Car car)
+		public async Task<bool> Rent(int Client_Id, int Offer_Id)
 		{
-			//Car? _car = await _carContext.Cars.Where(c => c.Id == car.Id).FirstOrDefaultAsync();
+			string? platform = HttpContext.Request.Headers.Origin.ToString();
 
-			Car? _car = await _carContext.Cars.Where(c => (car.LicensePlate == c.LicensePlate)
-														  && (car.CarModel == c.CarModel)
-														  && (car.CarBrand == c.CarBrand))
+			OfferDB? _offer = await _carContext.OffersDB.Include(o => o.Car).Where(c => c.Id == Offer_Id)
 														  .FirstOrDefaultAsync();
-			if (_car == null)
-				return null;
+			if (_offer == null)
+				return false;
+			if (platform == null)
+				return false;
 
-			if (!_car.IsRented)
+			bool rented = false;
+			if (!_offer.Car.IsRented)
 			{
-				_car.IsRented = true;
+				rented = true;
+				_offer.Car.IsRented = true;
+				_carContext.Rents.Add(new()
+				{
+					Client_Id = Client_Id,
+					Platform = platform,
+					OfferId = _offer.Id,
+					Offer = _offer,
+					RentDate = DateTime.Now
+				});
 				await _carContext.SaveChangesAsync();
 			}
 
-			return _car;
+
+			return rented;
 		}
 
-		[HttpPut]
-		public async Task<Car?> Rent(int Client_Id, int Car_Id)
+		[HttpPost]
+		public async Task<Offer?> CreateOffer(AskPrice ask)
 		{
-			string? platform = HttpContext.Request.Headers["Origin"].ToString();
-
-			Car? _car = await _carContext.Cars.Where(c => c.Id == Car_Id)
-														  .FirstOrDefaultAsync();
-			if (_car == null)
-				return null;
-			if (platform == null)
-				return _car;
-
-
-			if (!_car.IsRented)
+			try
 			{
-				_car.IsRented = true;
-				_carContext.Rents.Add(new() { Client_Id = Client_Id, Platform = platform, Car = _car, RentDate = DateTime.Now });
+				if (ask.Age < 18)
+					return new() { IsSuccess = false, ExpirationDate = DateTime.Now, Id = -1, PriceDay = 0, PriceInsurance = 0 };
+
+				if (!(await _carContext.Cars.Where(c => c.Id == ask.Car_Id).AnyAsync()))
+					return new() { IsSuccess = false, ExpirationDate = DateTime.Now, Id = -1, PriceDay = 0, PriceInsurance = 0 };
+
+				Car car = await _carContext.Cars.Where(c => c.Id == ask.Car_Id).FirstAsync();
+
+				Random rand = new();
+
+				DateTime date = DateTime.Now;
+				Offer offer = new()
+				{
+					IsSuccess = true,
+					ExpirationDate = date.AddHours(1 + rand.Next() % 10),
+					//Id = -1,
+					PriceDay = 100 + rand.Next() % 200,
+					PriceInsurance = 100 + rand.Next() % 200
+				};
+
+				_carContext.OffersDB.Add(new()
+				{
+					PriceDay = offer.PriceDay,
+					PriceInsurance = offer.PriceInsurance,
+					ExpirationDate = offer.ExpirationDate,
+					WhenOfferWasMade = date,
+					Car = car,
+					CarId = car.Id,
+				});
+
 				await _carContext.SaveChangesAsync();
+
+				offer.Id = _carContext.OffersDB.Where(o => (o.WhenOfferWasMade == date
+											 && o.CarId == car.Id
+											 && o.ExpirationDate == offer.ExpirationDate
+											 && o.PriceInsurance == offer.PriceInsurance)).First().Id;
+
+				return offer;
 			}
-
-
-			return _car;
+			catch(Exception)
+			{
+				return new() { IsSuccess = false, ExpirationDate = DateTime.Now, Id = -1, PriceDay = 0, PriceInsurance = 0 };
+			}
 		}
 
 		[HttpPut]
 		public async Task<Car?> Unrent(Car car)
 		{
-			//Car? _car = await _carContext.Cars.Where(c => c.Id == car.Id).FirstOrDefaultAsync();
-
 			Car? _car = await _carContext.Cars.Where(c => (car.LicensePlate == c.LicensePlate)
 														  && (car.CarModel == c.CarModel)
 														  && (car.CarBrand == c.CarBrand))

@@ -1,7 +1,8 @@
-﻿@model IEnumerable<DotNetWebApp.Models.Car>
+﻿@model IEnumerable<DotNetWebApp.Models.CarOverall>
 @{
 	ViewData["Title"] = "Index";
 }
+
 
 <h1>Index</h1>
 
@@ -10,16 +11,10 @@
 	<thead>
 		<tr>
 			<th>
-				@Html.DisplayNameFor(model => model.LicensePlate)
-			</th>
-			<th>
 				@Html.DisplayNameFor(model => model.CarBrand)
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.CarModel)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.IsRented)
 			</th>
 			<th>
 
@@ -31,19 +26,20 @@
 		{
 			<tr>
 				<td>
-					@Html.DisplayFor(modelItem => item.LicensePlate)
-				</td>
-				<td>
 					@Html.DisplayFor(modelItem => item.CarBrand)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.CarModel)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.IsRented)
-				</td>
-				<td>
-					<a asp-action="Edit" asp-route-id="@item.Id">Rent</a> 
+					@{
+						var parms = new Dictionary<string, string>
+						{
+							{ "CarBrand", item.CarBrand },
+							{ "CarModel", item.CarModel }
+						};
+					}
+					<a asp-action="ShowOffers" asp-all-route-data="parms">Show Offers</a>
 				</td>
 			</tr>
 		}
@@ -51,27 +47,3 @@
 </table>
 
 
-
-
-<h1>Połączenie z API</h1>
-<button id="fetchData">Pobierz dane z API Hello World</button>
-<p id="response">xxx</p>
-
-<script>
-	document.getElementById('fetchData').addEventListener('click', () => {
-		document.getElementById('response').textContent = "nnn";
-		fetch('https://localhost:7127/hello')
-			.then(response => response.json())
-			.then(data => {
-				document.getElementById('response').textContent = data.message;
-			})
-			.catch(error => {
-				console.error('Błąd:', error);
-				document.getElementById('response').textContent = error.message;
-				alert(error);
-
-			});
-
-	});
-
-</script>

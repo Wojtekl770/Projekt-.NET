@@ -3,14 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetWebApp.Data
 {
-	
-		public class CarContext : DbContext
-		{
-			public CarContext() { }
-			public CarContext(DbContextOptions<CarContext> op) : base(op) {  }
-			public DbSet<Car> Cars { get; set; }
 
+	public class CarContext : DbContext
+	{
+		public CarContext() { }
+		public CarContext(DbContextOptions<CarContext> op) : base(op) { }
+		public DbSet<Car> Cars { get; set; }
+		//public DbSet<CarPlusDomain> CarsPlusDomain { get; set; }
+		public DbSet<OfferCarModel> Offers {get; set;}
+		
+	}
 
-		}
-	
 }
