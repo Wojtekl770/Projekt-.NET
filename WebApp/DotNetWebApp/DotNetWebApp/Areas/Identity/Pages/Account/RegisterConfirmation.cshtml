@@ -8,32 +8,48 @@
 
 @if (Model.IsEmailConfirmed)
 {
-        <script>
-            window.location.reload();  // Odświeża stronę
-        </script>
-
-        <p>Your email has been confirmed successfully! You can now log in.</p>
+    <p>Your email has been confirmed successfully! You can now log in.</p>
 }
 else
 {
-        <p>
-            A confirmation email has been sent to your address: <strong>@Model.Email</strong>. 
-            Please check your email to confirm your account.
-        </p>
-        <p>
-            If you did not receive the email, please check your spam folder or 
-            <a href="#" id="resendLink">click here to resend the confirmation email</a>.
-        </p>
+    <p>
+        A confirmation email has been sent to your address: <strong>@Model.Email</strong>. 
+        Please check your email to confirm your account.
+    </p>
+    <p>
+        If you did not receive the email, please check your spam folder or 
+        <a href="#" id="resendLink">click here to resend the confirmation email</a>.
+    </p>
 
-        <form id="resendForm" method="post" style="display:none;">
-            <input type="hidden" name="email" value="@Model.Email" />
-            <button type="submit" class="btn btn-primary">Resend Confirmation Email</button>
-        </form>
+    <form id="resendForm" method="post" style="display:none;">
+        <input type="hidden" name="email" value="@Model.Email" />
+        <button type="submit" class="btn btn-primary">Resend Confirmation Email</button>
+    </form>
 
-        <script>
-            document.getElementById('resendLink').addEventListener('click', function(event) {
-                event.preventDefault(); // Zapobiega przeładowaniu strony
-                document.getElementById('resendForm').submit(); // Wysyła formularz
-            });
-        </script>
+    <div id="message" style="display:none; color: green;">
+        <p>Your email has been sent again! Please check your inbox.</p>
+    </div>
+
+    <script>
+        document.getElementById('resendLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevents the default link behavior
+            document.getElementById('resendForm').submit(); // Submit the form to resend the email
+        });
+
+        // Optional: If you want to automatically refresh the page with a simple AJAX call
+        // (Instead of reloading the entire page)
+        function updateConfirmationStatus() {
+            var isConfirmed = '@Model.IsEmailConfirmed'.toLowerCase() === 'true'; // Check if email is confirmed
+
+            if (isConfirmed) {
+                document.getElementById('message').style.display = 'block'; // Show the success message
+                document.getElementById('resendLink').style.display = 'none'; // Hide the resend link
+                document.getElementById('resendForm').style.display = 'none'; // Hide the resend form
+            }
+        }
+
+        // Call the function to update the confirmation status
+        updateConfirmationStatus();
+    </script>
 }
+
