@@ -95,6 +95,14 @@ namespace DotNetApiCars.Migrations
                     b.Property<int>("Client_Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OfferId")
                         .HasColumnType("int");
 
@@ -104,6 +112,10 @@ namespace DotNetApiCars.Migrations
 
                     b.Property<DateTime>("RentDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

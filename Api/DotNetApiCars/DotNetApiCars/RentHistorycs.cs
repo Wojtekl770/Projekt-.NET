@@ -6,6 +6,9 @@ namespace DotNetApiCars
 	{
 		public int Id { get; set; }
 		public int Client_Id { get; set; }
+		public string Name { get; set; }
+		public string Surname { get; set; }
+		public string Email { get; set; }
 		public string Platform { get; set; }
 		public DateTime RentDate { get; set; }
 		public int OfferId { get; set; }

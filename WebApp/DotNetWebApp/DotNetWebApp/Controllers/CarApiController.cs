@@ -14,6 +14,7 @@ using System.Collections.Concurrent;
 using System.Net.Http.Json;
 using System.Runtime.ConstrainedExecution;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotNetWebApp.Controllers
 {
@@ -45,7 +46,7 @@ namespace DotNetWebApp.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			List<Car> cars = new List<Car>();
+			List<Car>? cars;
 			HttpResponseMessage? response = null;
 			try
 			{
@@ -53,29 +54,40 @@ namespace DotNetWebApp.Controllers
 			}
 			catch (HttpRequestException e)
 			{
-				//return View(carContext.Cars.ToList());
-
-				List<CarOverall> co2 = [];
-				foreach (var group in (await carContext.Cars.ToListAsync()).GroupBy(c => (c.CarBrand, c.CarModel)))
-					co2.Add(new() { CarBrand = group.Key.CarBrand, CarModel = group.Key.CarModel });
-
-				return View(co2);
+				response = null;
 			}
 
 			if (response != null && response.IsSuccessStatusCode)
 			{
 				string data = await response.Content.ReadAsStringAsync();
 				cars = JsonConvert.DeserializeObject<List<Car>>(data);
+				List<Car> templist;
 
-				if (carContext.Cars.Count() == 0)
-					foreach (Car car in cars)
-					{
-						carContext.Add(car);
-						await carContext.SaveChangesAsync();
-					}
+				if (cars != null)
+				{
+					if (!carContext.Cars.Any())
+						foreach (Car car in cars)
+						{
+							carContext.Add(car);
+							await carContext.SaveChangesAsync();
+						}
+					else
+						foreach (Car car in cars)
+						{
+							if ((templist = (await carContext.Cars.ToListAsync()).Where(c => c.Id == car.Id).ToList()).Count != 0)
+							{
+								foreach (var c in templist)
+									c.IsRented = car.IsRented;
+							}
+							else
+								carContext.Add(car);
+
+							await carContext.SaveChangesAsync();
+						}
+				}
 
 			}
-			//return View(carContext.Cars.ToList());
+
 			List<CarOverall> co = [];
 			foreach (var group in (await carContext.Cars.ToListAsync()).GroupBy(c => (c.CarBrand, c.CarModel)))
 				co.Add(new() { CarBrand = group.Key.CarBrand, CarModel = group.Key.CarModel });
@@ -85,21 +97,10 @@ namespace DotNetWebApp.Controllers
 
 		public async Task<IActionResult> Edit(int id)
 		{
-			/*
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var car = (await carContext.Cars.ToListAsync()).Find(c => c.Id == id);
-
-			return View(car);
-			*/
-
-			if (id == null)
-				return NotFound();
-
 			var offer = (await carContext.Offers.Include(o => o.Car).ToListAsync()).Find(o => o.Id == id);
+
+			if (offer == null)
+				return NotFound();
 
 			return View(offer);
 		}
@@ -111,24 +112,22 @@ namespace DotNetWebApp.Controllers
 				if (User.Identity == null || !User.Identity.IsAuthenticated)
 					return Redirect("/Identity/Account/Login");
 
-
 				if (carOverall == null)
-				{
 					return NotFound();
-				}
 
-				var cars = (await carContext.Cars.ToListAsync()).FindAll(car =>
+				List<Car> cars = (await carContext.Cars.ToListAsync()).FindAll(car =>
 									car.CarModel == carOverall.CarModel && car.CarBrand == carOverall.CarBrand);
 
 
 				Random rand = new();
 				int add = rand.Next() % 10;
-				DateTime Start = DateTime.Now.AddDays(add);
-				DateTime Return = DateTime.Now.AddDays(add + rand.Next() % 10);
+				DateTime now = DateTime.Now;
+				DateTime Start = now.AddDays(add);
+				DateTime Return = now.AddDays(add + rand.Next() % 10);
 
-				int yearOfBirth = DateTime.Now.Year;
-				int yearNow = DateTime.Now.Year;
-				int yearOfGettingDriversLicence = DateTime.Now.Year;
+				int yearOfBirth = now.Year;
+				int yearNow = now.Year;
+				int yearOfGettingDriversLicence = now.Year;
 
 				if (int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "YearOfBirth")?.Value, out var yob))
 					yearOfBirth = yob;
@@ -136,80 +135,80 @@ namespace DotNetWebApp.Controllers
 					yearOfGettingDriversLicence = yogdl;
 
 
+
 				ConcurrentBag<OfferCarModel> offerscars = [];
 				ConcurrentBag<OfferCarModel> existingOffers = [];
-				foreach(var m in (await carContext.Offers.Include(o => o.Car).ToListAsync())
+				foreach (var m in (await carContext.Offers.Include(o => o.Car).ToListAsync())
 					.Where(o => o.Car.CarModel == carOverall.CarModel && o.Car.CarBrand == carOverall.CarBrand))
 				{
-					existingOffers.Add(m);
+					//usuwamy niekatywne oferty
+					if (m.ExpirationDate.CompareTo(now) < 0)
+					{
+						carContext.Offers.Remove(m);
+						await carContext.SaveChangesAsync();
+					}
+					else
+						existingOffers.Add(m);
 				}
 
 				await Parallel.ForEachAsync(cars, async (car, cancell) =>
 				{
 					try
 					{
-						
+
 						OfferCarModel? offerFromDatabase;
-						if((offerFromDatabase = existingOffers.Where(o=> o.CarId == car.Id).FirstOrDefault()) != null)
+						if ((offerFromDatabase = existingOffers.Where(o => o.CarId == car.Id).FirstOrDefault()) != null)
 						{
+							//pokazujemy aktywna oferte z naszej lokalnej bazy danych
 							offerscars.Add(offerFromDatabase);
-							throw new Exception();
 						}
-						
-
-						AskPrice ask = new()
+						else
 						{
-							Age = yearNow - yearOfBirth,
-							DriversLicenceDuration = yearNow - yearOfGettingDriversLicence,
-							Start = Start,
-							Return = Return,
-							ExtraInfo = "No Extra Info",
-							Car_Id = car.Id
-						};
-
-
-						var response = await _client.PostAsJsonAsync(baseAddress + "/CreateOffer", ask);
-						response.EnsureSuccessStatusCode();
-
-
-						string data = await response.Content.ReadAsStringAsync();
-						Offer? offer = JsonConvert.DeserializeObject<Offer>(data);
-
-						if (offer.IsSuccess)
-						{
-
-							OfferCarModel ocm = new()
+							//nowe zapytanie o oferte
+							AskPrice ask = new()
 							{
-								Id = offer.Id,
-								PriceDay = offer.PriceDay,
-								PriceInsurance = offer.PriceInsurance,
-								ExpirationDate = offer.ExpirationDate,
-								Car = car,
-								CarId = car.Id
+								Age = yearNow - yearOfBirth,
+								DriversLicenceDuration = yearNow - yearOfGettingDriversLicence,
+								Start = Start,
+								Return = Return,
+								ExtraInfo = "No Extra Info",
+								Car_Id = car.Id
 							};
 
 
-							offerscars.Add(ocm);
-							carContext.Offers.Add(ocm);
-							await carContext.SaveChangesAsync();
+							var response = await _client.PostAsJsonAsync(baseAddress + "/CreateOffer", ask);
+							response.EnsureSuccessStatusCode();
+
+							string data = await response.Content.ReadAsStringAsync();
+							Offer? offer = JsonConvert.DeserializeObject<Offer>(data);
+
+							if (offer != null && offer.IsSuccess)
+							{
+								OfferCarModel ocm = new()
+								{
+									Id = offer.Id,
+									PriceDay = offer.PriceDay,
+									PriceInsurance = offer.PriceInsurance,
+									ExpirationDate = offer.ExpirationDate,
+									Car = car,
+									CarId = car.Id
+								};
+
+								offerscars.Add(ocm);
+								carContext.Offers.Add(ocm);
+								await carContext.SaveChangesAsync();
+							}
 						}
 					}
 					catch (Exception) { }
 				});
 
-				/*
-				foreach(var o in offerscars)
-				{
-					carContext.Offers.Add(o);
-					await carContext.SaveChangesAsync();
-				}
-				*/
 
 				return View(offerscars.ToList());
 			}
 			catch (Exception)
 			{
-				return await Index();
+				return Redirect("/CarApi/Index");
 			}
 		}
 
@@ -219,73 +218,60 @@ namespace DotNetWebApp.Controllers
 		{
 			try
 			{
+				if ((await carContext.Cars.ToListAsync()).Where(c => c.Id == offerCarID.CarId && c.IsRented).Count() > 0)
+					return View((await carContext.Offers.ToListAsync()).First(o => offerCarID.Id == o.Id));
+
+
 				//(int Client_Id, int Offer_Id)
-				int id_client = -1; //User.FindFirst(ClaimTypes.Email).Value;
+				string platform = Request.Host.ToString();
+				int id_client = -1;
 
-				var requestMessage = new HttpRequestMessage(HttpMethod.Put, baseAddress + "/Rent" + $"?Client_Id={id_client}&Offer_Id={id}");
-				requestMessage.Headers.Add("accept", "text/plain");
-				var response = await _client.SendAsync(requestMessage);
-				response.EnsureSuccessStatusCode();
+				string? name2 = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+				string? surname2 = User.Claims.FirstOrDefault(c => c.Type == "Surname")?.Value;
+				string? email2 = User.FindFirstValue(ClaimTypes.Email);
 
+				string name = name2 == null ? "" : name2;
+				string surname = surname2 == null ? "" : surname2;
+				string email = email2 == null ? "" : email2;
 
-				string data = await response.Content.ReadAsStringAsync();
-				bool rented = JsonConvert.DeserializeObject<bool>(data);
-
-				if(rented)
+				OfferChoice oc = new()
 				{
-					Car? _car = (await carContext.Cars.ToListAsync()).First(c => offerCarID.CarId == c.Id);
+					Client_Id = id_client,
+					Offer_Id = id,
+					Email = email,
+					Name = name,
+					Surname = surname,
+					Platform = platform,
+				};
 
-					_car.IsRented = true;
+
+				var response = await _client.PutAsJsonAsync(baseAddress + "/Rent", oc);
+				response.EnsureSuccessStatusCode();
+				string data = await response.Content.ReadAsStringAsync();
+				int Rent_Id = int.Parse(data);//JsonConvert.DeserializeObject<int>(data);
+
+				//if (Rent_Id != null)
+				if (Rent_Id > -2)
+				{
+					//albo juz wynajety przez kogos innego == -1
+					//albo udalo nam sie > 0
+
+					//wsm to nic tu nie robimy, ale w api jakis email, cos?
+					// no i trzeba zapisac ten rent_Id
+					Car car = (await carContext.Cars.ToListAsync()).First(c => offerCarID.CarId == c.Id);
+					car.IsRented = true;
 					await carContext.SaveChangesAsync();
 				}
 
+				return View((await carContext.Offers.ToListAsync()).First(o => offerCarID.Id == o.Id));
 
-				OfferCarModel ofm = (await carContext.Offers.ToListAsync()).First(o => offerCarID.Id == o.Id);
 
-				return View(ofm);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
-				return View(id);
+				return Redirect("/CarApi/Index");
 			}
 
-
-			/*
-			try
-			{
-				if (User.Identity == null || !User.Identity.IsAuthenticated)
-					return Redirect("/Identity/Account/Login");
-
-
-				Car? _car = (await carContext.Cars.ToListAsync()).First(c => (car.LicensePlate == c.LicensePlate)
-															  && (car.CarModel == c.CarModel)
-															  && (car.CarBrand == c.CarBrand));
-				
-				int id_client = -1; //User.FindFirst(ClaimTypes.Email).Value;
-
-
-				var requestMessage = new HttpRequestMessage(HttpMethod.Put, baseAddress + "/Rent" + $"?Client_Id={id_client}&Car_Id={id}");
-				requestMessage.Headers.Add("accept", "text/plain");
-				var response = await _client.SendAsync(requestMessage);
-
-				response.EnsureSuccessStatusCode();
-
-				string data = await response.Content.ReadAsStringAsync();
-				Car? car2 = JsonConvert.DeserializeObject<Car>(data);
-
-				//if (_car != null && car2 != null)
-				//{
-				_car.IsRented = car2.IsRented;
-				await carContext.SaveChangesAsync();
-				//}
-
-				return View(_car);
-			}
-			catch (Exception)
-			{
-				return View(id);
-			}
-			*/
 
 		}
 

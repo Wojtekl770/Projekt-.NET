@@ -46,37 +46,39 @@ namespace DotNetApiCars.Controllers
 		}
 
 
-
 		[HttpPut]
-		public async Task<bool> Rent(int Client_Id, int Offer_Id)
+		public async Task<int> Rent(OfferChoice oc)
 		{
-			string? platform = HttpContext.Request.Headers.Origin.ToString();
-
-			OfferDB? _offer = await _carContext.OffersDB.Include(o => o.Car).Where(c => c.Id == Offer_Id)
+			OfferDB? _offer = await _carContext.OffersDB.Include(o => o.Car).Where(c => c.Id == oc.Offer_Id)
 														  .FirstOrDefaultAsync();
 			if (_offer == null)
-				return false;
-			if (platform == null)
-				return false;
+				return -2;
 
-			bool rented = false;
+			RentHistory history = new() { Id = -1};
 			if (!_offer.Car.IsRented)
 			{
-				rented = true;
+				//wsm tutaj to powinno emaila wysylac a nie od razu na zawolanie wynajmowac
+
 				_offer.Car.IsRented = true;
-				_carContext.Rents.Add(new()
+
+				history = new()
 				{
-					Client_Id = Client_Id,
-					Platform = platform,
+					Name = oc.Name,
+					Surname = oc.Surname,
+					Email = oc.Email,
+					Client_Id = oc.Client_Id,
+					Platform = oc.Platform,
 					OfferId = _offer.Id,
 					Offer = _offer,
 					RentDate = DateTime.Now
-				});
+				};
+
+				_carContext.Rents.Add(history);
 				await _carContext.SaveChangesAsync();
 			}
 
 
-			return rented;
+			return history.Id;
 		}
 
 		[HttpPost]

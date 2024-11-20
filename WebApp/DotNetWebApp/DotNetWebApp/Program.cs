@@ -2,6 +2,7 @@ using DotNetWebApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DotNetWebApp.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace DotNetWebApp
 {
@@ -11,22 +12,28 @@ namespace DotNetWebApp
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
-			// Add services to the container.
+			//dodanie bazy danych z connectionstringa
 			var connectionString = builder.Configuration.GetConnectionString("LogInConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-			builder.Services.AddDbContext<ApplicationDbContext>(options =>
-			options.UseSqlServer(connectionString));
+			builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 			builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-			/*
-			builder.Services.AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true)
-				.AddEntityFrameworkStores<ApplicationDbContext>();
-			*/
+
+
+			//tymczasowy emailSender bo defaultowe nie chacialo dzialac
+			builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+
+
+
+			//dodanie jako naszej Identity naszego CustomUsera (zamiast IdentityUser)
 			builder.Services.AddIdentity<CustomUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
 							.AddEntityFrameworkStores<ApplicationDbContext>();
 			builder.Services.AddScoped<IUserClaimsPrincipalFactory<CustomUser>, CustomUserClaimsPrincipalFactory>();
 
+			//dodanie naszego glownego contextu CarApi
 			builder.Services.AddDbContext<CarContext>(options=> options.UseInMemoryDatabase("Cars"));
 
+			//dodanie autentykacji defaultowej (IdentityUser) i tej z google
 			builder.Services.AddAuthentication(o =>
 			{
 				o.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -37,27 +44,19 @@ namespace DotNetWebApp
 			{
 				options.ClientId = "881753906009-bridd3jbnb6o9s11v53chnlcl7shi7ck.apps.googleusercontent.com";
 				options.ClientSecret = "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";
-				/*
-                options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-                options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-                */
-
 			});
 
-
-
+			//Dodanie Controlerow z widokami i stron
 			builder.Services.AddControllersWithViews();
-
 			builder.Services.AddRazorPages();
 
 
 
 			var app = builder.Build();
 
-			// Configure the HTTP request pipeline.
+			//dodanie errorow w zaleznosci od tego czy development czy production
 			if (app.Environment.IsDevelopment())
 			{
-				//app.UseMigrationsEndPoint();
 				app.UseDeveloperExceptionPage();
 			}
 			else
@@ -72,14 +71,16 @@ namespace DotNetWebApp
 
 			app.UseRouting();
 
+			//dodanie logowania
 			app.UseAuthentication();
 			app.UseAuthorization();
 
 
-
+			//defaultowo znajdujemy sie na tej stronie
 			app.MapControllerRoute(
 				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
+				//pattern: "{controller=Home}/{action=Index}/{id?}");
+				pattern: "{controller=CarApi}/{action=Index}/{id?}");
 			app.MapRazorPages();
 
 

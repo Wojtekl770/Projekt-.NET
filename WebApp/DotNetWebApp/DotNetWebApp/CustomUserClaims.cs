@@ -19,6 +19,8 @@ namespace DotNetWebApp
 			var identity = await base.GenerateClaimsAsync(user);
 			identity.AddClaim(new Claim("YearOfBirth", user.YearOfBirth.ToString()));
 			identity.AddClaim(new Claim("YearOfGettingDriversLicence", user.YearOfGettingDriversLicence.ToString()));
+			identity.AddClaim(new Claim("Name", user.Name == null ? "" : user.Name.ToString()));
+			identity.AddClaim(new Claim("Surname", user.Surname == null ? "" : user.Surname.ToString()));
 			return identity;
 		}
 	}
