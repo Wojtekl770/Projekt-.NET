@@ -92,6 +92,7 @@ namespace DotNetWebApp.Controllers
 			foreach (var group in (await carContext.Cars.ToListAsync()).GroupBy(c => (c.CarBrand, c.CarModel)))
 				co.Add(new() { CarBrand = group.Key.CarBrand, CarModel = group.Key.CarModel });
 
+			co.Sort((c1, c2) => c1.CarBrand.CompareTo(c2.CarBrand));
 			return View(co);
 		}
 
@@ -203,8 +204,9 @@ namespace DotNetWebApp.Controllers
 					catch (Exception) { }
 				});
 
-
-				return View(offerscars.ToList());
+				var final = offerscars.ToList();
+				final.Sort((c1, c2)=>c1.CarId.CompareTo(c2.CarId));
+				return View(final);
 			}
 			catch (Exception)
 			{

@@ -21,15 +21,9 @@ namespace DotNetWebApp
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-
-			//tymczasowy emailSender bo defaultowe nie chacialo dzialac
-			builder.Services.AddTransient<IEmailSender, EmailSender>();
-
-
-
-
 			//dodanie jako naszej Identity naszego CustomUsera (zamiast IdentityUser)
 			builder.Services.AddIdentity<CustomUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+							.AddDefaultTokenProviders()
 							.AddEntityFrameworkStores<ApplicationDbContext>();
 			builder.Services.AddScoped<IUserClaimsPrincipalFactory<CustomUser>, CustomUserClaimsPrincipalFactory>();
 
@@ -38,16 +32,16 @@ namespace DotNetWebApp
 
 			//dodanie autentykacji defaultowej (IdentityUser) i tej z google
 			builder.Services.AddAuthentication(o =>
-			{
-				o.DefaultScheme = IdentityConstants.ApplicationScheme;
-				o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-			})
-			.AddCookie()
-			.AddGoogle(options =>
-			{
-				options.ClientId = "881753906009-bridd3jbnb6o9s11v53chnlcl7shi7ck.apps.googleusercontent.com";
-				options.ClientSecret = "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";
-			});
+							 {
+								 o.DefaultScheme = IdentityConstants.ApplicationScheme;
+								 o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+							 })
+							 .AddCookie()
+							 .AddGoogle(options =>
+							 {
+								 options.ClientId = "881753906009-bridd3jbnb6o9s11v53chnlcl7shi7ck.apps.googleusercontent.com";
+								 options.ClientSecret = "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";
+							 });
 
 			//Dodanie Controlerow z widokami i stron
 			builder.Services.AddControllersWithViews();
