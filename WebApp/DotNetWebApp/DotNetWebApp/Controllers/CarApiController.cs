@@ -176,8 +176,10 @@ namespace DotNetWebApp.Controllers
 								Car_Id = car.Id
 							};
 
+							CancellationTokenSource cancel = new();
+							cancel.CancelAfter(15);
 
-							var response = await _client.PostAsJsonAsync(baseAddress + "/CreateOffer", ask);
+							var response = await _client.PostAsJsonAsync(baseAddress + "/CreateOffer", ask, cancel.Token);
 							response.EnsureSuccessStatusCode();
 
 							string data = await response.Content.ReadAsStringAsync();
