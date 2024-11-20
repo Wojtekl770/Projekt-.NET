@@ -1,80 +1,83 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using DotNetWebApp.Models;
+﻿using DotNetWebApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace DotNetWebApp.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<CustomUser> _userManager;
-        private readonly IEmailSender _sender;
+        private readonly IEmailSender _emailSender;
+        private readonly ILogger<RegisterConfirmationModel> _logger;
 
-        public RegisterConfirmationModel(UserManager<CustomUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<CustomUser> userManager, IEmailSender emailSender, ILogger<RegisterConfirmationModel> logger)
         {
             _userManager = userManager;
-            _sender = sender;
+            _emailSender = emailSender;
+            _logger = logger;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+        [BindProperty]
         public string Email { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public bool DisplayConfirmAccountLink { get; set; }
+        public bool IsEmailConfirmed { get; set; }
+        public string StatusMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public string EmailConfirmationUrl { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(string email, string returnUrl = null)
+        // Metoda OnGet służy do wyświetlania strony
+        public void OnGet(string email)
         {
-            if (email == null)
+            Email = email;
+            var user = _userManager.FindByEmailAsync(Email).Result;
+            if (user != null)
             {
-                return RedirectToPage("/Index");
+                // Sprawdzamy status potwierdzenia e-maila
+                IsEmailConfirmed = _userManager.IsEmailConfirmedAsync(user).Result;
             }
-            returnUrl = returnUrl ?? Url.Content("~/");
+        }
+
+        // Metoda OnPostAsync obsługuje logikę ponownego wysyłania e-maila
+        public async Task<IActionResult> OnPostAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return Page();
+            }
 
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return NotFound($"Unable to load user with email '{email}'.");
+                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                return Page();
             }
 
-            Email = email;
-            // Once you add a real email sender, you should remove this code that lets you confirm the account
-            DisplayConfirmAccountLink = true;
-            if (DisplayConfirmAccountLink)
-            {
-                var userId = await _userManager.GetUserIdAsync(user);
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                EmailConfirmationUrl = Url.Page(
-                    "/Account/ConfirmEmail",
-                    pageHandler: null,
-                    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                    protocol: Request.Scheme);
-            }
+            var userId = await _userManager.GetUserIdAsync(user);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-            return Page();
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { userId = userId, code = code },
+                protocol: Request.Scheme);
+
+            // Wysyłanie nowego e-maila z potwierdzeniem
+            await _emailSender.SendEmailAsync(
+                email,
+                "Confirm your email",
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+            // Dodanie komunikatu informującego o wysłanym e-mailu
+            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+
+            // Przekierowanie do tej samej strony, aby odświeżyć stronę z nowym komunikatem
+            return RedirectToPage("/Account/RegisterConfirmation", new { email = email });
         }
     }
 }
