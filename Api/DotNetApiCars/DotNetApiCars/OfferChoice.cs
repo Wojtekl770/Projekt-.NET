@@ -2,7 +2,7 @@
 {
 	public class OfferChoice
 	{
-		public int Client_Id { get; set; }
+		public string Client_Id { get; set; } = "";
 		public int Offer_Id { get; set; }
 		public string Platform { get; set; } = "";
 

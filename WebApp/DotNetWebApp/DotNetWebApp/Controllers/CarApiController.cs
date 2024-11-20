@@ -226,7 +226,11 @@ namespace DotNetWebApp.Controllers
 
 				//(int Client_Id, int Offer_Id)
 				string platform = Request.Host.ToString();
-				int id_client = -1;
+				string id_client = "null";
+				string? id_str = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				if (id_str != null)
+					id_client = id_str;
+
 
 				string? name2 = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
 				string? surname2 = User.Claims.FirstOrDefault(c => c.Type == "Surname")?.Value;

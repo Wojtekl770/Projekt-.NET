@@ -92,8 +92,9 @@ namespace DotNetApiCars.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Client_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Client_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
