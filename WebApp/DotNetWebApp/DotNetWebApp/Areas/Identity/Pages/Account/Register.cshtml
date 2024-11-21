@@ -1,71 +1,98 @@
 ﻿@page
 @model RegisterModel
+
 @{
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="page-wrapper">
+    <h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.YearOfBirth" class="form-control" autocomplete="YearOfBirth" aria-required="true" placeholder="Please enter your year of birth" />
-                <label asp-for="Input.YearOfBirth" class="form-label">Year Of Birth</label>
-                <span asp-validation-for="Input.YearOfBirth" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.YearOfGettingDriversLicence" class="form-control" autocomplete="YearOfGettingDriversLicence" aria-required="true" placeholder="drivers licence" />
-                <label asp-for="Input.YearOfGettingDriversLicence" class="form-label">Year Of Getting Drivers Licence</label>
-                <span asp-validation-for="Input.YearOfGettingDriversLicence" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Localization" class="form-control" autocomplete="localization" aria-required="true" placeholder="address." />
-                <label asp-for="Input.Localization" class="form-label">Address</label>
-                <span asp-validation-for="Input.Localization" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Name" class="form-control" autocomplete="name" placeholder="name." />
-                <label asp-for="Input.Name" class="form-label">Name</label>
-                <span asp-validation-for="Input.Name" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Surname" class="form-control" autocomplete="surname" placeholder="surname." />
-                <label asp-for="Input.Surname" class="form-label">Surname</label>
-                <span asp-validation-for="Input.Surname" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+    <div class="row justify-content-center">
+        <!-- Register Panel Card (left side) -->
+        <div class="col-md-6 col-lg-5">
+            <section class="card p-4 shadow-sm rounded">
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <h2>Create a new account.</h2>
+                    <hr />
+                    <!-- Validation Summary -->
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <!-- Email Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                        <label asp-for="Input.Email">Email</label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Input.Password">Password</label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    <!-- Confirm Password Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <!-- Year of Birth Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.YearOfBirth" class="form-control" autocomplete="YearOfBirth" aria-required="true" placeholder="Please enter your year of birth" />
+                        <label asp-for="Input.YearOfBirth" class="form-label">Year Of Birth</label>
+                        <span asp-validation-for="Input.YearOfBirth" class="text-danger"></span>
+                    </div>
+
+                    <!-- Year of Getting Driver's License Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.YearOfGettingDriversLicence" class="form-control" autocomplete="YearOfGettingDriversLicence" aria-required="true" placeholder="drivers licence" />
+                        <label asp-for="Input.YearOfGettingDriversLicence" class="form-label">Year Of Getting Drivers Licence</label>
+                        <span asp-validation-for="Input.YearOfGettingDriversLicence" class="text-danger"></span>
+                    </div>
+
+                    <!-- Address Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Localization" class="form-control" autocomplete="localization" aria-required="true" placeholder="address." />
+                        <label asp-for="Input.Localization" class="form-label">Address</label>
+                        <span asp-validation-for="Input.Localization" class="text-danger"></span>
+                    </div>
+
+                    <!-- Name Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Name" class="form-control" autocomplete="name" placeholder="name." />
+                        <label asp-for="Input.Name" class="form-label">Name</label>
+                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+                    </div>
+
+                    <!-- Surname Input -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Surname" class="form-control" autocomplete="surname" placeholder="surname." />
+                        <label asp-for="Input.Surname" class="form-label">Surname</label>
+                        <span asp-validation-for="Input.Surname" class="text-danger"></span>
+                    </div>
+
+                    <!-- Register Button -->
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+                </form>
+            </section>
+        </div>
+
+        <!-- External Register Panel Card (right side) -->
+        <div class="col-md-6 col-lg-5 mt-4 mt-md-0">
+            <section class="card p-4 shadow-sm rounded">
+                <h3>Use another service to register.</h3>
+                <hr />
+                @if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                article
+                                about setting up this ASP.NET application to support logging in via external services
+                            </a>.
                         </p>
                     </div>
                 }
@@ -76,14 +103,14 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins!)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    <button type="submit" class="btn btn-primary mb-2" name="provider" value="@provider.Name" title="Register using your @provider.DisplayName account">@provider.DisplayName</button>
                                 }
                             </p>
                         </div>
                     </form>
                 }
-            }
-        </section>
+            </section>
+        </div>
     </div>
 </div>
 

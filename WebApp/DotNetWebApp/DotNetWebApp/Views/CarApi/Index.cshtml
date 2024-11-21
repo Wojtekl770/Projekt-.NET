@@ -1,49 +1,43 @@
 ﻿@model IEnumerable<DotNetWebApp.Models.CarOverall>
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search Cars";
 }
 
+<div class="page-wrapper">
+    <header class="page-header">
+        <h1>Search Our Car Models</h1>
+    </header>
 
-<h1>Our Car Models</h1>
+    <div class="search-form-container">
+        <form asp-controller="CarApi" asp-action="Search" method="get" class="search-form">
+            <input type="text" name="query" class="form-control search-input" placeholder="Enter car brand or model" />
+            <button type="submit" class="btn search-btn">Search</button>
+        </form>
+    </div>
 
-
-<table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.CarBrand)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.CarModel)
-			</th>
-			<th>
-
-			</th>
-		</tr>
-	</thead>
-	<tbody id="car_table_body">
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.CarBrand)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.CarModel)
-				</td>
-				<td>
-					@{
-						var parms = new Dictionary<string, string>
-						{
-							{ "CarBrand", item.CarBrand },
-							{ "CarModel", item.CarModel }
-						};
-					}
-					<a asp-action="ShowOffers" asp-all-route-data="parms">Show Offers</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
-
-
+    @if (Model != null && Model.Any())
+    {
+        <div class="car-grid">
+            @foreach (var car in Model)
+            {
+                <div class="car-card">
+                    <div class="image-placeholder">
+                        <!-- Placeholder for the car image -->
+                        <span>Image Coming Soon</span>
+                    </div>
+                    <div class="car-info">
+                        <h2>@car.CarBrand</h2>
+                        <p>@car.CarModel</p>
+                        <a asp-action="ShowOffers" asp-route-CarBrand="@car.CarBrand" asp-route-CarModel="@car.CarModel" class="btn btn-primary">
+                            Show Offers
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="no-results">No cars found matching your search criteria.</p>
+    }
+</div>

@@ -1,69 +1,36 @@
 ﻿@model IEnumerable<DotNetWebApp.Models.OfferCarModel>
 @{
-	ViewData["Title"] = "ShowOffers";
+    ViewData["Title"] = "Show Offers";
 }
 
-<h1>Show Offers</h1>
+<div class="page-wrapper">
+    <header class="page-header">
+        <h1>Available Car Offers</h1>
+    </header>
 
+    <div class="car-grid">
+        @foreach (var item in Model)
+        {
+            <div class="car-card">
+                <!-- Image placeholder (you can replace this with actual image URL once available) -->
+                <div class="image-placeholder">
+                    <span>Car Image</span>
+                </div>
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.Car.CarBrand)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Car.CarModel)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Car.LicensePlate)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Car.Localization)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.PriceDay)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.PriceInsurance)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.ExpirationDate)
-			</th>
-			<th>
+                <div class="car-info">
+                    <h2>@item.Car.CarBrand @item.Car.CarModel</h2>
+                    <p class="car-license">License Plate: @item.Car.LicensePlate</p>
+                    <p class="car-location">Location: @item.Car.Localization</p>
 
-			</th>
-		</tr>
-	</thead>
-	<tbody id="car_table_body">
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Car.CarBrand)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Car.CarModel)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Car.LicensePlate)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Car.Localization)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.PriceDay)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.PriceInsurance)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.ExpirationDate)
-				</td>
-				<td>
-					<a asp-action="Edit" asp-route-id="@item.Id">Rent</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
+                    <div class="price-info">
+                        <p><strong>Price per Day:</strong> $@item.PriceDay</p>
+                        <p><strong>Insurance Price:</strong> $@item.PriceInsurance</p>
+                        <p><strong>Expiration Date:</strong> @item.ExpirationDate.ToString("MM/dd/yyyy")</p>
+                    </div>
+
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn rent-btn">Rent</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,41 +1,53 @@
 ﻿@model DotNetWebApp.Models.OfferCarModel
 @{
-	ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Renting";
 }
 
-<h1>Renting</h1>
+<div class="page-wrapper">
+    <header class="page-header">
+        <h1>Renting</h1>
+    </header>
 
-<h4>Car</h4>
-<body>
-	@if (Model.Car.IsRented)
-	{
-		<div>
-			Car Is Rented
-		</div>
-	}
-	else
-	{
-		<div>
-			You Still Can Rent Car!
-		</div>
-	}
+    <div class="car-rent-container">
+        <!-- Car Image Section (Left Side) -->
+        <div class="car-image-section">
+            <div class="image-placeholder">
+                <span>Car Image</span> <!-- Placeholder for the car image -->
+            </div>
 
-	<form asp-action="Edit">
-		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-		<input type="hidden" asp-for="Id" />
-		<input type="hidden" asp-for="CarId" />
+            <!-- Rent Button Section -->
+            @if (Model.Car.IsRented)
+            {
+                <div class="car-status">
+                    <p>Car is already rented</p>
+                </div>
+            }
+            else
+            {
+                <form asp-action="Edit">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="CarId" />
+                    <div class="form-group">
+                        <input type="submit" value="Rent" class="btn btn-primary rent-btn" />
+                    </div>
+                </form>
+            }
+        </div>
 
-		<div class="form-group">
-			<input type="submit" value="Rent" class="btn btn-primary" />
-		</div>
-	</form>
+        <!-- Car Info Section (Right Side) -->
+        <div class="car-info-section">
+            <h2>@Model.Car.CarBrand @Model.Car.CarModel</h2>
+            <p><strong>License Plate:</strong> @Model.Car.LicensePlate</p>
+            <p><strong>Location:</strong> @Model.Car.Localization</p>
+            <p><strong>Price per Day:</strong> $@Model.PriceDay</p>
+            <p><strong>Insurance Price:</strong> $@Model.PriceInsurance</p>
+            <p><strong>Expiration Date:</strong> @Model.ExpirationDate.ToString("MM/dd/yyyy")</p>
 
+        </div>
+    </div>
 
-</body>
-
-
-
-<div>
-	<a asp-action="Index">Back to List</a>
+    <!-- Back to List Link -->
+    <div class="back-to-list">
+        <a asp-action="Index" class="btn btn-link">Back to List</a>
+    </div>
 </div>
-

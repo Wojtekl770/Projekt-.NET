@@ -46,6 +46,7 @@ namespace DotNetWebApp
 			// Add Controllers with Views and Razor Pages
 			builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+           // builder.Services.AddServerSideBlazor();
 
             var app = builder.Build();
 
@@ -65,7 +66,7 @@ namespace DotNetWebApp
             app.UseStaticFiles();
 
 
-            app.UseRouting();
+           app.UseRouting();
 
             
             app.UseAuthentication();
@@ -76,6 +77,8 @@ namespace DotNetWebApp
                 name: "default",
                 pattern: "{controller=CarApi}/{action=Index}/{id?}");
             app.MapRazorPages();
+           // app.MapBlazorHub();
+           // app.MapFallbackToController("Blazor", "Home");
 
             app.Run();
         }

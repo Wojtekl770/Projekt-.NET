@@ -42,8 +42,38 @@ namespace DotNetWebApp.Controllers
 			return await Get();
 		}
 
+        [HttpGet]
+        public async Task<IActionResult> Search(string query)
+        {
+            await Get();
 
-		[HttpGet]
+            if (string.IsNullOrEmpty(query))
+            {
+                // If no query is provided, redirect back to the Index view or return all cars
+                return RedirectToAction("Index");
+            }
+
+            // Normalize query for case-insensitive search
+            query = query.ToLower();
+
+            // Perform search in the database
+            var results = await carContext.Cars
+                .Where(c => c.CarBrand.ToLower().Contains(query) || c.CarModel.ToLower().Contains(query))
+                .GroupBy(c => new { c.CarBrand, c.CarModel })
+                .Select(g => new CarOverall
+                {
+                    CarBrand = g.Key.CarBrand,
+                    CarModel = g.Key.CarModel
+                })
+                .OrderBy(c => c.CarBrand)
+                .ToListAsync();
+
+            // Return search results to the same view
+            return View("Index", results);
+        }
+
+
+        [HttpGet]
 		public async Task<IActionResult> Get()
 		{
 			List<Car>? cars;
