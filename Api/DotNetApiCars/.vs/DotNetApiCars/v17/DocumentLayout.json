@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241120204355_New User Id.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DotNetApiCars\\Migrations\\20241120204355_New User Id.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|c:\\users\\wikto\\source\\repos\\.net projekt\\api\\dotnetapicars\\dotnetapicars\\migrations\\20241120204355_new user id.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\migrations\\20241120204355_new user id.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\controllers\\carcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,7 +23,7 @@
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\offerchoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|c:\\users\\wikto\\source\\repos\\.net projekt\\api\\dotnetapicars\\dotnetapicars\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -92,7 +92,7 @@
               "RelativeDocumentMoniker": "DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
               "RelativeToolTip": "DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-20T20:43:55.976Z",
               "EditorCaption": ""
@@ -107,8 +107,7 @@
               "RelativeToolTip": "DotNetApiCars\\OfferChoice.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-20T00:43:50.878Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-20T00:43:50.878Z"
             },
             {
               "$type": "Document",
@@ -120,8 +119,7 @@
               "RelativeToolTip": "DotNetApiCars\\Car.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T16:20:09.568Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-06T16:20:09.568Z"
             },
             {
               "$type": "Document",
@@ -133,8 +131,7 @@
               "RelativeToolTip": "DotNetApiCars\\Controllers\\CarController.cs",
               "ViewState": "AQIAADkAAAAAAAAAAAAowDsAAABPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T16:48:30.414Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-06T16:48:30.414Z"
             },
             {
               "$type": "Document",
@@ -146,8 +143,7 @@
               "RelativeToolTip": "DotNetApiCars\\RentHistorycs.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-12T12:53:40.672Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-12T12:53:40.672Z"
             },
             {
               "$type": "Document",
@@ -159,8 +155,7 @@
               "RelativeToolTip": "DotNetApiCars\\CarContext.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T16:20:43.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-06T16:20:43.967Z"
             },
             {
               "$type": "Document",
@@ -172,8 +167,7 @@
               "RelativeToolTip": "DotNetApiCars\\AskPrice.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-13T18:30:48.268Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-13T18:30:48.268Z"
             },
             {
               "$type": "Document",
@@ -185,8 +179,7 @@
               "RelativeToolTip": "DotNetApiCars\\Offer.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAAoAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-13T18:21:41.179Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-13T18:21:41.179Z"
             },
             {
               "$type": "Document",
@@ -210,8 +203,7 @@
               "RelativeToolTip": "DotNetApiCars\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T16:17:23.267Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-06T16:17:23.267Z"
             },
             {
               "$type": "Document",

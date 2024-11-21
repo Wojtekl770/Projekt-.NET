@@ -65,6 +65,7 @@ namespace DotNetWebApp.Controllers
 
 				if (cars != null)
 				{
+					//jezeli w pamieci podrecznej brak aut
 					if (!carContext.Cars.Any())
 						foreach (Car car in cars)
 						{
@@ -74,12 +75,13 @@ namespace DotNetWebApp.Controllers
 					else
 						foreach (Car car in cars)
 						{
+							//istnialo auto wczesniej u nas
 							if ((templist = (await carContext.Cars.ToListAsync()).Where(c => c.Id == car.Id).ToList()).Count != 0)
 							{
 								foreach (var c in templist)
 									c.IsRented = car.IsRented;
 							}
-							else
+							else //nie istnialo auto wczesniej u nas
 								carContext.Add(car);
 
 							await carContext.SaveChangesAsync();
@@ -88,6 +90,7 @@ namespace DotNetWebApp.Controllers
 
 			}
 
+			//wypluwamy widok modeli i marek
 			List<CarOverall> co = [];
 			foreach (var group in (await carContext.Cars.ToListAsync()).GroupBy(c => (c.CarBrand, c.CarModel)))
 				co.Add(new() { CarBrand = group.Key.CarBrand, CarModel = group.Key.CarModel });
@@ -116,10 +119,12 @@ namespace DotNetWebApp.Controllers
 				if (carOverall == null)
 					return NotFound();
 
+				//auta dla tej marki i modelu
 				List<Car> cars = (await carContext.Cars.ToListAsync()).FindAll(car =>
 									car.CarModel == carOverall.CarModel && car.CarBrand == carOverall.CarBrand);
 
 
+				//info do zlozenia oferty
 				Random rand = new();
 				int add = rand.Next() % 10;
 				DateTime now = DateTime.Now;
@@ -148,7 +153,7 @@ namespace DotNetWebApp.Controllers
 						carContext.Offers.Remove(m);
 						await carContext.SaveChangesAsync();
 					}
-					else
+					else //dodajemy do listy odpornej na async
 						existingOffers.Add(m);
 				}
 
@@ -179,6 +184,7 @@ namespace DotNetWebApp.Controllers
 							CancellationTokenSource cancel = new();
 							cancel.CancelAfter(15);
 
+							//wysylamy oferte
 							var response = await _client.PostAsJsonAsync(baseAddress + "/CreateOffer", ask, cancel.Token);
 							response.EnsureSuccessStatusCode();
 
@@ -187,6 +193,7 @@ namespace DotNetWebApp.Controllers
 
 							if (offer != null && offer.IsSuccess)
 							{
+								//dodajemy oferte na ten model
 								OfferCarModel ocm = new()
 								{
 									Id = offer.Id,
@@ -238,9 +245,9 @@ namespace DotNetWebApp.Controllers
 				string? surname2 = User.Claims.FirstOrDefault(c => c.Type == "Surname")?.Value;
 				string? email2 = User.FindFirstValue(ClaimTypes.Email);
 
-				string name = name2 == null ? "" : name2;
-				string surname = surname2 == null ? "" : surname2;
-				string email = email2 == null ? "" : email2;
+				string name = name2 ?? "";
+				string surname = surname2 ?? "";
+				string email = email2 ?? "";
 
 				OfferChoice oc = new()
 				{
