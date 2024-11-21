@@ -1,4 +1,6 @@
+using DotNetWebApp;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetApiCars
@@ -13,7 +15,11 @@ namespace DotNetApiCars
             
             builder.Services.AddDbContext<CarContext>(options =>
                options.UseSqlServer(connectionString));
-            
+
+            // Email Settings
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
+
             // Add services to the container.
 
             builder.Services.AddControllers();
