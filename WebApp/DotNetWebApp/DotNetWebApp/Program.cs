@@ -61,8 +61,8 @@ namespace DotNetWebApp
             }
             
 
-            //app.UseHttpsRedirection();
-            //app.UseStaticFiles();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
 
             app.UseRouting();

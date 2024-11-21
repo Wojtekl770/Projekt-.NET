@@ -182,7 +182,7 @@ namespace DotNetWebApp.Controllers
 							};
 
 							CancellationTokenSource cancel = new();
-							cancel.CancelAfter(15);
+							cancel.CancelAfter(15000);
 
 							//wysylamy oferte
 							var response = await _client.PostAsJsonAsync(baseAddress + "/CreateOffer", ask, cancel.Token);
