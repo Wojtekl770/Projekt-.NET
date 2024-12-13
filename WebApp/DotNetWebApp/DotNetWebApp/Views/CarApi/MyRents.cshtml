@@ -19,7 +19,7 @@
                     <p class="car-model">Car Model: @item.Offer.Car.CarModel</p>
                     <p class="car-rentdate">Rent Date: @item.RentDate</p>
                     <p class="car-returned">Returned: @item.IsReturned</p>
-                    <a asp-action="Return" asp-route-Id="@item.Id" class="btn btn-primary">
+                    <a asp-action="Return" asp-route-Id="@item.Id" asp-route-Platform="@item.Platform" class="btn btn-primary">
                         Return
                     </a>
                 </div>

@@ -28,7 +28,7 @@
                         <p><strong>Expiration Date:</strong> @item.ExpirationDate.ToString("MM/dd/yyyy")</p>
                     </div>
 
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn rent-btn">Rent</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" asp-route-platform="@item.Platform" class="btn rent-btn">Rent</a>
                 </div>
             </div>
         }

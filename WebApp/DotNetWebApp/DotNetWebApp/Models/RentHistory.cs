@@ -29,14 +29,14 @@
         public OfferCarModel Offer { get; set; }
         public bool IsReturned { get; set; }
         public RentHistoryModel() { }
-        public RentHistoryModel(RentHistory rent) 
+        public RentHistoryModel(RentHistory rent, string platform ="") 
         {
             this.Id = rent.Id;
             this.Client_Id = rent.Client_Id;
             this.Name = rent.Name;
             this.Surname = rent.Surname;
             this.Email = rent.Email;
-            this.Platform = rent.Platform;
+            this.Platform = platform;
             this.RentDate = rent.RentDate;
             this.OfferId = rent.OfferId;
             this.IsReturned = rent.IsReturned;

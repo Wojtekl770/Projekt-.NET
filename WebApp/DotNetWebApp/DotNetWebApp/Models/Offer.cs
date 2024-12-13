@@ -17,16 +17,18 @@ namespace DotNetWebApp.Models
 		public int PriceDay { get; set; }
 		public int PriceInsurance { get; set; }
 		public DateTime ExpirationDate { get; set; }
-		public Car Car { get; set; }
+		public CarPlatform Car { get; set; }
 		public int CarId { get; set; }
+		public string Platform { get; set; }
 		public OfferCarModel() { }
-		public OfferCarModel(OfferDB o)
+		public OfferCarModel(OfferDB o, string platform = "")
 		{
 			this.Id = o.Id;
 			this.PriceDay = o.PriceDay;
 			this.PriceInsurance = o.PriceInsurance;
 			this.ExpirationDate = o.ExpirationDate;
 			this.CarId = o.CarId;
+			this.Platform = platform;
 		}
 	}
 
@@ -34,6 +36,7 @@ namespace DotNetWebApp.Models
 	{
 		public int Id { get; set; }
 		public int CarId { get; set; }
+		public string Platform { get; set; }
 	}
 
     public class OfferDB
