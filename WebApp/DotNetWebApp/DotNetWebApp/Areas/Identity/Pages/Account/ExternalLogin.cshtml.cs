@@ -164,6 +164,7 @@ namespace DotNetWebApp.Areas.Identity.Pages.Account
 				user.Localization = Input.Localization;
 				user.Name = Input.Name;
 				user.Surname = Input.Surname;
+                user.Worker = false;
 
 				await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

@@ -46,15 +46,27 @@ namespace DotNetWebApp
 			// Add Controllers with Views and Razor Pages
 			builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
-           // builder.Services.AddServerSideBlazor();
+			// builder.Services.AddServerSideBlazor();
 
-            var app = builder.Build();
+
+			var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy(name: MyAllowSpecificOrigins,
+					  policy =>
+					  {
+						  policy.WithOrigins("https://localhost:7136")
+						  .AllowAnyHeader()
+						  .AllowAnyMethod();
+					  });
+			});
+			var app = builder.Build();
 
 			// Add error handling based on development or production environment
 			if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
+			}
             else
             {
                 app.UseExceptionHandler("/Home/Error");

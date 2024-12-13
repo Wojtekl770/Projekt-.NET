@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\return.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\return.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|c:\\users\\wikto\\source\\repos\\.net projekt\\api\\dotnetapicars\\dotnetapicars\\carcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\carcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,16 +15,8 @@
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\carcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\carcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\migrations\\20241120204355_new user id.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\migrations\\20241120204355_new user id.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\rentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\rentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\renthistorycs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,8 +27,24 @@
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\offer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\carcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\carcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\offerchoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\offerchoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\car.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\migrations\\20241120204355_new user id.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\migrations\\20241120204355_new user id.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\askprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -47,16 +59,16 @@
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:DotNetApiCars\\Migrations\\20241112133710_RentHistory2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241106164421_InitialMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:DotNetApiCars\\Migrations\\20241106164421_InitialMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\dotnetapicars\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:dotnetapicars\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241205003148_IsReturned.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC96F5C2-4E07-4C29-8B93-EA01DA0E638E}|DotNetApiCars\\DotNetApiCars.csproj|solutionrelative:DotNetApiCars\\Migrations\\20241205003148_IsReturned.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -87,12 +99,49 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Return.cs",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Return.cs",
+              "RelativeDocumentMoniker": "DotNetApiCars\\Return.cs",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Return.cs",
+              "RelativeToolTip": "DotNetApiCars\\Return.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T00:54:13.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "20241205003148_IsReturned.cs",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241205003148_IsReturned.cs",
+              "RelativeDocumentMoniker": "DotNetApiCars\\Migrations\\20241205003148_IsReturned.cs",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241205003148_IsReturned.cs",
+              "RelativeToolTip": "DotNetApiCars\\Migrations\\20241205003148_IsReturned.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T00:31:48.599Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RentRequest.cs",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\RentRequest.cs",
+              "RelativeDocumentMoniker": "DotNetApiCars\\RentRequest.cs",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\RentRequest.cs",
+              "RelativeToolTip": "DotNetApiCars\\RentRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T16:29:40.14Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "CarController.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\CarController.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\CarController.cs",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\CarController.cs",
               "RelativeToolTip": "DotNetApiCars\\CarController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAF4AAAA5AAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAAwCEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T00:28:08.731Z",
               "EditorCaption": ""
@@ -100,48 +149,36 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "20241120204355_New User Id.cs",
-              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
-              "RelativeDocumentMoniker": "DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
-              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
-              "RelativeToolTip": "DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-20T20:43:55.976Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "RentHistorycs.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\RentHistorycs.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\RentHistorycs.cs",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\RentHistorycs.cs",
               "RelativeToolTip": "DotNetApiCars\\RentHistorycs.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAtAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-12T12:53:40.672Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "Offer.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Offer.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\Offer.cs",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Offer.cs",
               "RelativeToolTip": "DotNetApiCars\\Offer.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAAwA8AAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-13T18:21:41.179Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Program.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\Program.cs",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Program.cs",
               "RelativeToolTip": "DotNetApiCars\\Program.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAAwB4AAABDAAAA",
+              "ViewState": "AQIAACUAAAAAAAAAAAAQwDEAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-06T16:17:23.267Z",
               "EditorCaption": ""
@@ -154,13 +191,13 @@
               "RelativeDocumentMoniker": "DotNetApiCars\\OfferChoice.cs",
               "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\OfferChoice.cs",
               "RelativeToolTip": "DotNetApiCars\\OfferChoice.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAASAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-20T00:43:50.878Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "Car.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Car.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\Car.cs",
@@ -172,7 +209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "CarContext.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\CarContext.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\CarContext.cs",
@@ -180,12 +217,35 @@
               "RelativeToolTip": "DotNetApiCars\\CarContext.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T16:20:43.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-06T16:20:43.967Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\appsettings.json",
+              "RelativeDocumentMoniker": "DotNetApiCars\\appsettings.json",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\appsettings.json",
+              "RelativeToolTip": "DotNetApiCars\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-06T16:18:19.503Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "20241120204355_New User Id.cs",
+              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
+              "RelativeDocumentMoniker": "DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
+              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
+              "RelativeToolTip": "DotNetApiCars\\Migrations\\20241120204355_New User Id.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-20T20:43:55.976Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "AskPrice.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\AskPrice.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\AskPrice.cs",
@@ -197,7 +257,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "DotNetApiCars.http",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\DotNetApiCars.http",
               "RelativeDocumentMoniker": "DotNetApiCars\\DotNetApiCars.http",
@@ -209,7 +269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "20241106164421_InitialMigration.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241106164421_InitialMigration.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\Migrations\\20241106164421_InitialMigration.cs",
@@ -221,7 +281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "20241112133710_RentHistory2.cs",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Migrations\\20241112133710_RentHistory2.cs",
               "RelativeDocumentMoniker": "DotNetApiCars\\Migrations\\20241112133710_RentHistory2.cs",
@@ -233,19 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\appsettings.json",
-              "RelativeDocumentMoniker": "DotNetApiCars\\appsettings.json",
-              "ToolTip": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\appsettings.json",
-              "RelativeToolTip": "DotNetApiCars\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-11-06T16:18:19.503Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\wikto\\source\\repos\\.Net Projekt\\Api\\DotNetApiCars\\DotNetApiCars\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "DotNetApiCars\\Properties\\launchSettings.json",

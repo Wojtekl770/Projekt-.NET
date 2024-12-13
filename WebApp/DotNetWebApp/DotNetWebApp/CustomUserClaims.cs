@@ -21,7 +21,8 @@ namespace DotNetWebApp
 			identity.AddClaim(new Claim("YearOfGettingDriversLicence", user.YearOfGettingDriversLicence.ToString()));
 			identity.AddClaim(new Claim("Name", user.Name == null ? "" : user.Name.ToString()));
 			identity.AddClaim(new Claim("Surname", user.Surname == null ? "" : user.Surname.ToString()));
-			return identity;
+            identity.AddClaim(new Claim("Worker", user.Worker.ToString()));
+            return identity;
 		}
 	}
 }

@@ -38,7 +38,7 @@ namespace DotNetWebApp.Models
 
 			return f.Id == s.Id && f.LicensePlate == s.LicensePlate && f.CarModel == s.CarModel;
 		}
-		public static bool operator !=(Car f, Car s)
+		public static bool operator !=(Car? f, Car? s)
 		{
 			return !(f == s);
 		}

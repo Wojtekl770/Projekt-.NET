@@ -11,7 +11,9 @@ namespace DotNetWebApp.Data
 		public DbSet<Car> Cars { get; set; }
 		//public DbSet<CarPlusDomain> CarsPlusDomain { get; set; }
 		public DbSet<OfferCarModel> Offers {get; set;}
-		
-	}
+		//public DbSet<RentHistory> Rents { get; set; }
+        public DbSet<RentHistoryModel> Rents { get; set; }
+
+    }
 
 }

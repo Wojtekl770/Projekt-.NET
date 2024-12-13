@@ -50,8 +50,30 @@ namespace DotNetApiCars.Controllers
 
 		}
 
+		[HttpPut]
+		public async Task<IEnumerable<RentHistory>> GetMyRents(RentsRequest rr)
+		{
+			IEnumerable<RentHistory>? rh = (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())
+				.Where(r =>
+				r.Client_Id == rr.Client_Id &&
+				r.Platform == rr.Platform);
 
-        [HttpPut]
+			return rh??[];
+		}
+
+		[HttpPut]
+		public async Task<RentHistory?> GetRent(RentRequest rr)
+		{
+			RentHistory? rh =  (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())
+				.Where(r =>
+				r.Client_Id == rr.Client_Id &&
+				r.Platform == rr.Platform &&
+				r.Id == rr.Rent_Id).FirstOrDefault();
+
+			return rh;
+		}
+
+		[HttpPut]
         [HttpPut]
         public async Task<int> Rent(OfferChoice oc)
         {
@@ -87,6 +109,8 @@ namespace DotNetApiCars.Controllers
                 _carContext.Rents.Add(history);
                 await _carContext.SaveChangesAsync();
 
+				//DODAJ PO SKONCZONYCH TESTACH
+				/*
                 // Send the rental confirmation email
                 var emailSubject = "Car Rental Confirmation";
                 var emailBody = $"Dear {oc.Name},<br><br>" +
@@ -96,6 +120,7 @@ namespace DotNetApiCars.Controllers
 
                 // Send email to the user (the email in the request)
                 await _emailSender.SendEmailAsync(oc.Email, emailSubject, emailBody);  // Send email to the user
+				*/
             }
 
             return history.Id;
@@ -172,83 +197,29 @@ namespace DotNetApiCars.Controllers
 			return _car;
 		}
 
-
-		/*
-        // GET: CarController
-        public ActionResult Index()
+        [HttpPut]
+        public async Task<bool> Return(ReturnRequest retr)
         {
-            return View();
+            RentHistory? rh = (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())
+                .Where(r =>
+                r.Client_Id == retr.Client_Id &&
+                r.Platform == retr.Platform &&
+                r.Id == retr.Rent_Id).FirstOrDefault();
+
+			if (rh == null)
+				return false;
+
+			//dodac emaila
+			rh.IsReturned = true;
+			rh.Offer.Car.IsRented = false;
+			await _carContext.SaveChangesAsync();
+
+
+            return true;
         }
 
-        // GET: CarController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+    }
 
-        // GET: CarController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: CarController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CarController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CarController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CarController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CarController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-     */
-	}
 
 }

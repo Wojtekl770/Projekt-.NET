@@ -13,6 +13,7 @@ namespace DotNetApiCars
 		public DateTime RentDate { get; set; }
 		public int OfferId { get; set; }
 		public OfferDB Offer {get; set;}
+		public bool IsReturned { get; set; }
 		public RentHistory() { }
 
 	}
