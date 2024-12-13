@@ -342,26 +342,27 @@ namespace DotNetWebApp.Controllers
 
             RentsRequest rr = new() { Client_Id = id_client, Email = email, Platform = platform };
 
-            await Rents(rr);
+            await Rents(rr, true);
 
             return View(await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).ToListAsync());
 
         }
 
         [HttpPut]
-        private async Task<int> Rents(RentsRequest rr)
+        private async Task<int> Rents(RentsRequest rr, bool onlyNotReturned)
         {
             try
             {
-                //ususwanie zwroconych wynajmow - wsm tu sie nic nie dzieje xd
-                foreach (RentHistoryModel rh in (await carContext.Rents.ToListAsync()))
-                    if (rh.IsReturned)
-                    {
-                        rh.Offer.Car = null;
-                        rh.Offer = null;
-                        carContext.Remove(rh);
-                        await carContext.SaveChangesAsync();
-                    }
+                if (onlyNotReturned)
+                    //ususwanie zwroconych wynajmow - wsm tu sie nic nie dzieje xd
+                    foreach (RentHistoryModel rh in (await carContext.Rents.ToListAsync()))
+                        if (rh.IsReturned)
+                        {
+                            rh.Offer.Car = null;
+                            rh.Offer = null;
+                            carContext.Remove(rh);
+                            await carContext.SaveChangesAsync();
+                        }
 
 
                 //pobranie wynajmow
@@ -378,7 +379,7 @@ namespace DotNetWebApp.Controllers
                 if (!carContext.Rents.Any())
                     foreach (RentHistory rent in rents)
                     {
-                        if (!rent.IsReturned)
+                        if (!onlyNotReturned || !rent.IsReturned)
                         {
                             RentHistoryModel rentModel = new(rent);
 
@@ -412,8 +413,8 @@ namespace DotNetWebApp.Controllers
                         RentHistoryModel rentModel = new(rent);
 
 
-                        //dodanie takich ktorych nie ma w naszej lokalnej DB i nie sa zwrocone
-                        if ((temprent = (await carContext.Rents.ToListAsync()).Where(r => r.Id == rentModel.Id).FirstOrDefault()) == null && !rentModel.IsReturned)
+                        //dodanie takich ktorych nie ma w naszej lokalnej DB i nie sa zwrocone (lub chcemy tez nie zwrocone)
+                        if ((temprent = (await carContext.Rents.ToListAsync()).Where(r => r.Id == rentModel.Id).FirstOrDefault()) == null && (!onlyNotReturned || !rentModel.IsReturned))
                         {
                             carContext.Add(rentModel);
                             await carContext.SaveChangesAsync();
@@ -441,8 +442,8 @@ namespace DotNetWebApp.Controllers
                         }
                         else if (temprent != null)
                         {
-                            //jezeli jest w bazie danych ale trzeba usunac ja bo juz zwrocilismy
-                            if (rentModel.IsReturned)
+                            //jezeli jest w bazie danych ale trzeba usunac ja bo juz zwrocilismy (chyba ze chcemy te zwrocone juz ogladac)
+                            if (onlyNotReturned && rentModel.IsReturned)
                             {
                                 if (temprent.Offer != null)
                                     temprent.Offer.Car = null;
@@ -538,7 +539,7 @@ namespace DotNetWebApp.Controllers
                 foreach (CustomUser u in users)
                 {
                     RentsRequest rr = new() { Client_Id = u.Id, Email = u.Email ?? "", Platform = platform };
-                    await Rents(rr);
+                    await Rents(rr, false);
                 }
 
 
