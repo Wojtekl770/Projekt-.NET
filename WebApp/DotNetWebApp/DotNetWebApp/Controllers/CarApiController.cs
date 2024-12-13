@@ -186,6 +186,7 @@ namespace DotNetWebApp.Controllers
                     if (m.ExpirationDate.CompareTo(now) < 0
                         && !(await carContext.Rents.Where(re => re.OfferId == m.Id).ToListAsync()).Any())
                     {
+                        m.Car = null;
                         carContext.Offers.Remove(m);
                         await carContext.SaveChangesAsync();
                     }
@@ -358,7 +359,7 @@ namespace DotNetWebApp.Controllers
                     foreach (RentHistoryModel rh in (await carContext.Rents.ToListAsync()))
                         if (rh.IsReturned)
                         {
-                            rh.Offer.Car = null;
+                            //rh.Offer.Car = null;
                             rh.Offer = null;
                             carContext.Remove(rh);
                             await carContext.SaveChangesAsync();
@@ -445,8 +446,8 @@ namespace DotNetWebApp.Controllers
                             //jezeli jest w bazie danych ale trzeba usunac ja bo juz zwrocilismy (chyba ze chcemy te zwrocone juz ogladac)
                             if (onlyNotReturned && rentModel.IsReturned)
                             {
-                                if (temprent.Offer != null)
-                                    temprent.Offer.Car = null;
+                                //if (temprent.Offer != null)
+                                    //temprent.Offer.Car = null;
                                 temprent.Offer = null;
                                 carContext.Remove(temprent);
                                 await carContext.SaveChangesAsync();
@@ -504,7 +505,7 @@ namespace DotNetWebApp.Controllers
                             rh2.Offer.Car.IsRented = false;
 
                             //zeny z mojej bazy nie ususnac auta i oferty
-                            rh2.Offer.Car = null;
+                            //rh2.Offer.Car = null;
                             rh2.Offer = null;
                             carContext.Remove(rh2);
 
