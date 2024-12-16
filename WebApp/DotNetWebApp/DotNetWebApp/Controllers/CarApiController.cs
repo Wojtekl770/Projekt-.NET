@@ -37,7 +37,7 @@ namespace DotNetWebApp.Controllers
             //Uri = "https://carrentalapi2-acg4cgdcanecabap.canadacentral-01.azurewebsites.net/Car";
 
             this.Uri = Uri;
-            Uri baseAddress = new Uri(Uri);
+            Uri baseAddress = new Uri(this.Uri);
             _client = new HttpClient();
             _client.BaseAddress = baseAddress;
             carContext = carC;
