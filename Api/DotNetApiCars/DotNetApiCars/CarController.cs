@@ -210,15 +210,40 @@ namespace DotNetApiCars.Controllers
 				return false;
 
 			//dodac emaila
-			rh.IsReturned = true;
-			rh.Offer.Car.IsRented = false;
+			//rh.IsReturned = true;
+			//rh.Offer.Car.IsRented = false;
+			rh.IsReadyToReturn = true;
 			await _carContext.SaveChangesAsync();
 
 
             return true;
         }
 
-    }
+		[HttpPut]
+		public async Task<bool> ConfirmReturn(ReturnRequest retr)
+		{
+			RentHistory? rh = (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())
+				.Where(r =>
+				r.Client_Id == retr.Client_Id &&
+				r.Platform == retr.Platform &&
+				r.Id == retr.Rent_Id).FirstOrDefault();
+
+			if (rh == null)
+				return false;
+
+			if (!rh.IsReadyToReturn)
+				return false;
+
+			//dodac emaila
+			rh.IsReturned = true;
+			rh.Offer.Car.IsRented = false;
+			await _carContext.SaveChangesAsync();
+
+
+			return true;
+		}
+
+	}
 
 
 

@@ -14,6 +14,7 @@ namespace DotNetApiCars
 		public int OfferId { get; set; }
 		public OfferDB Offer {get; set;}
 		public bool IsReturned { get; set; }
+		public bool IsReadyToReturn { get; set; }
 		public RentHistory() { }
 
 	}
