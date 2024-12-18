@@ -219,7 +219,7 @@ namespace DotNetApiCars.Controllers
             return true;
         }
 
-		[HttpPut]
+		[HttpPost]
 		public async Task<bool> ConfirmReturn(ReturnRequest retr)
 		{
 			RentHistory? rh = (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())

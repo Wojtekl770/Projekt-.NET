@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DotNetApiCars")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+594e1f474c279931f807d58f028f5e99ba01b19d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+216674fc2fb077ca9791314b46fc207075e21e88")]
 [assembly: System.Reflection.AssemblyProductAttribute("DotNetApiCars")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DotNetApiCars")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
