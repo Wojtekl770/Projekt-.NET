@@ -1,31 +1,38 @@
 ﻿@model IEnumerable<DotNetWebApp.Models.RentHistoryModel>
 @{
-    ViewData["Title"] = "My Rents";
+	ViewData["Title"] = "My Rents";
 }
 
 <div class="page-wrapper">
-    <header class="page-header">
-        <h1>My Rents</h1>
-    </header>
+	<header class="page-header">
+		<h1>My Rents</h1>
+	</header>
 
-    <div class="car-grid">
-        @foreach (var item in Model)
-        {
-            <div class="car-card">
-                <!-- xxxxx -->
-                <div class="car-info">
-                    <p class="car-license">License Plate: @item.Offer.Car.LicensePlate</p>
-                    <p class="car-brand">Car Brand: @item.Offer.Car.CarBrand</p>
-                    <p class="car-model">Car Model: @item.Offer.Car.CarModel</p>
-                    <p class="car-rentdate">Rent Date: @item.RentDate</p>
-                    <p class="car-returned">Returned: @item.IsReturned</p>
-                    <a asp-action="Return" asp-route-Id="@item.Id" asp-route-Platform="@item.Platform" class="btn btn-primary">
-                        Return
-                    </a>
-                </div>
-            </div>
-        }
-    </div>
+	<div class="car-grid">
+		@foreach (var item in Model)
+		{
+			<div class="car-card">
+				<!-- xxxxx -->
+				<div class="car-info">
+					<p class="car-license">License Plate: @item.Offer.Car.LicensePlate</p>
+					<p class="car-brand">Car Brand: @item.Offer.Car.CarBrand</p>
+					<p class="car-model">Car Model: @item.Offer.Car.CarModel</p>
+					<p class="car-rentdate">Rent Date: @item.RentDate</p>
+					<p class="car-returned">Returned: @item.IsReturned</p>
+					@if (!item.IsReadyToReturn)
+					{
+						<a asp-action="Return" asp-route-Id="@item.Id" asp-route-Platform="@item.Platform" class="btn btn-primary">
+							Return
+						</a>
+					}
+					else
+					{
+						<p>Waiting for Confirmation</p>
+					}
+				</div>
+			</div>
+		}
+	</div>
 
-    
+
 </div>

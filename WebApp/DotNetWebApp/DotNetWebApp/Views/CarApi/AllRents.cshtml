@@ -1,31 +1,47 @@
 ﻿@model IEnumerable<DotNetWebApp.Models.RentHistoryModel>
 @{
-    ViewData["Title"] = "All Rents";
+	ViewData["Title"] = "All Rents";
 }
 
 <div class="page-wrapper">
-    <header class="page-header">
-        <h1>All Rents</h1>
-    </header>
+	<header class="page-header">
+		<h1>All Rents</h1>
+	</header>
 
-    <div class="car-grid">
-        @foreach (var item in Model)
-        {
-            <div class="car-card">
-                <!-- xxxxx -->
-                <div class="car-info">
-                    <p class="car-license">License Plate: @item.Offer.Car.LicensePlate</p>
-                    <p class="car-brand">Car Brand: @item.Offer.Car.CarBrand</p>
-                    <p class="car-model">Car Model: @item.Offer.Car.CarModel</p>
-                    <p class="car-rentdate">Rent Date: @item.RentDate</p>
-                    <p class="name">Client Name: @item.Name</p>
-                    <p class="surname">Client Surname: @item.Surname</p>
-                    <p class="email">Client Email: @item.Email</p>
-                    <p class="car-returned">Returned: @item.IsReturned</p>
-                </div>
-            </div>
-        }
-    </div>
+	<div class="car-grid">
+		@foreach (var item in Model)
+		{
+			<div class="car-card">
+				<!-- xxxxx -->
+				<div class="car-info">
+					<p class="car-license">License Plate: @item.Offer.Car.LicensePlate</p>
+					<p class="car-brand">Car Brand: @item.Offer.Car.CarBrand</p>
+					<p class="car-model">Car Model: @item.Offer.Car.CarModel</p>
+					<p class="car-rentdate">Rent Date: @item.RentDate</p>
+					<p class="name">Client Name: @item.Name</p>
+					<p class="surname">Client Surname: @item.Surname</p>
+					<p class="email">Client Email: @item.Email</p>
+					<p class="car-returned">Returned: @item.IsReturned</p>
+					@if (item.IsReadyToReturn && !item.IsReturned)
+					{
+						<a asp-action="ConfirmReturn" asp-route-Id="@item.Id" asp-route-Platform="@item.Platform"
+						   asp-route-Email="@item.Email" asp-route-Client_Id="@item.Client_Id"
+						   asp-route-IsReadyToReturn="@item.IsReadyToReturn" class="btn btn-primary">
+							Confirm Return
+						</a>
+					}
+					else if (!item.IsReadyToReturn)
+					{
+						<p>Waiting for Return Request</p>
+					}
+					else if (item.IsReturned)
+					{
+						<p>Car Returned</p>
+					}
+				</div>
+			</div>
+		}
+	</div>
 
 
 </div>

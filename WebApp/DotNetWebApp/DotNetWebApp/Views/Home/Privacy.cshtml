@@ -1,6 +1,15 @@
-﻿@{
+﻿@using Azure.Storage.Blobs;
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<form asp-controller="CarApi" asp-action="UploadImage" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="file">Select an image:</label>
+        <input type="file" id="file" name="file" accept="image/*" />
+    </div>
+    <button type="submit">Upload</button>
+</form>

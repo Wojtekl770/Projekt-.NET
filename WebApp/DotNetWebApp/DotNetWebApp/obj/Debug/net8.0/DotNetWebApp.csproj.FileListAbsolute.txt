@@ -883,3 +883,7 @@ C:\Users\HP\Desktop\GUWNO\AutoSwift\WebApp\DotNetWebApp\DotNetWebApp\obj\Debug\n
 C:\Users\HP\Desktop\GUWNO\AutoSwift\WebApp\DotNetWebApp\DotNetWebApp\obj\Debug\net8.0\DotNetWebApp.pdb
 C:\Users\HP\Desktop\GUWNO\AutoSwift\WebApp\DotNetWebApp\DotNetWebApp\obj\Debug\net8.0\DotNetWebApp.genruntimeconfig.cache
 C:\Users\HP\Desktop\GUWNO\AutoSwift\WebApp\DotNetWebApp\DotNetWebApp\obj\Debug\net8.0\ref\DotNetWebApp.dll
+C:\Users\wikto\source\repos\.Net Projekt\WebApp\DotNetWebApp\DotNetWebApp\bin\Debug\net8.0\Azure.Storage.Blobs.dll
+C:\Users\wikto\source\repos\.Net Projekt\WebApp\DotNetWebApp\DotNetWebApp\bin\Debug\net8.0\Azure.Storage.Common.dll
+C:\Users\wikto\source\repos\.Net Projekt\WebApp\DotNetWebApp\DotNetWebApp\bin\Debug\net8.0\System.ClientModel.dll
+C:\Users\wikto\source\repos\.Net Projekt\WebApp\DotNetWebApp\DotNetWebApp\bin\Debug\net8.0\System.IO.Hashing.dll

@@ -12,7 +12,8 @@
 		public int OfferId { get; set; }
 		public OfferDB Offer { get; set; }
         public bool IsReturned { get; set; }
-        public RentHistory() { }
+		public bool IsReadyToReturn { get; set; }
+		public RentHistory() { }
 
 	}
 
@@ -28,7 +29,8 @@
         public int OfferId { get; set; }
         public OfferCarModel Offer { get; set; }
         public bool IsReturned { get; set; }
-        public RentHistoryModel() { }
+		public bool IsReadyToReturn { get; set; }
+		public RentHistoryModel() { }
         public RentHistoryModel(RentHistory rent, string platform ="") 
         {
             this.Id = rent.Id;
@@ -40,6 +42,7 @@
             this.RentDate = rent.RentDate;
             this.OfferId = rent.OfferId;
             this.IsReturned = rent.IsReturned;
+            this.IsReadyToReturn = rent.IsReadyToReturn;
         }
     }
 }

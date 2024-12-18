@@ -20,6 +20,8 @@ using System.Linq;
 //using AspNetCore;
 using System.Runtime.InteropServices.ComTypes;
 using static System.Net.WebRequestMethods;
+using Azure.Storage.Blobs;
+using DotNetWebApp.Models;
 
 namespace DotNetWebApp.Controllers
 {
@@ -30,7 +32,7 @@ namespace DotNetWebApp.Controllers
         //private Uri baseAddress;
         private readonly HttpClient _client;
         private CarContext carContext;
-
+        private readonly BlobStorageService _blobStorageService;
         public CarApiController(CarContext carC)
         {
             string Uri = "https://localhost:7127/Car";
@@ -42,6 +44,8 @@ namespace DotNetWebApp.Controllers
             _client.BaseAddress = baseAddress;
             carContext = carC;
             _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/plain"));
+
+            _blobStorageService = new();
         }
 
         [HttpGet]
@@ -132,15 +136,15 @@ namespace DotNetWebApp.Controllers
                             else //nie istnialo auto wczesniej u nas
                                 carContext
                                     .Add(new CarPlatform()
-                                        {
-                                            Id = car.Id,
-                                            CarBrand = car.CarBrand,
-                                            CarModel = car.CarModel,
-                                            LicensePlate = car.LicensePlate,
-                                            IsRented = car.IsRented,
-                                            Localization = car.Localization,
-                                            Platform = Uri
-                                        }
+                                    {
+                                        Id = car.Id,
+                                        CarBrand = car.CarBrand,
+                                        CarModel = car.CarModel,
+                                        LicensePlate = car.LicensePlate,
+                                        IsRented = car.IsRented,
+                                        Localization = car.Localization,
+                                        Platform = Uri
+                                    }
                                     );
 
                             await carContext.SaveChangesAsync();
@@ -447,7 +451,7 @@ namespace DotNetWebApp.Controllers
 
 
                             //dodanie referencji na auto i oferte
-                            rentModel.Offer = (await carContext.Offers.ToListAsync()).FirstOrDefault(o => o.Id == rentModel.OfferId && o.Platform==rentModel.Platform);
+                            rentModel.Offer = (await carContext.Offers.ToListAsync()).FirstOrDefault(o => o.Id == rentModel.OfferId && o.Platform == rentModel.Platform);
                             await carContext.SaveChangesAsync();
                             if (rentModel.Offer == null)
                             {
@@ -472,7 +476,7 @@ namespace DotNetWebApp.Controllers
                             if (onlyNotReturned && rentModel.IsReturned)
                             {
                                 //if (temprent.Offer != null)
-                                    //temprent.Offer.Car = null;
+                                //temprent.Offer.Car = null;
                                 temprent.Offer = null;
                                 carContext.Remove(temprent);
                                 await carContext.SaveChangesAsync();
@@ -526,13 +530,13 @@ namespace DotNetWebApp.Controllers
                         RentHistoryModel? rh2 = temprents.FirstOrDefault();
                         if (rh2 != null)
                         {
-                            rh2.IsReturned = true;
-                            rh2.Offer.Car.IsRented = false;
+                            rh2.IsReadyToReturn = true;
+                            //rh2.IsReturned = true;
+                            //rh2.Offer.Car.IsRented = false;
 
                             //zeny z mojej bazy nie ususnac auta i oferty
-                            //rh2.Offer.Car = null;
-                            rh2.Offer = null;
-                            carContext.Remove(rh2);
+                            //rh2.Offer = null;
+                            //carContext.Remove(rh2);
 
                             await carContext.SaveChangesAsync();
                         }
@@ -571,6 +575,73 @@ namespace DotNetWebApp.Controllers
 
 
             return View(await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).ToListAsync());
+        }
+
+        public async Task<IActionResult> ConfirmReturn(RentHistory rh) //tylko id poprawne tutaj
+        {
+            string platform = Request.Host.ToString();
+
+
+            ReturnRequest rr = new() { Client_Id = rh.Client_Id, Email = rh.Email, Platform = platform, Rent_Id = rh.Id };
+
+            if (rh.IsReadyToReturn)
+                try
+                {
+                    //proba zwrotu?
+                    var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/ConfirmReturn", rr);
+                    response.EnsureSuccessStatusCode();
+                    string data = await response.Content.ReadAsStringAsync();
+                    bool? success = JsonConvert.DeserializeObject<bool>(data);
+
+                    if (success != null && (bool)success)
+                    {
+                        IEnumerable<RentHistoryModel> temprents = (await carContext.Rents
+                            .Include(r => r.Offer)
+                            .Include(r => r.Offer.Car)
+                            .ToListAsync()).Where(r => r.Id == rh.Id && r.Platform == Uri);
+
+                        if (temprents.Count() == 1)
+                        {
+                            RentHistoryModel? rh2 = temprents.FirstOrDefault();
+                            if (rh2 != null)
+                            {
+                                rh2.IsReturned = true;
+                                rh2.Offer.Car.IsRented = false;
+
+                                //zeny z mojej bazy nie ususnac auta i oferty
+                                //rh2.Offer = null;
+                                //carContext.Remove(rh2);
+
+                                //await carContext.SaveChangesAsync();
+                            }
+                        }
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    string x = e.Message;
+                }
+
+
+            return Redirect("/CarApi/MyRents");
+        }
+
+
+
+
+        [HttpPost("uploadImage")]
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            // Przesyłanie pliku do Azure Blob Storage
+            var fileUrl = await _blobStorageService.UploadFileAsync(file);
+
+            return Ok(new { FileUrl = fileUrl });
         }
 
 
