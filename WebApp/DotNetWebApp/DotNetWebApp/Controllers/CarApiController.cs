@@ -21,7 +21,6 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using static System.Net.WebRequestMethods;
 using Azure.Storage.Blobs;
-using DotNetWebApp.Models;
 
 namespace DotNetWebApp.Controllers
 {
@@ -33,6 +32,8 @@ namespace DotNetWebApp.Controllers
 		private readonly HttpClient _client;
 		private CarContext carContext;
 		private readonly BlobStorageService _blobStorageService;
+		private string apiKey = "some_random_key";
+		private string apiName = "X-Api-Key";
 		public CarApiController(CarContext carC)
 		{
 			string Uri = "https://localhost:7127/Car";
@@ -92,7 +93,9 @@ namespace DotNetWebApp.Controllers
 			HttpResponseMessage? response = null;
 			try
 			{
-				response = await _client.GetAsync(_client.BaseAddress + "/Get");
+				var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/Get");
+				request.Headers.Add(apiName, apiKey);
+				response = await _client.SendAsync(request);
 			}
 			catch (HttpRequestException e)
 			{
@@ -252,7 +255,13 @@ namespace DotNetWebApp.Controllers
 							cancel.CancelAfter(15000);
 
 							//wysylamy oferte
-							var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/CreateOffer", ask, cancel.Token);
+							//var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/CreateOffer", ask, cancel.Token);
+							string jsonContent = System.Text.Json.JsonSerializer.Serialize(ask);
+							var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/CreateOffer");
+							request.Headers.Add(apiName, apiKey);
+							request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+							var response = await _client.SendAsync(request, cancel.Token);
+
 							response.EnsureSuccessStatusCode();
 
 							string data = await response.Content.ReadAsStringAsync();
@@ -329,8 +338,17 @@ namespace DotNetWebApp.Controllers
 				};
 
 
-				var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/Rent", oc);
+				//var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/Rent", oc);
+
+				string jsonContent = System.Text.Json.JsonSerializer.Serialize(oc);
+				var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/Rent");
+				request.Headers.Add(apiName, apiKey);
+				request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+				var response = await _client.SendAsync(request);
+
 				response.EnsureSuccessStatusCode();
+
+
 				string data = await response.Content.ReadAsStringAsync();
 				int Rent_Id = int.Parse(data);//JsonConvert.DeserializeObject<int>(data);
 
@@ -374,7 +392,7 @@ namespace DotNetWebApp.Controllers
 
 			await Rents(rr, true);
 
-			return View(await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).ToListAsync());
+			return View(await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).Where(r => r.Client_Id == id_client).ToListAsync());
 
 		}
 
@@ -396,7 +414,13 @@ namespace DotNetWebApp.Controllers
 
 
 				//pobranie wynajmow
-				var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/GetMyRents", rr);
+				//var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/GetMyRents", rr);
+				string jsonContent = System.Text.Json.JsonSerializer.Serialize(rr);
+				var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/GetMyRents");
+				request.Headers.Add(apiName, apiKey);
+				request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+				var response = await _client.SendAsync(request);
+
 				response.EnsureSuccessStatusCode();
 				string data = await response.Content.ReadAsStringAsync();
 				IEnumerable<RentHistory>? rents = JsonConvert.DeserializeObject<IEnumerable<RentHistory>>(data);
@@ -513,7 +537,13 @@ namespace DotNetWebApp.Controllers
 			try
 			{
 				//proba zwrotu?
-				var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/Return", rr);
+				//var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/Return", rr);
+				string jsonContent = System.Text.Json.JsonSerializer.Serialize(rr);
+				var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/Return");
+				request.Headers.Add(apiName, apiKey);
+				request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+				var response = await _client.SendAsync(request);
+
 				response.EnsureSuccessStatusCode();
 				string data = await response.Content.ReadAsStringAsync();
 				bool? success = JsonConvert.DeserializeObject<bool>(data);
@@ -608,7 +638,13 @@ namespace DotNetWebApp.Controllers
 				try
 				{
 					//proba zwrotu?
-					var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/ConfirmReturn", rcr);
+					//var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/ConfirmReturn", rcr);
+					string jsonContent = System.Text.Json.JsonSerializer.Serialize(rcr);
+					var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/ConfirmReturn");
+					request.Headers.Add(apiName, apiKey);
+					request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await _client.SendAsync(request);
+
 					response.EnsureSuccessStatusCode();
 					string data = await response.Content.ReadAsStringAsync();
 					bool? success = JsonConvert.DeserializeObject<bool>(data);
