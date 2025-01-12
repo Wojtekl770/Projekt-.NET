@@ -30,6 +30,34 @@ namespace DotNetApiCars.Controllers
 
 			return await _carContext.Cars.ToListAsync();
 		}
+
+		[HttpGet("{id}")]
+		public ActionResult<Car?> GetCar([FromBody] int id, [FromHeader(Name = apiName)] string apiKey)
+		{
+			if (apiKey != this.apiKey)
+				return NotFound();
+
+			var car = _carContext.Cars.Find(id);
+
+			if (car == null)
+				return NotFound();
+
+			return Ok(car);
+		}
+
+		[HttpGet("{id}")]
+		public ActionResult<RentHistory?> GetRent([FromBody] int id, [FromHeader(Name = apiName)] string apiKey)
+		{
+			if (apiKey != this.apiKey)
+				return NotFound();
+
+			var rent = _carContext.Rents.Find(id);
+
+			if(rent == null)
+				return NotFound();
+
+			return Ok(rent);
+		}
 		/*
 		[HttpGet]
 		public async Task<IEnumerable<RentHistory>> GetRents()
