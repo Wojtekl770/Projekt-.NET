@@ -12,19 +12,25 @@ namespace DotNetApiCars.Controllers
 	{
         private readonly CarContext _carContext;
         private readonly IEmailSender _emailSender;  // Declare _emailSender
+		private string apiKey = "some_random_key";
+		private const string apiName = "X-Api-Key";
 
-        // Inject IEmailSender into the constructor
-        public CarController(CarContext carContext, IEmailSender emailSender)
+		// Inject IEmailSender into the constructor
+		public CarController(CarContext carContext, IEmailSender emailSender)
         {
             _carContext = carContext;
             _emailSender = emailSender;  // Assign the injected IEmailSender
         }
 
         [HttpGet]
-		public async Task<IEnumerable<Car>> Get()
+		public async Task<IEnumerable<Car>> Get([FromHeader(Name = apiName)] string apiKey)
 		{
+			if (apiKey != this.apiKey)
+				return [];
+
 			return await _carContext.Cars.ToListAsync();
 		}
+		/*
 		[HttpGet]
 		public async Task<IEnumerable<RentHistory>> GetRents()
 		{
@@ -49,10 +55,14 @@ namespace DotNetApiCars.Controllers
 			_carContext.SaveChangesAsync();
 
 		}
+		*/
 
 		[HttpPut]
-		public async Task<IEnumerable<RentHistory>> GetMyRents(RentsRequest rr)
+		public async Task<IEnumerable<RentHistory>> GetMyRents([FromBody] RentsRequest rr, [FromHeader(Name = apiName)] string apiKey)
 		{
+			if (apiKey != this.apiKey)
+				return [];
+
 			IEnumerable<RentHistory>? rh = (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())
 				.Where(r =>
 				r.Client_Id == rr.Client_Id &&
@@ -61,6 +71,7 @@ namespace DotNetApiCars.Controllers
 			return rh??[];
 		}
 
+		/*
 		[HttpPut]
 		public async Task<RentHistory?> GetRent(RentRequest rr)
 		{
@@ -72,13 +83,17 @@ namespace DotNetApiCars.Controllers
 
 			return rh;
 		}
+		*/
 
 		[HttpPut]
-        [HttpPut]
-        public async Task<int> Rent(OfferChoice oc)
+		[HttpPut]
+		public async Task<int> Rent([FromBody] OfferChoice oc, [FromHeader(Name = apiName)] string apiKey)
         {
-            // Retrieve the offer and car
-            OfferDB? _offer = await _carContext.OffersDB.Include(o => o.Car)
+			if (apiKey != this.apiKey)
+				return -3;
+
+			// Retrieve the offer and car
+			OfferDB? _offer = await _carContext.OffersDB.Include(o => o.Car)
                                                          .Where(c => c.Id == oc.Offer_Id)
                                                          .FirstOrDefaultAsync();
 
@@ -129,8 +144,12 @@ namespace DotNetApiCars.Controllers
 
 
         [HttpPost]
-		public async Task<Offer?> CreateOffer(AskPrice ask)
+		public async Task<Offer?> CreateOffer([FromBody] AskPrice ask, [FromHeader(Name = apiName)] string apiKey)
 		{
+			if (apiKey != this.apiKey)
+				return new();
+
+			Console.WriteLine(apiKey);
 			try
 			{
 				if (ask.Age < 18)
@@ -177,7 +196,7 @@ namespace DotNetApiCars.Controllers
 				return new() { IsSuccess = false, ExpirationDate = DateTime.Now, Id = -1, PriceDay = 0, PriceInsurance = 0 };
 			}
 		}
-
+		/*
 		[HttpPut]
 		public async Task<Car?> Unrent(Car car)
 		{
@@ -196,11 +215,14 @@ namespace DotNetApiCars.Controllers
 
 			return _car;
 		}
-
+		*/
         [HttpPut]
-        public async Task<bool> Return(ReturnRequest retr)
+        public async Task<bool> Return([FromBody]ReturnRequest retr, [FromHeader(Name = apiName)] string apiKey)
         {
-            RentHistory? rh = (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())
+			if (apiKey != this.apiKey)
+				return false;
+
+			RentHistory? rh = (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())
                 .Where(r =>
                 r.Client_Id == retr.Client_Id &&
                 r.Platform == retr.Platform &&
@@ -220,8 +242,11 @@ namespace DotNetApiCars.Controllers
         }
 
 		[HttpPost]
-		public async Task<bool> ConfirmReturn(ReturnRequest retr)
+		public async Task<bool> ConfirmReturn([FromBody] ReturnRequest retr, [FromHeader(Name = apiName)] string apiKey)
 		{
+			if (apiKey != this.apiKey)
+				return false;
+
 			RentHistory? rh = (await _carContext.Rents.Include(o => o.Offer).Include(r => r.Offer.Car).ToListAsync())
 				.Where(r =>
 				r.Client_Id == retr.Client_Id &&
