@@ -1,5 +1,13 @@
 ﻿namespace DotNetWebApp.Models
 {
+	public enum RentState
+	{
+		In_Progess = 0,
+		Active = 1,
+		ReadyToReturn = 2,
+		Returned = 3,
+        Failure = 4
+	}
 	public class RentHistory
 	{
 		public int Id { get; set; }
@@ -13,6 +21,7 @@
 		public OfferDB Offer { get; set; }
         public bool IsReturned { get; set; }
 		public bool IsReadyToReturn { get; set; }
+		public RentState RentState { get; set; }
 		public RentHistory() { }
 
 	}
@@ -30,6 +39,7 @@
         public OfferCarModel Offer { get; set; }
         public bool IsReturned { get; set; }
 		public bool IsReadyToReturn { get; set; }
+		public RentState RentState { get; set; }
 		public RentHistoryModel() { }
         public RentHistoryModel(RentHistory rent, string platform ="") 
         {
@@ -43,6 +53,8 @@
             this.OfferId = rent.OfferId;
             this.IsReturned = rent.IsReturned;
             this.IsReadyToReturn = rent.IsReadyToReturn;
+            this.RentState = rent.RentState;
         }
     }
+
 }
