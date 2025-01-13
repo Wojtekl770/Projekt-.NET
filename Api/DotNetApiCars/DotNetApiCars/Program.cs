@@ -34,8 +34,11 @@ namespace DotNetApiCars
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("https://localhost:7136", "https://carrentalwebapp-a5fxc7cne5cmfve8.canadacentral-01.azurewebsites.net")
-                          .AllowAnyHeader()
+                          policy.WithOrigins("https://localhost:7136",
+                              "https://carrentalwebapp-a5fxc7cne5cmfve8.canadacentral-01.azurewebsites.net",
+							  "https://webapp1-ehg7h6g3e9hpaqda.polandcentral-01.azurewebsites.net")
+
+						  .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
             });
