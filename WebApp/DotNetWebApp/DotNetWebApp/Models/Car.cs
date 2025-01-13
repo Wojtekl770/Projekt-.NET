@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using System.Text.Json.Serialization;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotNetWebApp.Models
 {
@@ -6,10 +7,14 @@ namespace DotNetWebApp.Models
 	{
 		public int Id { get; set; }
 		public string LicensePlate { get; set; }
-		public string CarBrand { get; set; }
 		public string CarModel { get; set; }
+
+		public string CarBrand { get; set; }
+
 		public bool IsRented { get; set; }
 		public string Localization { get; set; }
+
+
 
 		public Car()
 		{

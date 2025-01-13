@@ -1,6 +1,7 @@
 ﻿using Azure;
 using DotNetWebApp.Data;
 using DotNetWebApp.Models;
+using DotNetWebApp.ObceApi;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,24 +28,34 @@ namespace DotNetWebApp.Controllers
 
 	public class CarApiController : Controller
 	{
-		private string Uri;
+		private string Uri, Uri2;
 		//private Uri baseAddress;
-		private readonly HttpClient _client;
+		private readonly HttpClient _client, _client2;
 		private CarContext carContext;
 		private readonly BlobStorageService _blobStorageService;
 		private string apiKey = "some_random_key";
 		private string apiName = "X-Api-Key";
+		private string apiKey2 = "5faa0775-1e65-4616-9974-4922ec588269";
 		public CarApiController(CarContext carC)
 		{
 			string Uri = "https://localhost:7127/Car";
-			//Uri = "https://carrentalapi2-acg4cgdcanecabap.canadacentral-01.azurewebsites.net/Car";
+			//Uri = "https://webapp2net-gmd6bjgfggduhqf0.polandcentral-01.azurewebsites.net/Car";
+			string Uri2 = "https://minicarrentalapi.azurewebsites.net/api";
 
 			this.Uri = Uri;
 			Uri baseAddress = new Uri(this.Uri);
 			_client = new HttpClient();
 			_client.BaseAddress = baseAddress;
-			carContext = carC;
 			_client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/plain"));
+
+			this.Uri2 = Uri2;
+			Uri baseAddress2 = new Uri(this.Uri2);
+			_client2 = new HttpClient();
+			_client2.BaseAddress = baseAddress2;
+			_client2.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/plain"));
+
+
+			carContext = carC;
 
 			_blobStorageService = new();
 		}
@@ -52,6 +63,8 @@ namespace DotNetWebApp.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
+			await GetThemAll();
+
 			return await Get();
 		}
 
@@ -85,11 +98,88 @@ namespace DotNetWebApp.Controllers
 			return View("Index", results);
 		}
 
+		[HttpGet]
+		public async Task<bool> GetThemAll()
+		{
+			List<ObceApi.Car2>? cars;
+			HttpResponseMessage? response = null;
+			try
+			{
+				var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Cars/allAvailable");
+				request.Headers.Add(apiName, apiKey2);
+				response = await _client2.SendAsync(request);
+			}
+			catch (HttpRequestException e)
+			{
+				response = null;
+				return false;
+			}
+
+			string data = await response.Content.ReadAsStringAsync();
+			cars = JsonConvert.DeserializeObject<List<ObceApi.Car2>>(data);
+			if (cars == null)
+				return false;
+
+			ConcurrentBag<int> ids = new((await carContext.Cars.Where(c => c.Platform == Uri2).ToListAsync()).Select(c => c.Id));
+
+
+			await Parallel.ForEachAsync(cars, async (car, cancell) =>
+			//foreach (ObceApi.Car2 car in cars)
+			{
+				if (!ids.Contains(car.Id)) //nie istnialo auto wczesniej u nas
+				{
+					string localization = "unknown";
+					string licenceplate = "XYZ000";
+					/*
+					try
+					{
+						var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Cars/" + car.Id);
+						request.Headers.Add(apiName, apiKey2);
+						response = await _client2.SendAsync(request);
+
+						string data2 = await response.Content.ReadAsStringAsync();
+						ObceApi.Car? carFull = JsonConvert.DeserializeObject<ObceApi.Car>(data2);
+
+						if (carFull != null)
+						{
+							localization = $"Lat: {carFull.Location.Latitude}, Long: {carFull.Location.Longitude}";
+							licenceplate = $"{carFull.FuelType.Substring(0, 2)} + {carFull.Colour.Substring(1, 1)} + {carFull.DoorsNumber} + {carFull.HorsePower}";
+						}
+					}
+					catch (HttpRequestException e)
+					{
+						response = null;
+					}
+					*/
+
+					lock (carContext)
+					{
+						carContext
+							.Add(new CarPlatform()
+							{
+								Id = car.Id,
+								CarBrand = car.BrandName,
+								CarModel = car.ModelName,
+								LicensePlate = licenceplate,
+								IsRented = false,
+								Localization = localization,
+								Platform = Uri2
+							}
+							);
+
+						carContext.SaveChanges();
+					}
+				}
+			}
+			);
+
+			return true;
+		}
 
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			List<Car>? cars;
+			List<Models.Car>? cars;
 			HttpResponseMessage? response = null;
 			try
 			{
@@ -105,14 +195,14 @@ namespace DotNetWebApp.Controllers
 			if (response != null && response.IsSuccessStatusCode)
 			{
 				string data = await response.Content.ReadAsStringAsync();
-				cars = JsonConvert.DeserializeObject<List<Car>>(data);
+				cars = JsonConvert.DeserializeObject<List<Models.Car>>(data);
 				List<CarPlatform> templist;
 
 				if (cars != null)
 				{
 					//jezeli w pamieci podrecznej brak aut
 					if (!carContext.Cars.Any())
-						foreach (Car car in cars)
+						foreach (Models.Car car in cars)
 						{
 							CarPlatform new_car = new()
 							{
@@ -128,7 +218,7 @@ namespace DotNetWebApp.Controllers
 							await carContext.SaveChangesAsync();
 						}
 					else
-						foreach (Car car in cars)
+						foreach (Models.Car car in cars)
 						{
 							//istnialo auto wczesniej u nas
 							if ((templist = (await carContext.Cars.ToListAsync()).Where(c => c.Id == car.Id && c.Platform == Uri).ToList()).Count != 0)
@@ -187,7 +277,7 @@ namespace DotNetWebApp.Controllers
 
 				//auta dla tej marki i modelu
 				List<CarPlatform> cars = (await carContext.Cars.ToListAsync()).FindAll(car =>
-									car.CarModel == carOverall.CarModel && car.CarBrand == carOverall.CarBrand);
+										car.CarModel == carOverall.CarModel && car.CarBrand == carOverall.CarBrand);
 
 
 				//info do zlozenia oferty
@@ -225,76 +315,168 @@ namespace DotNetWebApp.Controllers
 						existingOrUsedOffers.Add(m);
 				}
 
+
 				await Parallel.ForEachAsync(cars, async (car, cancell) =>
 				{
-					try
+					if (car.Platform == Uri)
 					{
-
-						OfferCarModel? offerFromDatabase;
-						if ((offerFromDatabase = existingOrUsedOffers
-							.Where(o => o.CarId == car.Id && o.Platform == car.Platform && o.ExpirationDate.CompareTo(now) < 0)
-							.FirstOrDefault()) != null)
+						try
 						{
-							//pokazujemy AKTYWNA oferte z naszej lokalnej bazy danych
-							offerscars.Add(offerFromDatabase);
+
+							OfferCarModel? offerFromDatabase;
+							if ((offerFromDatabase = existingOrUsedOffers
+								.Where(o => o.CarId == car.Id && o.Platform == car.Platform && o.ExpirationDate.CompareTo(now) < 0)
+								.FirstOrDefault()) != null)
+							{
+								//pokazujemy AKTYWNA oferte z naszej lokalnej bazy danych
+								offerscars.Add(offerFromDatabase);
+							}
+							else
+							{
+								//nowe zapytanie o oferte
+								AskPrice ask = new()
+								{
+									Age = yearNow - yearOfBirth,
+									DriversLicenceDuration = yearNow - yearOfGettingDriversLicence,
+									Start = Start,
+									Return = Return,
+									ExtraInfo = "No Extra Info",
+									Car_Id = car.Id
+								};
+
+								CancellationTokenSource cancel = new();
+								cancel.CancelAfter(15000);
+
+								//wysylamy oferte
+								//var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/CreateOffer", ask, cancel.Token);
+								string jsonContent = System.Text.Json.JsonSerializer.Serialize(ask);
+								var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/CreateOffer");
+								request.Headers.Add(apiName, apiKey);
+								request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+								var response = await _client.SendAsync(request, cancel.Token);
+
+								response.EnsureSuccessStatusCode();
+
+								string data = await response.Content.ReadAsStringAsync();
+								Models.Offer? offer = JsonConvert.DeserializeObject<Models.Offer>(data);
+
+								if (offer != null && offer.IsSuccess)
+								{
+									//dodajemy oferte na ten model
+									OfferCarModel ocm = new()
+									{
+										Id = offer.Id,
+										PriceDay = offer.PriceDay,
+										PriceInsurance = offer.PriceInsurance,
+										ExpirationDate = offer.ExpirationDate,
+										Car = car,
+										CarId = car.Id,
+										Platform = Uri
+									};
+
+									offerscars.Add(ocm);
+									lock (carContext)
+									{
+										carContext.Offers.Add(ocm);
+										carContext.SaveChanges();
+									}
+								}
+							}
+						}
+						catch (Exception) { }
+					}
+					else if (car.Platform == Uri2)
+					{
+						List<OfferCarModel> offersFromDatabase;
+						if ((offersFromDatabase = existingOrUsedOffers
+							.Where(o => o.CarId == car.Id && o.Platform == car.Platform && o.ExpirationDate.CompareTo(now) < 0).ToList()).Any())
+						{
+							//pokazujemy AKTYWNE oferty z naszej lokalnej bazy danych
+							foreach (var o in offersFromDatabase)
+								offerscars.Add(o);
 						}
 						else
 						{
-							//nowe zapytanie o oferte
-							AskPrice ask = new()
+							if (car.Localization == "unknown")
 							{
-								Age = yearNow - yearOfBirth,
-								DriversLicenceDuration = yearNow - yearOfGettingDriversLicence,
-								Start = Start,
-								Return = Return,
-								ExtraInfo = "No Extra Info",
-								Car_Id = car.Id
-							};
+								try
+								{
+									string localization = "unknown";
+									string licenceplate = "XYZ000";
 
-							CancellationTokenSource cancel = new();
-							cancel.CancelAfter(15000);
+									var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Cars/" + car.Id);
+									request.Headers.Add(apiName, apiKey2);
+									HttpResponseMessage?  response2 = await _client2.SendAsync(request);
 
-							//wysylamy oferte
-							//var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/CreateOffer", ask, cancel.Token);
-							string jsonContent = System.Text.Json.JsonSerializer.Serialize(ask);
-							var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/CreateOffer");
-							request.Headers.Add(apiName, apiKey);
-							request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-							var response = await _client.SendAsync(request, cancel.Token);
+									string data2 = await response2.Content.ReadAsStringAsync();
+									ObceApi.Car? carFull = JsonConvert.DeserializeObject<ObceApi.Car>(data2);
 
-							response.EnsureSuccessStatusCode();
+									if (carFull != null && carFull.Location != null)
+									{
+										localization = $"Lat: {carFull.Location.Latitude}, Long: {carFull.Location.Longitude}";
+										licenceplate = $"{carFull.FuelType.Substring(0, 2)}{carFull.Colour.Substring(1, 1)}{carFull.DoorsNumber}{carFull.HorsePower}";
+
+										lock (carContext)
+										{
+											car.Localization = localization;
+											car.LicensePlate = licenceplate;
+											carContext.SaveChanges();
+										}
+									}
+
+								}
+								catch (HttpRequestException e) { }
+							}
+
+
+							HttpResponseMessage? response = null;
+							try
+							{
+								var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Rental/offers/" + car.Id);
+								request.Headers.Add(apiName, apiKey2);
+								response = await _client2.SendAsync(request);
+								response.EnsureSuccessStatusCode();
+							}
+							catch (HttpRequestException e)
+							{
+								return;
+							}
 
 							string data = await response.Content.ReadAsStringAsync();
-							Offer? offer = JsonConvert.DeserializeObject<Offer>(data);
+							List<ObceApi.Offer>? offers = JsonConvert.DeserializeObject<List<ObceApi.Offer>>(data);
 
-							if (offer != null && offer.IsSuccess)
-							{
-								//dodajemy oferte na ten model
-								OfferCarModel ocm = new()
+
+							if (offers != null)
+								foreach (var offer in offers)
 								{
-									Id = offer.Id,
-									PriceDay = offer.PriceDay,
-									PriceInsurance = offer.PriceInsurance,
-									ExpirationDate = offer.ExpirationDate,
-									Car = car,
-									CarId = car.Id,
-									Platform = Uri
-								};
+									//dodajemy oferte na ten model
+									OfferCarModel ocm = new()
+									{
+										Id = offer.Id,
+										PriceDay = Decimal.ToInt32(offer.Price),
+										PriceInsurance = offer.IsInsurance ? Decimal.ToInt32(offer.Price) : 0,
+										ExpirationDate = offer.ExpirationDate,
+										Car = car,
+										CarId = car.Id,
+										Platform = Uri2
+									};
 
-								offerscars.Add(ocm);
-								carContext.Offers.Add(ocm);
-								await carContext.SaveChangesAsync();
-							}
+									offerscars.Add(ocm);
+									lock (carContext)
+									{
+										carContext.Offers.Add(ocm);
+										carContext.SaveChanges();
+									}
+								}
 						}
 					}
-					catch (Exception) { }
 				});
 
 				var final = offerscars.ToList();
 				final.Sort((c1, c2) => c1.CarId.CompareTo(c2.CarId));
 				return View(final);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
 				return Redirect("/CarApi/Index");
 			}
