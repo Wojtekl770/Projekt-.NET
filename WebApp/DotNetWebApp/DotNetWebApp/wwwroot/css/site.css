@@ -12,42 +12,43 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    margin-top: auto; /* Added margin to push content down from the navbar */
+    margin-bottom: 60px; /* Added margin to ensure space for the footer */
     font-family: 'Arial', sans-serif;
-    color: #4a4a4a;
+    color: #4a4a4a; /* Dark gray */
 }
 
 /* Button Styles */
 .btn, .rent-btn, .search-btn, .ask-price-btn {
-    background-color: #a29bfe;
+    background-color: #6c5ce7; /* Purple base color */
     color: white;
     border: none;
     padding: 10px 15px;
-    font-size: 14px;
+    font-size: 1rem;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
     .btn:hover, .rent-btn:hover, .search-btn:hover, .ask-price-btn:hover {
-        background-color: #6c5ce7;
-    }
-
-.search-btn {
-    background-color: #6c5ce7; /* Purple base color */
-}
-
-    .search-btn:hover {
-        background-color: #5a51b8; /* Slightly darker purple */
+        background-color: #4a4aeb; /* Slightly darker purple */
     }
 
 .ask-price-btn {
-    background-color: #f39c12;
+    background-color: #f39c12; /* Yellow */
     cursor: not-allowed;
 }
 
     .ask-price-btn:hover {
-        background-color: #e67e22;
+        background-color: #e67e22; /* Darker yellow */
+    }
+
+.search-btn {
+    background-color: #6c5ce7; /* Purple */
+}
+
+    .search-btn:hover {
+        background-color: #4a4aeb; /* Darker purple */
     }
 
 /* Page Wrapper */
@@ -55,17 +56,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+    color: #4a4a4a; /* Dark gray */
     padding: 20px;
     max-width: 1200px;
+    min-height: calc(100vh - 120px); /* Account for the height of the navbar and footer */
     text-align: center;
+    padding-bottom: 60px; /* Ensure there's space for the footer */
 }
 
 /* Page Header */
 .page-header {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #6c5ce7;
+    color: #6c5ce7; /* Purple */
 }
 
 /* Search Form */
@@ -99,7 +105,7 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e0e0e0; /* Light gray border */
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -116,11 +122,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; /* Light gray background */
     width: 100%;
     height: 150px;
     border-radius: 8px;
-    color: #a29bfe;
+    color: #6c5ce7; /* Purple text */
     font-size: 16px;
     margin-bottom: 15px;
 }
@@ -132,30 +138,29 @@ body {
 
     .car-info h2 {
         margin: 10px 0 5px;
-        color: #4a4a4a;
+        color: #4a4a4a; /* Dark gray */
         font-size: 18px;
     }
 
     .car-info p {
         margin: 0 0 15px;
-        color: #6c5ce7;
+        color: #6c5ce7; /* Purple */
         font-size: 16px;
     }
 
-    /* Rent Button in Car Info */
     .car-info .btn {
         text-transform: uppercase;
     }
 
         .car-info .btn:hover {
-            background-color: #6c5ce7;
+            background-color: #4a4aeb; /* Darker purple */
         }
 
 /* No Results Message */
 .no-results {
     margin-top: 20px;
     font-size: 18px;
-    color: #6c5ce7;
+    color: #6c5ce7; /* Purple */
     font-weight: bold;
 }
 
@@ -181,11 +186,11 @@ body {
     .car-image-section .image-placeholder {
         width: 100%;
         height: 250px;
-        background-color: #f0f0f0;
+        background-color: #f0f0f0; /* Light gray */
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #a29bfe;
+        color: #6c5ce7; /* Purple */
         font-size: 16px;
         margin-bottom: 20px;
     }
@@ -201,12 +206,12 @@ body {
     .car-info-section h2 {
         font-size: 24px;
         margin-bottom: 15px;
-        color: #4a4a4a;
+        color: #4a4a4a; /* Dark gray */
     }
 
     .car-info-section p {
         font-size: 16px;
-        color: #6c5ce7;
+        color: #6c5ce7; /* Purple */
         margin-bottom: 10px;
     }
 
@@ -217,7 +222,7 @@ body {
 }
 
     .back-to-list .btn-link {
-        color: #6c5ce7;
+        color: #6c5ce7; /* Purple */
         text-decoration: none;
     }
 
@@ -225,34 +230,10 @@ body {
             text-decoration: underline;
         }
 
-/* Login Button Styling */
-#login-submit {
-    background-color: #6c5ce7;
-    border: none;
-    color: white;
-}
-
-    #login-submit:hover {
-        background-co
-        /* General Page Styling */
-        .page-wrapper
-
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center the content vertically and horizontally */
-    height: 100vh; /* Full viewport height */
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    color: #4a4a4a;
-    padding: 20px;
-}
-
 /* Title */
 .page-wrapper h1 {
     font-size: 36px;
-    color: #6c5ce7;
+    color: #6c5ce7; /* Purple */
     margin-bottom: 30px;
     text-align: center;
 }
@@ -272,10 +253,9 @@ body {
     min-height: 400px; /* Ensure the card has a minimum height */
 }
 
-    /* Card Header */
     .card h2 {
         font-size: 24px;
-        color: #4a4a4a;
+        color: #4a4a4a; /* Dark gray */
         margin-bottom: 20px;
         text-align: center;
     }
@@ -287,14 +267,14 @@ body {
 
 .form-control {
     border-radius: 5px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e0e0e0; /* Light gray border */
     padding: 12px 15px;
     font-size: 16px;
 }
 
 /* Submit Button */
 #login-submit {
-    background-color: #6c5ce7;
+    background-color: #6c5ce7; /* Purple */
     color: white;
     border: none;
     padding: 12px 15px;
@@ -306,22 +286,36 @@ body {
 }
 
     #login-submit:hover {
-        background-color: #4a4aeb;
+        background-color: #4a4aeb; /* Darker purple */
     }
 
-/* Links Styling */
-.mt-3 p {
-    text-align: center;
+/* Registration Form Specific Styles */
+.card h2 {
+    font-size: 24px;
+    color: #4a4a4a; /* Dark gray */
 }
 
-.mt-3 a {
-    color: #6c5ce7;
-    text-decoration: none;
+.form-floating {
+    margin-bottom: 15px;
+    font-size: 14px; /* Smaller font for inputs */
 }
 
-    .mt-3 a:hover {
-        text-decoration: underline;
+    .form-floating input,
+    .form-floating label {
+        font-size: 14px; /* Smaller font for labels and inputs */
     }
+
+.page-wrapper h1 {
+    font-size: 32px;
+}
+
+.page-wrapper .col-md-6 {
+    margin-bottom: 20px;
+}
+
+button#w-100 {
+    font-size: 14px; /* Adjusted font size for the button */
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -354,3 +348,51 @@ body {
         font-size: 14px;
     }
 }
+
+/* Pagination Container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+    .pagination a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #6c5ce7; /* Purple */
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .pagination a:hover {
+            background-color: #4a4aeb; /* Darker purple */
+            transform: scale(1.05);
+        }
+
+    .pagination .disabled {
+        background-color: #d3d3d3; /* Gray */
+        color: #a0a0a0;
+        cursor: not-allowed;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        box-shadow: none;
+    }
+
+        .pagination .disabled:hover {
+            background-color: #d3d3d3; /* Gray */
+            transform: none;
+        }
+

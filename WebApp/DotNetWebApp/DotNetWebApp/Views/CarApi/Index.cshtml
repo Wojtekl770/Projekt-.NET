@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DotNetWebApp.Models.CarOverall>
+﻿@model DotNetWebApp.Models.PagedResult<DotNetWebApp.Models.CarOverall>
 @{
     ViewData["Title"] = "Search Cars";
 }
@@ -15,10 +15,10 @@
         </form>
     </div>
 
-    @if (Model != null && Model.Any())
+    @if (Model.Items != null && Model.Items.Any())
     {
         <div class="car-grid">
-            @foreach (var car in Model)
+            @foreach (var car in Model.Items)
             {
                 <div class="car-card">
                     <div class="image-placeholder">
@@ -35,6 +35,43 @@
                 </div>
             }
         </div>
+
+        <div class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                @if (Context.Request.Query.ContainsKey("query"))
+                {
+                    <a asp-action="Search" asp-route-query="@Context.Request.Query["query"]" asp-route-pageNumber="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize">Previous</a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize">Previous</a>
+                }
+            }
+            else
+            {
+                <span class="disabled">Previous</span> <!-- Disabled state for Previous -->
+            }
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                @if (Context.Request.Query.ContainsKey("query"))
+                {
+                    <a asp-action="Search" asp-route-query="@Context.Request.Query["query"]" asp-route-pageNumber="@(Model.CurrentPage + 1)" asp-route-pageSize="@Model.PageSize">Next</a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.CurrentPage + 1)" asp-route-pageSize="@Model.PageSize">Next</a>
+                }
+            }
+            else
+            {
+                <span class="disabled">Next</span> <!-- Disabled state for Next -->
+            }
+        </div>
+
+
+
     }
     else
     {

@@ -24,6 +24,7 @@ using static System.Net.WebRequestMethods;
 using Azure.Storage.Blobs;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Reflection.PortableExecutable;
+using System.Drawing.Printing;
 
 namespace DotNetWebApp.Controllers
 {
@@ -67,27 +68,48 @@ namespace DotNetWebApp.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 2)
 		{
-			await GetThemAll();
+            //await GetThemAll();
 
-			return await Get();
-		}
+            await Get();
+
+            var totalCars = await carContext.Cars.CountAsync();
+            var cars = await carContext.Cars
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(c => new CarOverall
+                {
+                    CarBrand = c.CarBrand,
+                    CarModel = c.CarModel
+                })
+                .ToListAsync();
+
+            var pagedResult = new PagedResult<CarOverall>
+            {
+                Items = cars,
+                TotalCount = totalCars,
+                PageSize = pageSize,
+                CurrentPage = pageNumber
+            };
+
+            return View(pagedResult);
+        }
 
 		[HttpGet]
-		public async Task<IActionResult> Search(string query)
+		public async Task<IActionResult> Search(string query, int pageNumber = 1, int pageSize = 2)
 		{
 			await Get();
-
+            
 			if (string.IsNullOrEmpty(query))
 			{
 				// If no query is provided, redirect back to the Index view or return all cars
 				return RedirectToAction("Index");
 			}
-
+			
 			// Normalize query for case-insensitive search
 			query = query.ToLower();
-
+			/*
 			// Perform search in the database
 			var results = await carContext.Cars
 				.Where(c => c.CarBrand.ToLower().Contains(query) || c.CarModel.ToLower().Contains(query))
@@ -102,7 +124,32 @@ namespace DotNetWebApp.Controllers
 
 			// Return search results to the same view
 			return View("Index", results);
-		}
+			*/
+            var totalCars = await carContext.Cars
+            .Where(c => c.CarBrand.ToLower().Contains(query) || c.CarModel.ToLower().Contains(query))
+            .CountAsync();
+
+            var cars = await carContext.Cars
+                .Where(c => c.CarBrand.ToLower().Contains(query) || c.CarModel.ToLower().Contains(query))
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(c => new CarOverall
+                {
+                    CarBrand = c.CarBrand,
+                    CarModel = c.CarModel
+                })
+                .ToListAsync();
+
+            var pagedResult = new PagedResult<CarOverall>
+            {
+                Items = cars,
+                TotalCount = totalCars,
+                PageSize = pageSize,
+                CurrentPage = pageNumber
+            };
+
+            return View("Index", pagedResult);
+        }
 
 		[HttpGet]
 		public async Task<bool> GetThemAll()
@@ -161,7 +208,7 @@ namespace DotNetWebApp.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Get()
+		public async Task<List<Models.CarOverall>> Get()
 		{
 			List<Models.Car>? cars;
 			HttpResponseMessage? response = null;
@@ -235,7 +282,7 @@ namespace DotNetWebApp.Controllers
 				co.Add(new() { CarBrand = group.Key.CarBrand, CarModel = group.Key.CarModel });
 
 			co.Sort((c1, c2) => c1.CarBrand.CompareTo(c2.CarBrand));
-			return View(co);
+			return co;
 		}
 
 		public async Task<IActionResult> Edit(int id, string Platform)
