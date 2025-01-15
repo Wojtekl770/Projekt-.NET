@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Register";
+    var currentYear = DateTime.Now.Year;
+    var yearRange = Enumerable.Range(currentYear - 100, 101).Reverse(); // Years from 1900 to current year
 }
 
 <div class="page-wrapper">
@@ -39,17 +41,29 @@
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
 
-                    <!-- Year of Birth Input -->
+                    <!-- Year of Birth Input (using a dropdown list of years) -->
                     <div class="form-floating mb-3">
-                        <input asp-for="Input.YearOfBirth" class="form-control" autocomplete="YearOfBirth" aria-required="true" placeholder="Please enter your year of birth" />
-                        <label asp-for="Input.YearOfBirth" class="form-label">Year Of Birth</label>
+                        <select asp-for="Input.YearOfBirth" class="form-control" aria-required="true">
+                            <option value="">Select Year of Birth</option>
+                            @foreach (var year in yearRange)
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        </select>
+                        <label asp-for="Input.YearOfBirth" class="form-label">Year of Birth</label>
                         <span asp-validation-for="Input.YearOfBirth" class="text-danger"></span>
                     </div>
 
-                    <!-- Year of Getting Driver's License Input -->
+                    <!-- Year of Getting Driver's License Input (using a dropdown list of years) -->
                     <div class="form-floating mb-3">
-                        <input asp-for="Input.YearOfGettingDriversLicence" class="form-control" autocomplete="YearOfGettingDriversLicence" aria-required="true" placeholder="drivers licence" />
-                        <label asp-for="Input.YearOfGettingDriversLicence" class="form-label">Year Of Getting Drivers Licence</label>
+                        <select asp-for="Input.YearOfGettingDriversLicence" class="form-control" aria-required="true">
+                            <option value="">Select Year of Getting Driver's License</option>
+                            @foreach (var year in yearRange)
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        </select>
+                        <label asp-for="Input.YearOfGettingDriversLicence" class="form-label">Year of Getting Driver's License</label>
                         <span asp-validation-for="Input.YearOfGettingDriversLicence" class="text-danger"></span>
                     </div>
 
@@ -82,7 +96,7 @@
 
         <!-- External Register Panel Card (right side) -->
         <div class="col-md-6 col-lg-5 mt-4 mt-md-0">
-            <section class="card p-4 shadow-sm rounded">
+            <section class="card p-4 shadow-sm rounded external-register-panel">
                 <h3>Use another service to register.</h3>
                 <hr />
                 @if ((Model.ExternalLogins?.Count ?? 0) == 0)
@@ -92,7 +106,7 @@
                             There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
                                 article
                                 about setting up this ASP.NET application to support logging in via external services
-                            </a>.
+                            </a> for more information.
                         </p>
                     </div>
                 }
