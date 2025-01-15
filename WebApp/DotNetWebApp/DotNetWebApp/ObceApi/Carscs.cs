@@ -2,6 +2,14 @@
 using System.Text.Json.Serialization;
 namespace DotNetWebApp.ObceApi
 {
+
+	public class ReturnRequestTheir
+	{
+		public string EmployeeEmail { get; set; }
+		public string ReturnDescription { get; set; }
+		public string Base64EncodedCarImage { get; set; }
+	}
+
 	public class Car2
 	{
 		[JsonPropertyName("id")]
@@ -32,6 +40,21 @@ namespace DotNetWebApp.ObceApi
 		public DateTime ExpirationDate { get; set; }
 
 		public string UserEmail { get; set; } = "";
+	}
+
+	public class RentalInfo
+	{
+		public int Id { get; set; }
+		public string OfferGuid { get; set; } = "";
+		public int RentalStatus { get; set; }
+		public DateTime RentDate { get; set; }
+		public int CarID { get; set; }
+		public string UserEmail { get; set; } = "";
+		public int SourceAPI { get; set; }
+		public double PricePerDay { get; set; }
+		public bool IsInsurance { get; set; }
+		public Car Car { get; set; }
+		public string? Return { get; set; }
 	}
 
 	public class Car

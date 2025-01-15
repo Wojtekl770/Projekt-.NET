@@ -22,7 +22,15 @@
 					<p class="surname">Client Surname: @item.Surname</p>
 					<p class="email">Client Email: @item.Email</p>
 					<p class="car-returned">Returned: @item.IsReturned</p>
-					@if (item.IsReadyToReturn && !item.IsReturned)
+					@if (item.RentState == RentState.Failure)
+					{
+						<p>Something went wrong</p>
+					}
+					else if (item.RentState == RentState.In_Progess)
+					{
+						<p>Waiting for Rent Confirmation</p>
+					}
+					else if (item.IsReadyToReturn && !item.IsReturned)
 					{
 						<a asp-action="ConfirmReturn" asp-route-Id="@item.Id" asp-route-Platform="@item.Platform"
 						   asp-route-Email="@item.Email" asp-route-Client_Id="@item.Client_Id"

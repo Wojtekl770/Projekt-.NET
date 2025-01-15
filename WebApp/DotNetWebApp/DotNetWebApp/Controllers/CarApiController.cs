@@ -22,6 +22,8 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using static System.Net.WebRequestMethods;
 using Azure.Storage.Blobs;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.Reflection.PortableExecutable;
 
 namespace DotNetWebApp.Controllers
 {
@@ -36,10 +38,12 @@ namespace DotNetWebApp.Controllers
 		private string apiKey = "some_random_key";
 		private string apiName = "X-Api-Key";
 		private string apiKey2 = "5faa0775-1e65-4616-9974-4922ec588269";
+		private string clientName = "X-Client-Id";
+		private string clientKey2 = "ClientId01";
 		public CarApiController(CarContext carC)
 		{
-			string Uri = "https://localhost:7127/Car";
-			//Uri = "https://webapp2net-gmd6bjgfggduhqf0.polandcentral-01.azurewebsites.net/Car";
+			//string Uri = "https://localhost:7127/Car";
+			string Uri = "https://webapp2net-gmd6bjgfggduhqf0.polandcentral-01.azurewebsites.net/Car";
 			string Uri2 = "https://minicarrentalapi.azurewebsites.net/api";
 
 			this.Uri = Uri;
@@ -47,13 +51,15 @@ namespace DotNetWebApp.Controllers
 			_client = new HttpClient();
 			_client.BaseAddress = baseAddress;
 			_client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/plain"));
+			_client.DefaultRequestHeaders.Add(apiName, apiKey);
 
 			this.Uri2 = Uri2;
 			Uri baseAddress2 = new Uri(this.Uri2);
 			_client2 = new HttpClient();
 			_client2.BaseAddress = baseAddress2;
 			_client2.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/plain"));
-
+			_client2.DefaultRequestHeaders.Add(apiName, apiKey2);
+			_client2.DefaultRequestHeaders.Add(clientName, clientKey2);
 
 			carContext = carC;
 
@@ -106,7 +112,6 @@ namespace DotNetWebApp.Controllers
 			try
 			{
 				var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Cars/allAvailable");
-				request.Headers.Add(apiName, apiKey2);
 				response = await _client2.SendAsync(request);
 			}
 			catch (HttpRequestException e)
@@ -126,38 +131,17 @@ namespace DotNetWebApp.Controllers
 			await Parallel.ForEachAsync(cars, async (car, cancell) =>
 			//foreach (ObceApi.Car2 car in cars)
 			{
-				if (!ids.Contains(car.Id)) //nie istnialo auto wczesniej u nas
+				if (!ids.Contains(car.Id + 100)) //nie istnialo auto wczesniej u nas
 				{
 					string localization = "unknown";
 					string licenceplate = "XYZ000";
-					/*
-					try
-					{
-						var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Cars/" + car.Id);
-						request.Headers.Add(apiName, apiKey2);
-						response = await _client2.SendAsync(request);
-
-						string data2 = await response.Content.ReadAsStringAsync();
-						ObceApi.Car? carFull = JsonConvert.DeserializeObject<ObceApi.Car>(data2);
-
-						if (carFull != null)
-						{
-							localization = $"Lat: {carFull.Location.Latitude}, Long: {carFull.Location.Longitude}";
-							licenceplate = $"{carFull.FuelType.Substring(0, 2)} + {carFull.Colour.Substring(1, 1)} + {carFull.DoorsNumber} + {carFull.HorsePower}";
-						}
-					}
-					catch (HttpRequestException e)
-					{
-						response = null;
-					}
-					*/
 
 					lock (carContext)
 					{
 						carContext
 							.Add(new CarPlatform()
 							{
-								Id = car.Id,
+								Id = car.Id + 100,
 								CarBrand = car.BrandName,
 								CarModel = car.ModelName,
 								LicensePlate = licenceplate,
@@ -184,7 +168,6 @@ namespace DotNetWebApp.Controllers
 			try
 			{
 				var request = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "/Get");
-				request.Headers.Add(apiName, apiKey);
 				response = await _client.SendAsync(request);
 			}
 			catch (HttpRequestException e)
@@ -322,7 +305,6 @@ namespace DotNetWebApp.Controllers
 					{
 						try
 						{
-
 							OfferCarModel? offerFromDatabase;
 							if ((offerFromDatabase = existingOrUsedOffers
 								.Where(o => o.CarId == car.Id && o.Platform == car.Platform && o.ExpirationDate.CompareTo(now) < 0)
@@ -348,13 +330,13 @@ namespace DotNetWebApp.Controllers
 								cancel.CancelAfter(15000);
 
 								//wysylamy oferte
-								//var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/CreateOffer", ask, cancel.Token);
+								var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/CreateOffer", ask, cancel.Token);
+								/*
 								string jsonContent = System.Text.Json.JsonSerializer.Serialize(ask);
 								var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/CreateOffer");
-								request.Headers.Add(apiName, apiKey);
 								request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 								var response = await _client.SendAsync(request, cancel.Token);
-
+								*/
 								response.EnsureSuccessStatusCode();
 
 								string data = await response.Content.ReadAsStringAsync();
@@ -399,41 +381,14 @@ namespace DotNetWebApp.Controllers
 						{
 							if (car.Localization == "unknown")
 							{
-								try
-								{
-									string localization = "unknown";
-									string licenceplate = "XYZ000";
-
-									var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Cars/" + car.Id);
-									request.Headers.Add(apiName, apiKey2);
-									HttpResponseMessage?  response2 = await _client2.SendAsync(request);
-
-									string data2 = await response2.Content.ReadAsStringAsync();
-									ObceApi.Car? carFull = JsonConvert.DeserializeObject<ObceApi.Car>(data2);
-
-									if (carFull != null && carFull.Location != null)
-									{
-										localization = $"Lat: {carFull.Location.Latitude}, Long: {carFull.Location.Longitude}";
-										licenceplate = $"{carFull.FuelType.Substring(0, 2)}{carFull.Colour.Substring(1, 1)}{carFull.DoorsNumber}{carFull.HorsePower}";
-
-										lock (carContext)
-										{
-											car.Localization = localization;
-											car.LicensePlate = licenceplate;
-											carContext.SaveChanges();
-										}
-									}
-
-								}
-								catch (HttpRequestException e) { }
+								car = await AddCar(car, car.Id, false);
 							}
 
 
 							HttpResponseMessage? response = null;
 							try
 							{
-								var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Rental/offers/" + car.Id);
-								request.Headers.Add(apiName, apiKey2);
+								var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Rental/offers/" + (car.Id - 100));
 								response = await _client2.SendAsync(request);
 								response.EnsureSuccessStatusCode();
 							}
@@ -458,7 +413,8 @@ namespace DotNetWebApp.Controllers
 										ExpirationDate = offer.ExpirationDate,
 										Car = car,
 										CarId = car.Id,
-										Platform = Uri2
+										Platform = Uri2,
+										GUID = offer.OfferGuid.ToString()
 									};
 
 									offerscars.Add(ocm);
@@ -480,6 +436,58 @@ namespace DotNetWebApp.Controllers
 			{
 				return Redirect("/CarApi/Index");
 			}
+		}
+
+		private async Task<CarPlatform?> AddCar(CarPlatform? car, int CarId, bool createCar)
+		{
+			try
+			{
+				string localization = "unknown";
+				string licenceplate = "XYZ000";
+
+				var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Cars/" + (CarId - 100));
+				HttpResponseMessage? response2 = await _client2.SendAsync(request);
+
+				string data2 = await response2.Content.ReadAsStringAsync();
+				ObceApi.Car? carFull = JsonConvert.DeserializeObject<ObceApi.Car>(data2);
+
+
+				if (carFull != null)
+				{
+					if (createCar)
+					{
+						car = new()
+						{
+							Id = CarId,
+							Platform = Uri2,
+							CarBrand = carFull.Model.Brand.Name,
+							CarModel = carFull.Model.Name,
+							//LicensePlate = licenceplate,
+							IsRented = false,
+							//Localization = localization
+						};
+
+						carContext.Add(car);
+						await carContext.SaveChangesAsync();
+					}
+
+					if (carFull.Location != null)
+					{
+						localization = $"Lat: {carFull.Location.Latitude}, Long: {carFull.Location.Longitude}";
+						licenceplate = $"{carFull.FuelType.Substring(0, 2)}{carFull.Colour.Substring(1, 1)}{carFull.DoorsNumber}{carFull.HorsePower}";
+
+						lock (carContext)
+						{
+							car.Localization = localization;
+							car.LicensePlate = licenceplate;
+							carContext.SaveChanges();
+						}
+					}
+				}
+
+			}
+			catch (HttpRequestException e) { }
+			return car;
 		}
 
 		[HttpPost]
@@ -519,32 +527,58 @@ namespace DotNetWebApp.Controllers
 					Platform = platform,
 				};
 
-
-				//var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/Rent", oc);
-
-				string jsonContent = System.Text.Json.JsonSerializer.Serialize(oc);
-				var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/Rent");
-				request.Headers.Add(apiName, apiKey);
-				request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-				var response = await _client.SendAsync(request);
-
-				response.EnsureSuccessStatusCode();
-
-
-				string data = await response.Content.ReadAsStringAsync();
-				int Rent_Id = int.Parse(data);//JsonConvert.DeserializeObject<int>(data);
-
-				//if (Rent_Id != null)
-				if (Rent_Id > -2)
+				
+				if (offerCarID.Platform == Uri)
 				{
-					//albo juz wynajety przez kogos innego == -1
-					//albo udalo nam sie > 0
+					var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/Rent", oc);
+					/*
+					string jsonContent = System.Text.Json.JsonSerializer.Serialize(oc);
+					var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/Rent");
+					request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await _client.SendAsync(request);
+					*/
+					response.EnsureSuccessStatusCode();
 
-					//wsm to nic tu nie robimy, ale w api jakis email, cos?
-					// no i trzeba zapisac ten rent_Id
-					CarPlatform car = (await carContext.Cars.ToListAsync()).First(c => offerCarID.CarId == c.Id && c.Platform == offerCarID.Platform);
-					car.IsRented = true;
-					await carContext.SaveChangesAsync();
+					string data = await response.Content.ReadAsStringAsync();
+					int Rent_Id = int.Parse(data);
+
+					//if (Rent_Id != null)
+					if (Rent_Id > -2)
+					{
+						//albo juz wynajety przez kogos innego == -1
+						//albo udalo nam sie > 0
+
+						//wsm to nic tu nie robimy, ale w api jakis email, cos?
+						// no i trzeba zapisac ten rent_Id
+						CarPlatform car = (await carContext.Cars.ToListAsync()).First(c => offerCarID.CarId == c.Id && c.Platform == offerCarID.Platform);
+						car.IsRented = true;
+						await carContext.SaveChangesAsync();
+					}
+				}
+				else if (offerCarID.Platform == Uri2)
+				{
+					//string jsonContent = "{\"emailAddress\": \"" + email + "\"}"; //System.Text.Json.JsonSerializer.Serialize(email);
+					string jsonContent = "\"" + email + "\"";
+					var request = new HttpRequestMessage(HttpMethod.Put, _client2.BaseAddress + "/Rental/offers/chooseOffer/" + offerCarID.Id);
+					request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await _client2.SendAsync(request);
+					response.EnsureSuccessStatusCode();
+
+					string data = await response.Content.ReadAsStringAsync();
+					ObceApi.RentalInfo? rent = JsonConvert.DeserializeObject<ObceApi.RentalInfo>(data);
+
+					if (rent != null)
+					{
+						Models.RentHistoryModel rent_correct = new(rent, oc, Uri2);
+
+						CarPlatform car = (await carContext.Cars.ToListAsync()).First(c => offerCarID.CarId == c.Id && c.Platform == offerCarID.Platform);
+						car.IsRented = true;
+						await carContext.SaveChangesAsync();
+
+						carContext.Rents.Add(rent_correct);
+						await carContext.SaveChangesAsync();
+					}
+
 				}
 
 				return View((await carContext.Offers.ToListAsync()).First(o => offerCarID.Id == o.Id && o.Platform == offerCarID.Platform));
@@ -572,10 +606,86 @@ namespace DotNetWebApp.Controllers
 
 			RentsRequest rr = new() { Client_Id = id_client, Email = email, Platform = platform };
 
-			await Rents(rr, true);
+			await Rents(rr, false);
 
-			return View(await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).Where(r => r.Client_Id == id_client).ToListAsync());
+			var rents = await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).Where(r => r.Client_Id == id_client).ToListAsync();
 
+			return View(rents);
+
+		}
+
+		private async Task<int> RentsThemAll(RentsRequest rr)
+		{
+			var request = new HttpRequestMessage(HttpMethod.Get, _client2.BaseAddress + "/Rental/rentals/allRentals/" + rr.Email);
+			var response = await _client2.SendAsync(request);
+
+			response.EnsureSuccessStatusCode();
+			var data = await response.Content.ReadAsStringAsync();
+			var rentsRaw = JsonConvert.DeserializeObject<IEnumerable<ObceApi.RentalInfo>>(data);
+
+			if (rentsRaw != null)
+			{
+				RentHistoryModel? rhm = null;
+				foreach (var rentRaw in rentsRaw)
+					if ((rhm = await carContext.Rents.Where(r => r.Id == rentRaw.Id && r.Platform == Uri2).FirstOrDefaultAsync()) == null)
+					{
+						OfferCarModel? offer;
+						if ((offer = await carContext.Offers.Where(o => o.GUID == rentRaw.OfferGuid).FirstOrDefaultAsync()) == null)
+						{
+							offer = new()
+							{
+								Platform = Uri2,
+								PriceDay = (int)(rentRaw.PricePerDay),
+								PriceInsurance = rentRaw.IsInsurance ? (int)(rentRaw.PricePerDay) : 0,
+								ExpirationDate = DateTime.Now.AddMinutes(1),
+								CarId = rentRaw.CarID + 100,
+								GUID = rentRaw.OfferGuid
+							};
+
+							carContext.Add(offer);
+							await carContext.SaveChangesAsync();
+
+
+							offer.Car = await carContext.Cars.Where(c => c.Id == offer.CarId && c.Platform == Uri2).FirstOrDefaultAsync();
+							await carContext.SaveChangesAsync();
+							if (!await carContext.Cars.Where(c => c.Id == offer.CarId && c.Platform == Uri2).AnyAsync())
+							{
+								CarPlatform? car = null;
+								car = await AddCar(car, offer.CarId, true);
+								offer.Car = car;
+								await carContext.SaveChangesAsync();
+							}
+							else
+							{
+								offer.Car = await AddCar(offer.Car, offer.Car.Id, false);
+								await carContext.SaveChangesAsync();
+							}
+
+
+							offer = await carContext.Offers.Where(o => o.GUID == rentRaw.OfferGuid).FirstOrDefaultAsync();
+						}
+
+						RentHistoryModel rent = new(rentRaw, rr, offer.Id, Uri2);
+						carContext.Add(rent);
+						await carContext.SaveChangesAsync();
+
+						rent.Offer = offer;
+						await carContext.SaveChangesAsync();
+
+					}
+					else
+					{
+						rhm.RentState = ConverterEnumState.Convert((RentalStatus)rentRaw.RentalStatus);
+						if (ConverterEnumState.StateToBools(rhm.RentState, out bool IsReadyToReturn, out bool IsReturned))
+						{
+							rhm.IsReadyToReturn = IsReadyToReturn;
+							rhm.IsReturned = IsReturned;
+						}
+						await carContext.SaveChangesAsync();
+					}
+
+			}
+			return 0;
 		}
 
 		[HttpPut]
@@ -594,104 +704,73 @@ namespace DotNetWebApp.Controllers
 							await carContext.SaveChangesAsync();
 						}
 
-
-				//pobranie wynajmow
-				//var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/GetMyRents", rr);
-				string jsonContent = System.Text.Json.JsonSerializer.Serialize(rr);
-				var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/GetMyRents");
-				request.Headers.Add(apiName, apiKey);
-				request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-				var response = await _client.SendAsync(request);
+				var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/GetMyRents", rr);
 
 				response.EnsureSuccessStatusCode();
 				string data = await response.Content.ReadAsStringAsync();
 				IEnumerable<RentHistory>? rents = JsonConvert.DeserializeObject<IEnumerable<RentHistory>>(data);
 
+
+				/**/
+				/**/
+				await RentsThemAll(rr);
+				/**/
+				/**/
+
+
 				if (rents == null)
 					return -1;
-				//return View(await carContext.Rents.ToListAsync());
 
+				foreach (RentHistory rent in rents)
+				{
+					RentHistoryModel? temprent;
+					RentHistoryModel rentModel = new(rent, Uri);
+					var x = rentModel.IsReturned;
 
-				if (!carContext.Rents.Any())
-					foreach (RentHistory rent in rents)
+					//dodanie takich ktorych nie ma w naszej lokalnej DB i nie sa zwrocone (lub chcemy tez nie zwrocone)
+					bool b = (temprent = (await carContext.Rents.ToListAsync()).Where(r => r.Id == rentModel.Id && r.Platform == rentModel.Platform).FirstOrDefault()) == null && (!onlyNotReturned || !rentModel.IsReturned);
+					if (b)
 					{
-						if (!onlyNotReturned || !rent.IsReturned)
+						carContext.Add(rentModel);
+						await carContext.SaveChangesAsync();
+
+
+						//dodanie referencji na auto i oferte
+						rentModel.Offer = (await carContext.Offers.ToListAsync()).FirstOrDefault(o => o.Id == rentModel.OfferId && o.Platform == rentModel.Platform);
+						await carContext.SaveChangesAsync();
+						if (rentModel.Offer == null)
 						{
-							RentHistoryModel rentModel = new(rent, Uri);
-
-							carContext.Add(rentModel);
+							rentModel.Offer = new(rent.Offer, Uri);
+							carContext.Add(rentModel.Offer);
 							await carContext.SaveChangesAsync();
 
 
-							//dodanie referencji na auto i oferte
-							rentModel.Offer = (await carContext.Offers.ToListAsync()).FirstOrDefault(o => o.Id == rentModel.OfferId && o.Platform == rentModel.Platform);
+							//nie POWINNO byc problemyu z dodaniem auta
+							//if (rentModel.Offer.Car == null)
+							//{
+							rentModel.Offer.Car = (await carContext.Cars.ToListAsync()).FirstOrDefault(c => c.Id == rentModel.Offer.CarId && c.Platform == rentModel.Platform);
 							await carContext.SaveChangesAsync();
-							if (rentModel.Offer == null)
-							{
-								rentModel.Offer = new(rent.Offer, Uri);
-								carContext.Add(rentModel.Offer);
-								// carContext.Update(rentModel);
-								await carContext.SaveChangesAsync();
-
-
-								//nie POWINNO byc problemyu z dodaniem erferencji na auto
-								rentModel.Offer.Car = (await carContext.Cars.ToListAsync()).FirstOrDefault(c => c.Id == rentModel.Offer.CarId && c.Platform == rentModel.Platform);
-								await carContext.SaveChangesAsync();
-							}
-
-
+							//}
 						}
-					}
-				else
-					foreach (RentHistory rent in rents)
-					{
-						RentHistoryModel? temprent;
-						RentHistoryModel rentModel = new(rent, Uri);
-
-
-						//dodanie takich ktorych nie ma w naszej lokalnej DB i nie sa zwrocone (lub chcemy tez nie zwrocone)
-						if ((temprent = (await carContext.Rents.ToListAsync()).Where(r => r.Id == rentModel.Id && r.Platform == rentModel.Platform).FirstOrDefault()) == null && (!onlyNotReturned || !rentModel.IsReturned))
-						{
-							carContext.Add(rentModel);
-							await carContext.SaveChangesAsync();
-
-
-							//dodanie referencji na auto i oferte
-							rentModel.Offer = (await carContext.Offers.ToListAsync()).FirstOrDefault(o => o.Id == rentModel.OfferId && o.Platform == rentModel.Platform);
-							await carContext.SaveChangesAsync();
-							if (rentModel.Offer == null)
-							{
-								rentModel.Offer = new(rent.Offer, Uri);
-								carContext.Add(rentModel.Offer);
-								//carContext.Update(rentModel);
-								await carContext.SaveChangesAsync();
-
-
-								//nie POWINNO byc problemyu z dodaniem auta
-								//if (rentModel.Offer.Car == null)
-								//{
-								rentModel.Offer.Car = (await carContext.Cars.ToListAsync()).FirstOrDefault(c => c.Id == rentModel.Offer.CarId && c.Platform == rentModel.Platform);
-								await carContext.SaveChangesAsync();
-								//}
-							}
-
-						}
-						else if (temprent != null)
-						{
-							//jezeli jest w bazie danych ale trzeba usunac ja bo juz zwrocilismy (chyba ze chcemy te zwrocone juz ogladac)
-							if (onlyNotReturned && rentModel.IsReturned)
-							{
-								//if (temprent.Offer != null)
-								//temprent.Offer.Car = null;
-								temprent.Offer = null;
-								carContext.Remove(temprent);
-								await carContext.SaveChangesAsync();
-							}
-
-						}
-
 
 					}
+					else if (temprent != null)
+					{
+						temprent.RentState = rent.RentState;
+						await carContext.SaveChangesAsync();
+
+						//jezeli jest w bazie danych ale trzeba usunac ja bo juz zwrocilismy (chyba ze chcemy te zwrocone juz ogladac)
+						if (onlyNotReturned && rentModel.IsReturned)
+						{
+							temprent.Offer = null;
+							carContext.Remove(temprent);
+							await carContext.SaveChangesAsync();
+						}
+
+					}
+
+
+				}
 
 
 			}
@@ -714,46 +793,51 @@ namespace DotNetWebApp.Controllers
 			string? email2 = User.FindFirstValue(ClaimTypes.Email);
 			string email = email2 ?? "";
 
-			ReturnRequest rr = new() { Client_Id = id_client, Email = email, Platform = platform, Rent_Id = rh.Id };
-
 			try
 			{
-				//proba zwrotu?
-				//var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/Return", rr);
-				string jsonContent = System.Text.Json.JsonSerializer.Serialize(rr);
-				var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/Return");
-				request.Headers.Add(apiName, apiKey);
-				request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-				var response = await _client.SendAsync(request);
-
-				response.EnsureSuccessStatusCode();
-				string data = await response.Content.ReadAsStringAsync();
-				bool? success = JsonConvert.DeserializeObject<bool>(data);
-
-				if (success != null && (bool)success)
+				if (rh.Platform == Uri)
 				{
-					IEnumerable<RentHistoryModel> temprents = (await carContext.Rents
-						.Include(r => r.Offer)
-						.Include(r => r.Offer.Car)
-						.ToListAsync()).Where(r => r.Id == rh.Id && r.Platform == Uri);
+					ReturnRequest rr = new() { Client_Id = id_client, Email = email, Platform = platform, Rent_Id = rh.Id };
 
-					if (temprents.Count() == 1)
+					//proba zwrotu?
+					var response = await _client.PutAsJsonAsync(_client.BaseAddress + "/Return", rr);
+					/*
+					string jsonContent = System.Text.Json.JsonSerializer.Serialize(rr);
+					var request = new HttpRequestMessage(HttpMethod.Put, _client.BaseAddress + "/Return");
+					request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+					var response = await _client.SendAsync(request);
+					*/
+
+					response.EnsureSuccessStatusCode();
+					string data = await response.Content.ReadAsStringAsync();
+					bool? success = JsonConvert.DeserializeObject<bool>(data);
+
+					if (success != null && (bool)success)
 					{
-						RentHistoryModel? rh2 = temprents.FirstOrDefault();
-						if (rh2 != null)
+						IEnumerable<RentHistoryModel> temprents = (await carContext.Rents
+							.Include(r => r.Offer)
+							.Include(r => r.Offer.Car)
+							.ToListAsync()).Where(r => r.Id == rh.Id && r.Platform == rh.Platform);
+
+						if (temprents.Count() == 1)
 						{
-							rh2.IsReadyToReturn = true;
-							//rh2.IsReturned = true;
-							//rh2.Offer.Car.IsRented = false;
+							RentHistoryModel? rh2 = temprents.FirstOrDefault();
+							if (rh2 != null)
+							{
+								rh2.IsReadyToReturn = true;
 
-							//zeny z mojej bazy nie ususnac auta i oferty
-							//rh2.Offer = null;
-							//carContext.Remove(rh2);
-
-							await carContext.SaveChangesAsync();
+								await carContext.SaveChangesAsync();
+							}
 						}
-					}
 
+					}
+				}
+				else if (rh.Platform == Uri2)
+				{
+
+					var response = await _client2.PutAsJsonAsync(_client2.BaseAddress + "/Rental/rentals/returnCar/" + rh.Id, email);
+					response.EnsureSuccessStatusCode();
+					string data = await response.Content.ReadAsStringAsync();
 				}
 			}
 			catch (Exception e)
@@ -789,7 +873,7 @@ namespace DotNetWebApp.Controllers
 			return View(await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).ToListAsync());
 		}
 
-		public async Task<IActionResult> ConfirmReturn(RentHistory rh) //tylko id poprawne tutaj
+		public async Task<IActionResult> ConfirmReturn(RentHistory rh) //tylko id poprawne tutaj i platform
 		{
 			try
 			{
@@ -809,34 +893,64 @@ namespace DotNetWebApp.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> ConfirmReturnFunction(ConfirmReturn rh) //tylko id poprawne tutaj
+		public async Task<IActionResult> ConfirmReturnFunction(ConfirmReturn rh)
 		{
 			string platform = Request.Host.ToString();
 
-
 			ReturnRequest rcr = new() { Client_Id = rh.Client_Id, Email = rh.Email, Platform = platform, Rent_Id = rh.Id };
 
-			if (rh.IsReadyToReturn)
-				try
-				{
-					//proba zwrotu?
-					//var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/ConfirmReturn", rcr);
-					string jsonContent = System.Text.Json.JsonSerializer.Serialize(rcr);
-					var request = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "/ConfirmReturn");
-					request.Headers.Add(apiName, apiKey);
-					request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-					var response = await _client.SendAsync(request);
+			RentHistoryModel? rent = carContext.Rents.Find(rh.Id);
 
-					response.EnsureSuccessStatusCode();
-					string data = await response.Content.ReadAsStringAsync();
-					bool? success = JsonConvert.DeserializeObject<bool>(data);
+			if (rent.Platform == Uri)
+			{
+				if (rh.IsReadyToReturn)
+					try
+					{
+						//proba zwrotu?
+						var response = await _client.PostAsJsonAsync(_client.BaseAddress + "/ConfirmReturn", rcr);
+						
+						response.EnsureSuccessStatusCode();
+						string data = await response.Content.ReadAsStringAsync();
+						bool? success = JsonConvert.DeserializeObject<bool>(data);
 
-					if (success != null && (bool)success)
+						if (success != null && (bool)success)
+						{
+							IEnumerable<RentHistoryModel> temprents = (await carContext.Rents
+								.Include(r => r.Offer)
+								.Include(r => r.Offer.Car)
+								.ToListAsync()).Where(r => r.Id == rh.Id && r.Platform == rent.Platform);
+
+							if (temprents.Count() == 1)
+							{
+								RentHistoryModel? rh2 = temprents.FirstOrDefault();
+								if (rh2 != null)
+								{
+									if (rh.File != null)
+										await UploadImage(rh.File);
+
+									rh2.IsReturned = true;
+									rh2.Offer.Car.IsRented = false;
+
+									await carContext.SaveChangesAsync();
+								}
+							}
+
+						}
+					}
+					catch (Exception e)
+					{
+						string x = e.Message;
+					}
+			}
+			else if (rent.Platform == Uri2)
+			{
+				if (rh.IsReadyToReturn)
+					try
 					{
 						IEnumerable<RentHistoryModel> temprents = (await carContext.Rents
-							.Include(r => r.Offer)
-							.Include(r => r.Offer.Car)
-							.ToListAsync()).Where(r => r.Id == rh.Id && r.Platform == Uri);
+								.Include(r => r.Offer)
+								.Include(r => r.Offer.Car)
+								.ToListAsync()).Where(r => r.Id == rh.Id && r.Platform == rent.Platform);
 
 						if (temprents.Count() == 1)
 						{
@@ -853,12 +967,20 @@ namespace DotNetWebApp.Controllers
 							}
 						}
 
+
+						ReturnRequestTheir rr = new() {EmployeeEmail = rh.Email, ReturnDescription = "", Base64EncodedCarImage = "" };
+
+						var response = await _client2.PutAsJsonAsync(_client2.BaseAddress + "/Rental/rentals/acceptReturn/" + rh.Id, rr);
+						response.EnsureSuccessStatusCode();
+						string data = await response.Content.ReadAsStringAsync();
+
+						
 					}
-				}
-				catch (Exception e)
-				{
-					string x = e.Message;
-				}
+					catch (Exception e)
+					{
+						string x = e.Message;
+					}
+			}
 
 
 			return Redirect("/CarApi/AllRents");

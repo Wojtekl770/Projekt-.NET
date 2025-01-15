@@ -20,6 +20,7 @@ namespace DotNetWebApp.Models
 		public CarPlatform Car { get; set; }
 		public int CarId { get; set; }
 		public string Platform { get; set; }
+		public string GUID { get; set; } = "GUID";
 		public OfferCarModel() { }
 		public OfferCarModel(OfferDB o, string platform = "")
 		{
