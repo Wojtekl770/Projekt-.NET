@@ -56,13 +56,7 @@ namespace DotNetApiCars.Controllers
 			if (rent == null)
 				return NotFound();
 
-			if(rent.Offer == null)
-				rent.Offer = _carContext.OffersDB.Find(rent.OfferId);
-
-			if (rent.Offer.Car == null)
-				rent.Offer.Car = _carContext.Cars.Find(rent.Offer.CarId);
-
-			//await NotConfirmedRent(id);
+			await NotConfirmedRent(id);
 
 			return Ok(rent);
 		}
