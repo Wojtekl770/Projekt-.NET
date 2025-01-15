@@ -56,7 +56,13 @@ namespace DotNetApiCars.Controllers
 			if (rent == null)
 				return NotFound();
 
-			await NotConfirmedRent(id);
+			if(rent.Offer == null)
+				rent.Offer = _carContext.OffersDB.Find(rent.OfferId);
+
+			if (rent.Offer.Car == null)
+				rent.Offer.Car = _carContext.Cars.Find(rent.Offer.CarId);
+
+			//await NotConfirmedRent(id);
 
 			return Ok(rent);
 		}
@@ -393,6 +399,24 @@ namespace DotNetApiCars.Controllers
 			rh.Offer.Car.IsRented = false;
 			await _carContext.SaveChangesAsync();
 
+
+			int days = ((DateTime.Now - rh.RentDate).Days);
+			if (days < 0)
+				days = 0;
+
+			int totalCost = days * rh.Offer.PriceDay + rh.Offer.PriceInsurance;
+
+
+			// Send the rental confirmation email
+			var emailSubject = "Car Rental Confirmation";
+			var emailBody = $"Dear Customer,<br><br>" +
+							$"You have successfully returned the car: <strong>{rh.Offer.Car.CarBrand} {rh.Offer.Car.CarModel}</strong>.<br>" +
+							$"Your Total Cost: {totalCost} euro<br><br>" +
+							$"Thank you for using our service!<br><br>" +
+							$"Best regards,<br>The Car Rental Team";
+
+			// Send email to the user (the email in the request)
+			await _emailSender.SendEmailAsync(retr.Email, emailSubject, emailBody);  // Send email to the user
 
 			return true;
 		}
