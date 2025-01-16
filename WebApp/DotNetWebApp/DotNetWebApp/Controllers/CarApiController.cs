@@ -25,6 +25,7 @@ using Azure.Storage.Blobs;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Reflection.PortableExecutable;
 using System.Drawing.Printing;
+using Microsoft.AspNetCore.Http;
 
 namespace DotNetWebApp.Controllers
 {
@@ -68,22 +69,21 @@ namespace DotNetWebApp.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 2)
+		public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
 		{
             //await GetThemAll();
 
-            await Get();
+			var carsfromGet = await Get();
 
-            var totalCars = await carContext.Cars.CountAsync();
-            var cars = await carContext.Cars
+            var totalCars =carsfromGet.Count();
+			var cars = carsfromGet
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(c => new CarOverall
                 {
                     CarBrand = c.CarBrand,
                     CarModel = c.CarModel
-                })
-                .ToListAsync();
+                });
 
             var pagedResult = new PagedResult<CarOverall>
             {
@@ -97,7 +97,7 @@ namespace DotNetWebApp.Controllers
         }
 
 		[HttpGet]
-		public async Task<IActionResult> Search(string query, int pageNumber = 1, int pageSize = 2)
+		public async Task<IActionResult> Search(string query, int pageNumber = 1, int pageSize = 5)
 		{
 			await Get();
             
@@ -477,7 +477,15 @@ namespace DotNetWebApp.Controllers
 
 				var final = offerscars.ToList();
 				final.Sort((c1, c2) => c1.CarId.CompareTo(c2.CarId));
-				return View(final);
+
+                // Store the final list in TempData
+               // TempData["OffersData"] = JsonConvert.SerializeObject(final);
+
+                // Storing the final offers list in the session
+                HttpContext.Session.SetString("OffersData", JsonConvert.SerializeObject(final));
+
+
+                return View(final);
 			}
 			catch (Exception e)
 			{
@@ -485,7 +493,129 @@ namespace DotNetWebApp.Controllers
 			}
 		}
 
-		private async Task<CarPlatform?> AddCar(CarPlatform? car, int CarId, bool createCar)
+        public IActionResult SortOffers(string sortBy, decimal? minPrice, decimal? maxPrice)
+        {
+            try
+            {
+                // Retrieve data from session
+                var offersData = HttpContext.Session.GetString("OffersData");
+
+                if (string.IsNullOrEmpty(offersData))
+                {
+                    // If no data is found in session, reload the "ShowOffers" page to load fresh data
+                    return RedirectToAction("ShowOffers");
+                }
+
+                // Deserialize the offers data back into the list
+                var offerscars = JsonConvert.DeserializeObject<List<OfferCarModel>>(offersData);
+
+                if (offerscars == null || offerscars.Count == 0)
+                {
+                    // In case the session data is corrupted or empty, reload the offers
+                    return RedirectToAction("ShowOffers");
+                }
+
+                // Apply filtering logic based on minPrice and maxPrice
+                if (minPrice.HasValue)
+                {
+                    offerscars = offerscars.Where(o => o.PriceDay >= minPrice).ToList();
+                }
+
+                if (maxPrice.HasValue)
+                {
+                    offerscars = offerscars.Where(o => o.PriceDay <= maxPrice).ToList();
+                }
+
+                List<OfferCarModel> sortedOffers;
+
+                // Sort based on the user's selection
+                switch (sortBy)
+                {
+                    case "PriceDayAsc":
+                        sortedOffers = offerscars.OrderBy(o => o.PriceDay).ToList();
+                        break;
+                    case "PriceDayDesc":
+                        sortedOffers = offerscars.OrderByDescending(o => o.PriceDay).ToList();
+                        break;
+                    case "PriceInsuranceAsc":
+                        sortedOffers = offerscars.OrderBy(o => o.PriceInsurance).ToList();
+                        break;
+                    case "PriceInsuranceDesc":
+                        sortedOffers = offerscars.OrderByDescending(o => o.PriceInsurance).ToList();
+                        break;
+                    case "ExpirationDate":
+                        sortedOffers = offerscars.OrderBy(o => o.ExpirationDate).ToList();
+                        break;
+                    default:
+                        sortedOffers = offerscars.OrderBy(o => o.CarId).ToList(); // Default sorting by CarId
+                        break;
+                }
+
+                // Optionally, store the sorted offers back in session
+                HttpContext.Session.SetString("OffersData", JsonConvert.SerializeObject(sortedOffers));
+
+                // Return the sorted list to the view
+                return View("ShowOffers", sortedOffers);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ShowOffers");
+            }
+        }
+
+
+        /* public IActionResult SortOffers(string sortBy)
+         {
+             try
+             {
+                 // Retrieve the byte array from session
+                 byte[] data = HttpContext.Session.Get("OffersData");
+
+                 if (data == null)
+                 {
+                     return RedirectToAction("ShowOffers"); // or handle case where session data doesn't exist
+                 }
+
+                 // Convert the byte array back to a JSON string
+                 string json = System.Text.Encoding.UTF8.GetString(data);
+
+                 // Deserialize the JSON string back to List<OfferCarModel>
+                 List<OfferCarModel> offerscars = JsonConvert.DeserializeObject<List<OfferCarModel>>(json);
+
+                 if (offerscars == null || offerscars.Count == 0)
+                 {
+                     return RedirectToAction("ShowOffers");  // Return to show offers if the list is empty
+                 }
+
+                 List<OfferCarModel> sortedOffers;
+
+                 // Sort the list based on the selected criterion
+                 switch (sortBy)
+                 {
+                     case "PriceDay":
+                         sortedOffers = offerscars.OrderBy(o => o.PriceDay).ToList();
+                         break;
+                     case "PriceInsurance":
+                         sortedOffers = offerscars.OrderBy(o => o.PriceInsurance).ToList();
+                         break;
+                     case "ExpirationDate":
+                         sortedOffers = offerscars.OrderBy(o => o.ExpirationDate).ToList();
+                         break;
+                     default:
+                         sortedOffers = offerscars.OrderBy(o => o.CarId).ToList();  // Default sorting by CarId
+                         break;
+                 }
+
+                 return View("ShowOffers", sortedOffers);  // Show the sorted data in the view
+             }
+             catch (Exception)
+             {
+                 return RedirectToAction("ShowOffers");  // Return to show offers on error
+             }
+         }*/
+
+
+        private async Task<CarPlatform?> AddCar(CarPlatform? car, int CarId, bool createCar)
 		{
 			try
 			{
@@ -896,31 +1026,33 @@ namespace DotNetWebApp.Controllers
 			return Redirect("/CarApi/MyRents");
 		}
 
-		public async Task<IActionResult> AllRents()
-		{
-			//jakos wykorzystaj te poprezdnie funkcje
-			string platform = Request.Host.ToString();
-			Uri uri = new("https://" + platform);
-			HttpClient client = new() { BaseAddress = uri };
+        public async Task<IActionResult> AllRents()
+        {
+            //jakos wykorzystaj te poprezdnie funkcje
+            string platform = Request.Host.ToString();
+            Uri uri = new("https://" + platform);
+            HttpClient client = new() { BaseAddress = uri };
 
-			var response = await client.GetAsync(uri + "Home/GetUsers");
-			response.EnsureSuccessStatusCode();
-			string data = await response.Content.ReadAsStringAsync();
-			IEnumerable<CustomUser>? users = JsonConvert.DeserializeObject<IEnumerable<CustomUser>>(data);
+            var response = await client.GetAsync(uri + "Home/GetUsers");
+            response.EnsureSuccessStatusCode();
+            string data = await response.Content.ReadAsStringAsync();
+            IEnumerable<CustomUser>? users = JsonConvert.DeserializeObject<IEnumerable<CustomUser>>(data);
 
-			if (users != null)
-				foreach (CustomUser u in users)
-				{
-					RentsRequest rr = new() { Client_Id = u.Id, Email = u.Email ?? "", Platform = platform };
-					await Rents(rr, false);
-				}
+            if (users != null)
+                foreach (CustomUser u in users)
+                {
+                    RentsRequest rr = new() { Client_Id = u.Id, Email = u.Email ?? "", Platform = platform };
+                    await Rents(rr, false);
+                }
 
 
 
-			return View(await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).ToListAsync());
-		}
+            return View(await carContext.Rents.Include(r => r.Offer).Include(r => r.Offer.Car).ToListAsync());
+        }
 
-		public async Task<IActionResult> ConfirmReturn(RentHistory rh) //tylko id poprawne tutaj i platform
+
+
+        public async Task<IActionResult> ConfirmReturn(RentHistory rh) //tylko id poprawne tutaj i platform
 		{
 			try
 			{

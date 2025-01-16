@@ -396,3 +396,128 @@ button#w-100 {
             transform: none;
         }
 
+/* Sorting and Filter Buttons */
+.sort-filter-btn {
+    background-color: #6c5ce7; /* Purple base color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+    .sort-filter-btn:hover {
+        background-color: #4a4aeb; /* Darker purple */
+        transform: scale(1.05);
+    }
+
+    /* Sorting Icon */
+    .sort-filter-btn i {
+        font-size: 18px;
+    }
+
+/* Filter Dropdown Button */
+.filter-dropdown-btn {
+    background-color: #6c5ce7; /* Purple base color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+    .filter-dropdown-btn:hover {
+        background-color: #4a4aeb; /* Darker purple */
+        transform: scale(1.05);
+    }
+
+/* Filter Dropdown Options */
+.filter-options {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0; /* Light gray border */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    font-size: 1rem;
+    color: #4a4a4a; /* Dark gray */
+    max-height: 200px;
+    overflow-y: auto;
+    display: none; /* Hidden by default */
+}
+
+    .filter-options.active {
+        display: block; /* Show when active */
+    }
+
+/* Filter Option */
+.filter-option {
+    padding: 10px;
+    color: #6c5ce7; /* Purple text */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .filter-option:hover {
+        background-color: #f0f0f0; /* Light gray */
+    }
+
+/* Sort By Dropdown */
+.sort-by-dropdown {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    width: 200px;
+    font-size: 1rem;
+    color: #4a4a4a; /* Dark gray */
+}
+
+    .sort-by-dropdown option {
+        padding: 10px;
+        font-size: 1rem;
+        color: #4a4a4a;
+    }
+
+    /* Active sorting style */
+    .sort-by-dropdown:focus {
+        outline: none;
+        border-color: #6c5ce7; /* Purple */
+    }
+
+    .sort-by-dropdown option:hover {
+        background-color: #f0f0f0; /* Light gray */
+    }
+
+/* Adding some margin and spacing */
+.sort-filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+    /* Add padding to the button container */
+    .sort-filter-container button {
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+/* Responsive Design for Sort/Filter */
+@media (max-width: 768px) {
+    .sort-filter-btn,
+    .filter-dropdown-btn {
+        font-size: 14px; /* Slightly smaller font size */
+        padding: 8px 12px;
+    }
+}
