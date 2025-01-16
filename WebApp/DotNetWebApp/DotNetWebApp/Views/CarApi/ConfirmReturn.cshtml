@@ -1,52 +1,47 @@
 ﻿@model DotNetWebApp.Models.RentHistoryModel
 @{
-	ViewData["Title"] = "Confirm Return";
+    ViewData["Title"] = "Confirm Return";
 }
 
 <div class="page-wrapper">
-	<header class="page-header">
-		<h1>Confirmation Details</h1>
-	</header>
+    <header class="page-header">
+        <h1>Confirmation Details</h1>
+    </header>
 
+    <div class="car-card">
+        <div class="car-info">
+            <p class="car-license">License Plate: @Model.Offer.Car.LicensePlate</p>
+            <p class="car-brand">Car Brand: @Model.Offer.Car.CarBrand</p>
+            <p class="car-model">Car Model: @Model.Offer.Car.CarModel</p>
+            <p class="car-rentdate">Rent Date: @Model.RentDate</p>
+            <p class="name">Client Name: @Model.Name</p>
+            <p class="surname">Client Surname: @Model.Surname</p>
+            <p class="email">Client Email: @Model.Email</p>
+            <p class="car-returned">Returned: @Model.IsReturned</p>
 
-	<div class="car-card">
-		<!-- xxxxx -->
-		<div class="car-info">
-			<p class="car-license">License Plate: @Model.Offer.Car.LicensePlate</p>
-			<p class="car-brand">Car Brand: @Model.Offer.Car.CarBrand</p>
-			<p class="car-model">Car Model: @Model.Offer.Car.CarModel</p>
-			<p class="car-rentdate">Rent Date: @Model.RentDate</p>
-			<p class="name">Client Name: @Model.Name</p>
-			<p class="surname">Client Surname: @Model.Surname</p>
-			<p class="email">Client Email: @Model.Email</p>
-			<p class="car-returned">Returned: @Model.IsReturned</p>
-			@if (Model.IsReadyToReturn && !Model.IsReturned)
-			{
-				<form asp-action="ConfirmReturnFunction" asp-controller="CarApi"
-					  asp-route-Id="@Model.Id" asp-route-Platform="@Model.Platform"
-					  asp-route-Email="@Model.Email" asp-route-Client_Id="@Model.Client_Id"
-					  asp-route-IsReadyToReturn="@Model.IsReadyToReturn"
-					  asp-route-IsReturned="@Model.IsReturned"
-					  method="post" enctype="multipart/form-data">
-					<div>
-						<label for="file">Select an image:</label>
-						<input type="file" id="file" name="File" accept="image/*" />
-					</div>
-					<button type="submit">Confirm Return</button>
-				</form>
-
-			}
-			else if (!Model.IsReadyToReturn)
-			{
-				<p>Waiting for Return Request</p>
-			}
-			else if (Model.IsReturned)
-			{
-				<p>Car Returned</p>
-			}
-		</div>
-
-	</div>
-
-
+            @if (Model.IsReadyToReturn && !Model.IsReturned)
+            {
+                <form asp-action="ConfirmReturnFunction" asp-controller="CarApi"
+                      asp-route-Id="@Model.Id" asp-route-Platform="@Model.Platform"
+                      asp-route-Email="@Model.Email" asp-route-Client_Id="@Model.Client_Id"
+                      asp-route-IsReadyToReturn="@Model.IsReadyToReturn"
+                      asp-route-IsReturned="@Model.IsReturned"
+                      method="post" enctype="multipart/form-data" class="confirm-return-form">
+                    <div class="form-group" style="margin-top: 15px; margin-bottom: 15px;">
+                        <label for="file">Select an image:</label>
+                        <input type="file" id="file" name="File" accept="image/*" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn">Confirm Return</button>
+                </form>
+            }
+            else if (!Model.IsReadyToReturn)
+            {
+                <p class="no-results">Waiting for Return Request</p>
+            }
+            else if (Model.IsReturned)
+            {
+                <p class="no-results">Car Returned</p>
+            }
+        </div>
+    </div>
 </div>

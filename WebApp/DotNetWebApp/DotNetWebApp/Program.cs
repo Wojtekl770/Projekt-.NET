@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DotNetWebApp.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Session;
 
 namespace DotNetWebApp
 {
@@ -11,6 +12,15 @@ namespace DotNetWebApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Session setup - Add memory cache for session storage
+            builder.Services.AddDistributedMemoryCache(); // Use memory cache to store session data
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Configure session timeout duration
+                options.Cookie.HttpOnly = true;  // Prevent access to session cookies via JavaScript
+                options.Cookie.IsEssential = true;  // Make session cookies essential for the application
+            });
 
             //BazyDAnych
             var connectionString = builder.Configuration.GetConnectionString("LogInConnection") ?? throw new InvalidOperationException("Connection string 'LogInConnection' not found.");
@@ -72,7 +82,8 @@ namespace DotNetWebApp
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            
+
+			app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
