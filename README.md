@@ -5,6 +5,8 @@ Aplikacja umożliwia wypożyczanie samochodów oraz porównywanie ofert z różn
 
 Aplikacja do wynajmu samochodów składa się z dwóch głównych komponentów: aplikacji pośredniczącej oraz API do zarządzania wynajmami. Architektura systemu umożliwia łatwą skalowalność oraz asynchroniczne przetwarzanie danych w tle.
 
+---
+
 ## Architektura i Infrastruktura
 Infrastruktura aplikacji jest hostowana na platformie Microsoft Azure, co zapewnia łatwą konserwację, skalowalność i bezpieczeństwo.
 
